@@ -11,7 +11,7 @@ return new class extends Migration {
     public function up(): void
     {
         // filament_v1.drawio diagram
-        schema::table('users', function (Blueprint $table) {
+        schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->foreignId('role_id')->references('id')->on('roles')->onDelete('cascade')->nullable()->default(null);
             $table->string('name')->nullable()->default(null);
@@ -38,7 +38,7 @@ return new class extends Migration {
             $table->string('folder_name')->nullable()->default(null);
         });
 
-        schema::table('students', function (Blueprint $table) {
+        schema::create('students', function (Blueprint $table) {
             $table->id();
             $table->string('annee_bac')->nullable()->default(null);
             $table->string('section_bac')->nullable()->default(null);
@@ -63,7 +63,7 @@ return new class extends Migration {
             $table->string('slug')->nullable()->default(null);
         });
 
-        schema::table('personals', function (Blueprint $table) {
+        schema::create('personals', function (Blueprint $table) {
             $table->id();
             $table->integer('affichage_in_front')->nullable()->default(null);
             $table->string('grade_name')->nullable()->default(null);
@@ -82,7 +82,7 @@ return new class extends Migration {
             $table->string('slug')->nullable()->default(null);
         });
 
-        Schema::table('grades', function (Blueprint $table) {
+        Schema::create('grades', function (Blueprint $table) {
             $table->id();
             $table->string('designation_fr')->nullable()->default(null);
             $table->string('designation_en')->nullable()->default(null);
@@ -95,7 +95,7 @@ return new class extends Migration {
             $table->timestamp('updated_at')->nullable()->default(null);
         });
 
-        Schema::table('teachers', function (Blueprint $table) {
+        Schema::create('teachers', function (Blueprint $table) {
             $table->id();
             $table->foreignId('department_id')->nullable()->default(null);
             $table->string('cin')->nullable()->default(null);
@@ -125,7 +125,7 @@ return new class extends Migration {
             $table->string('prenom_ar')->nullable()->default(null);
         });
 
-        Schema::table(('students_predefined_lists'), function (Blueprint $table) {
+        Schema::create('students_predefined_lists', function (Blueprint $table) {
             $table->id();
             $table->string('numero_inscription')->nullable()->default(null);
             $table->string('cin')->nullable()->default(null);
