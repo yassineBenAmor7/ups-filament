@@ -43,6 +43,7 @@ class PersonalResource extends Resource
                 DatePicker::make('updated_at'),
                 TextInput::make('cin'),
                 TextInput::make('slug'),
+
             ]);
     }
 
@@ -56,6 +57,7 @@ class PersonalResource extends Resource
                 TextColumn::make('affichage_in_front'),
                 TextColumn::make('cin'),
                 TextColumn::make('created_at')->dateTime(),
+
             ])
             ->filters([
                 //

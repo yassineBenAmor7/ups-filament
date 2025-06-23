@@ -12,6 +12,7 @@ use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DatePicker;
+
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\StudentResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -48,6 +49,7 @@ class StudentResource extends Resource
                 DatePicker::make('deleted_at'),
                 TextInput::make('diploma'),
                 TextInput::make('slug'),
+
             ]);
     }
 
@@ -62,6 +64,7 @@ class StudentResource extends Resource
                 TextColumn::make('diploma'),
                 TextColumn::make('slug'),
                 TextColumn::make('created_at')->dateTime(),
+
             ])
             ->filters([
                 //

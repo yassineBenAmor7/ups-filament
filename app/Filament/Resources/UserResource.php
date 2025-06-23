@@ -50,6 +50,7 @@ class UserResource extends Resource
             TextInput::make('updated_by'),
             TextInput::make('publier'),
             TextInput::make('folder_name'),
+
             ]);
     }
 
@@ -64,6 +65,7 @@ class UserResource extends Resource
                 TextColumn::make('nationalite'),
                 TextColumn::make('genre'),
                 TextColumn::make('publier'),
+
             ])
             ->filters([
                 //

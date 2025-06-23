@@ -58,6 +58,7 @@ class TeacherResource extends Resource
                 TextInput::make('nom_ar'),
                 TextInput::make('prenom'),
                 TextInput::make('prenom_ar'),
+
             ]);
     }
 
@@ -72,6 +73,11 @@ class TeacherResource extends Resource
                 TextColumn::make('poste'),
                 TextColumn::make('grade_name'),
                 TextColumn::make('created_at')->dateTime(),
+                TextColumn::make('cin')->label('CIN'),
+                TextColumn::make('nom')->label('Nom'),
+                TextColumn::make('prenom')->label('Prénom'),
+                TextColumn::make('email')->label('Email'),
+                TextColumn::make('grade.designation_fr')->label('Grade'),
             ])
             ->filters([
                 //

@@ -37,6 +37,7 @@ class GradeResource extends Resource
                 TextInput::make('updated_by'),
                 DatePicker::make('created_at'),
                 DatePicker::make('updated_at'),
+
             ]);
     }
 
@@ -50,6 +51,7 @@ class GradeResource extends Resource
                 TextColumn::make('type'),
                 TextColumn::make('publier'),
                 TextColumn::make('created_at')->dateTime(),
+
             ])
             ->filters([
                 //

@@ -43,6 +43,7 @@ class StudentsPredefinedListResource extends Resource
                 TextInput::make('updated_by'),
                 DatePicker::make('created_at'),
                 DatePicker::make('updated_at'),
+
             ]);
     }
 
@@ -57,6 +58,7 @@ class StudentsPredefinedListResource extends Resource
                 TextColumn::make('nom_ar'),
                 TextColumn::make('prenom_ar'),
                 TextColumn::make('created_at')->dateTime(),
+
             ])
             ->filters([
                 //
