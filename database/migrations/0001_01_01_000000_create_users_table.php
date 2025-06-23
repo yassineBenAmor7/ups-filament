@@ -11,7 +11,37 @@ return new class extends Migration
      */
     public function up(): void
     {
-        
+        Schema::create('users', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
+            $table->rememberToken();
+            $table->boolean('is_validated')->default(false);
+
+            $table->string('name_ar')->nullable()->default(null)->unique();
+            $table->string('phone')->nullable()->default(null);
+            $table->string('cin')->nullable()->default(null);
+            $table->string('avatar')->nullable()->default(null);
+            $table->string('nationalite')->nullable()->default(null);
+            $table->string('genre')->nullable()->default(null);
+            $table->string('address')->nullable()->default(null);
+            $table->string('cnss')->nullable()->default(null);
+            $table->date('date_naissance')->nullable()->default(null);
+            $table->string('lieu_naissance')->nullable()->default(null);
+            $table->text('cv')->nullable()->default(null);
+            $table->string('description_ar')->nullable()->default(null);
+            $table->string('description_en')->nullable()->default(null);
+            $table->string('description_fr')->nullable()->default(null);
+            $table->string('created_by')->nullable()->default(null);
+            $table->string('updated_by')->nullable()->default(null);
+            $table->integer('publier')->nullable()->default(null);
+            $table->string('folder_name')->nullable()->default(null);
+
+
+            $table->timestamps();
+        });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();

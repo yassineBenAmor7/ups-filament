@@ -10,6 +10,35 @@ return new class extends Migration {
      */
     public function up(): void
     {
+         Schema::create('departments', function (Blueprint $table) {
+            $table->id();
+            $table->string('teacher_cin');
+            $table->string('designation_fr')->nullable()->default(null);
+            $table->string('designation_en')->nullable()->default(null);
+            $table->string('designation_ar')->nullable()->default(null);
+            $table->string('cover')->nullable()->default(null);
+            $table->longtext('description_en')->nullable()->default(null);
+            $table->longtext('description_fr')->nullable()->default(null);
+            $table->longtext('description_ar')->nullable()->default(null);
+            $table->string('created_by')->nullable()->default(null);
+            $table->string('updated_by')->nullable()->default(null);
+            $table->timestamp('created_at')->nullable()->default(null);
+            $table->timestamp('updated_at')->nullable()->default(null);
+            $table->integer('publier')->nullable()->default(null);
+        });
+
+            Schema::create('sector_types', function (Blueprint $table) {
+            $table->id();
+            $table->string('designation_fr')->nullable()->default(null);
+            $table->string('designation_en')->nullable()->default(null);
+            $table->string('designation_ar')->nullable()->default(null);
+            $table->string('created_by')->nullable()->default(null);
+            $table->string('updated_by')->nullable()->default(null);
+            $table->timestamp('created_at')->nullable()->default(null);
+            $table->timestamp('updated_at')->nullable()->default(null);
+            $table->integer('publier')->nullable()->default(null);
+            $table->string('slug')->nullable()->default(null);
+        });
         Schema::create('sectors', function (Blueprint $table) {
             $table->id();
             $table->foreignId('sector_type_id')->references('id')->on('sector_types')->onDelete('cascade')->nullable()->default(null);
@@ -31,35 +60,9 @@ return new class extends Migration {
             $table->string('internship_coordinator')->nullable()->default(null);
         });
 
-        Schema::create('sector_types', function (Blueprint $table) {
-            $table->id();
-            $table->string('designation_fr')->nullable()->default(null);
-            $table->string('designation_en')->nullable()->default(null);
-            $table->string('designation_ar')->nullable()->default(null);
-            $table->string('created_by')->nullable()->default(null);
-            $table->string('updated_by')->nullable()->default(null);
-            $table->timestamp('created_at')->nullable()->default(null);
-            $table->timestamp('updated_at')->nullable()->default(null);
-            $table->integer('publier')->nullable()->default(null);
-            $table->string('slug')->nullable()->default(null);
-        });
 
-        Schema::create('departments', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('teacher_cin')->nullable()->default(null)->references('cin')->on('teachers')->onDelete('cascade');
-            $table->string('designation_fr')->nullable()->default(null);
-            $table->string('designation_en')->nullable()->default(null);
-            $table->string('designation_ar')->nullable()->default(null);
-            $table->string('cover')->nullable()->default(null);
-            $table->longtext('description_en')->nullable()->default(null);
-            $table->longtext('description_fr')->nullable()->default(null);
-            $table->longtext('description_ar')->nullable()->default(null);
-            $table->string('created_by')->nullable()->default(null);
-            $table->string('updated_by')->nullable()->default(null);
-            $table->timestamp('created_at')->nullable()->default(null);
-            $table->timestamp('updated_at')->nullable()->default(null);
-            $table->integer('publier')->nullable()->default(null);
-        });
+
+
 
         Schema::create('plaquette_periodiques', function (Blueprint $table) {
             $table->id();
@@ -78,8 +81,8 @@ return new class extends Migration {
 
         Schema::create('coordination_sectors', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('sector_id')->nullable()->default(null)->references('id')->on('sectors')->onDelete('cascade');
-            $table->foreignId('user_id')->nullable()->default(null)->references('id')->constrained('users')->onDelete('cascade');
+            $table->integer('sector_id');
+            $table->integer('user_id');
             $table->string('created_by')->nullable()->default(null);
             $table->string('updated_by')->nullable()->default(null);
             $table->timestamp('created_at')->nullable()->default(null);

@@ -9,16 +9,17 @@ use App\Entreprise;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Testing\Fluent\Concerns\Has;
+use Spatie\Permission\Traits\HasRoles;
 use App\Message;
 use App\Stage;
 use App\Models\StudentsPredefinedList;
 use App\Subject;
 use App\Teacher;
-
-
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    /** @use HasFactory<\Database\Factories\UserFactory> */
+    use HasFactory, Notifiable , HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -31,6 +32,7 @@ class User extends Authenticatable
         'password',
         'role_id',
         'cin',
+        'is_validated',
     ];
 
     /**
@@ -48,10 +50,14 @@ class User extends Authenticatable
      *
      * @var array<string, string>
      */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
-
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+             'is_validated' => 'boolean',
+        ];
+    }
 
     /*public function role()
     {
@@ -68,39 +74,39 @@ class User extends Authenticatable
 
     public function subjects()
     {
-        return $this->belongsToMany(Subject::class, 'subject_users');
+       // return $this->belongsToMany(Subject::class, 'subject_users');
     }
 
 
     public function receivers()
     {
-        return $this->hasMany(Message::class, 'receiver_id', 'id')->where('sender_id', auth()->user()->id)->orderBy('messages.created_at', 'desc');
+      //  return $this->hasMany(Message::class, 'receiver_id', 'id')->where('sender_id', auth()->user()->id)->orderBy('messages.created_at', 'desc');
     }
 
 
     public function senders()
     {
-        return $this->hasMany(Message::class, 'sender_id', 'id')->where('receiver_id', auth()->user()->id);
+      //  return $this->hasMany(Message::class, 'sender_id', 'id')->where('receiver_id', auth()->user()->id);
     }
 
     public function cv_setting()
     {
-        return $this->hasOne(CvSetting::class, 'user_id', 'id')->where('cv_settings.publier', 1);
+       // return $this->hasOne(CvSetting::class, 'user_id', 'id')->where('cv_settings.publier', 1);
     }
 
     public function company()
     {
-        return $this->belongsTo(Entreprise::class , 'entreprise_id');
+      //  return $this->belongsTo(Entreprise::class , 'entreprise_id');
     }
     public function stages(){
-        return $this->hasMany(Stage::class , 'encadrant_cin');
+      //  return $this->hasMany(Stage::class , 'encadrant_cin');
     }
     // This relationship assumes that both users.cin and teachers.cin are the same.
     public function teacher(){
-        return $this->belongsTo(Teacher::class , 'cin' , 'cin' );
+      //  return $this->belongsTo(Teacher::class , 'cin' , 'cin' );
     }
     public function student_stages(){
-        return $this->hasMany(Stage::class  , 'candidat_1_id');
+      //  return $this->hasMany(Stage::class  , 'candidat_1_id');
     }
 
     public function department(){
@@ -118,3 +124,5 @@ class User extends Authenticatable
 
 
 }
+
+

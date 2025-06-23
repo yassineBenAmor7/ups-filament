@@ -10,32 +10,18 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        // filament_v1.drawio diagram
-        schema::create('users', function (Blueprint $table) {
+
+        Schema::create('grades', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('role_id')->references('id')->on('roles')->onDelete('cascade')->nullable()->default(null);
-            $table->string('name')->nullable()->default(null);
-            $table->string('name_ar')->nullable()->default(null)->unique();
-            $table->string('phone')->nullable()->default(null);
-            $table->string('email')->nullable()->default(null)->unique();
-            $table->string('cin')->nullable()->default(null);
-            $table->string('avatar')->nullable()->default(null);
-            $table->string('nationalite')->nullable()->default(null);
-            $table->string('genre')->nullable()->default(null);
-            $table->string('address')->nullable()->default(null);
-            $table->string('cnss')->nullable()->default(null);
-            $table->date('date_naissance')->nullable()->default(null);
-            $table->string('lieu_naissance')->nullable()->default(null);
-            $table->text('cv')->nullable()->default(null);
-            $table->string('description_ar')->nullable()->default(null);
-            $table->string('description_en')->nullable()->default(null);
-            $table->string('description_fr')->nullable()->default(null);
+            $table->string('designation_fr')->nullable()->default(null);
+            $table->string('designation_en')->nullable()->default(null);
+            $table->string('designation_ar')->nullable()->default(null);
+            $table->string('type')->nullable()->default(null);
+            $table->integer('publier')->nullable()->default(null);
             $table->string('created_by')->nullable()->default(null);
             $table->string('updated_by')->nullable()->default(null);
             $table->timestamp('created_at')->nullable()->default(null);
             $table->timestamp('updated_at')->nullable()->default(null);
-            $table->integer('publier')->nullable()->default(null);
-            $table->string('folder_name')->nullable()->default(null);
         });
 
         schema::create('students', function (Blueprint $table) {
@@ -82,22 +68,11 @@ return new class extends Migration {
             $table->string('slug')->nullable()->default(null);
         });
 
-        Schema::create('grades', function (Blueprint $table) {
-            $table->id();
-            $table->string('designation_fr')->nullable()->default(null);
-            $table->string('designation_en')->nullable()->default(null);
-            $table->string('designation_ar')->nullable()->default(null);
-            $table->string('type')->nullable()->default(null);
-            $table->integer('publier')->nullable()->default(null);
-            $table->string('created_by')->nullable()->default(null);
-            $table->string('updated_by')->nullable()->default(null);
-            $table->timestamp('created_at')->nullable()->default(null);
-            $table->timestamp('updated_at')->nullable()->default(null);
-        });
+
 
         Schema::create('teachers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('department_id')->references('id')->on('departments')->onDelete('cascade')->nullable()->default(null);
+            $table->integer('department_id');
             $table->string('cin')->nullable()->default(null);
             $table->string('nom')->nullable()->default(null);
             $table->string('name')->nullable()->default(null);
@@ -150,7 +125,7 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+
         Schema::dropIfExists('students');
         Schema::dropIfExists('personals');
         Schema::dropIfExists('grades');
