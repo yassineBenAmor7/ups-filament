@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('sectors', function (Blueprint $table) {
             $table->id();
-            $table->integer('sector_type_id')->nullable()->default(null);
+            $table->foreignId('sector_type_id')->references('id')->on('sector_types')->onDelete('cascade')->nullable()->default(null);
             $table->string('designation_fr')->nullable()->default(null);
             $table->string('designation_en')->nullable()->default(null);
             $table->string('designation_ar')->nullable()->default(null);
@@ -20,7 +20,7 @@ return new class extends Migration {
             $table->text('description_en')->nullable()->default(null);
             $table->text('description_fr')->nullable()->default(null);
             $table->text('description_ar')->nullable()->default(null);
-            $table->integer('department_id')->nullable()->default(null);
+            $table->foreignId('department_id')->references('id')->on('departments')->onDelete('cascade')->nullable()->default(null);
             $table->string('created_by')->nullable()->default(null);
             $table->string('updated_by')->nullable()->default(null);
             $table->timestamp('created_at')->nullable()->default(null);
@@ -31,7 +31,7 @@ return new class extends Migration {
             $table->string('internship_coordinator')->nullable()->default(null);
         });
 
-        Schema::create('sectors_types', function (Blueprint $table) {
+        Schema::create('sector_types', function (Blueprint $table) {
             $table->id();
             $table->string('designation_fr')->nullable()->default(null);
             $table->string('designation_en')->nullable()->default(null);
@@ -46,7 +46,7 @@ return new class extends Migration {
 
         Schema::create('departments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('teacher_cin')->nullable()->default(null)->references('cin')->constrained('teachers')->onDelete('cascade');
+            $table->foreignId('teacher_cin')->nullable()->default(null)->references('cin')->on('teachers')->onDelete('cascade');
             $table->string('designation_fr')->nullable()->default(null);
             $table->string('designation_en')->nullable()->default(null);
             $table->string('designation_ar')->nullable()->default(null);
@@ -79,7 +79,7 @@ return new class extends Migration {
         Schema::create('coordination_sectors', function (Blueprint $table) {
             $table->id();
             $table->foreignId('sector_id')->nullable()->default(null)->references('id')->on('sectors')->onDelete('cascade');
-            $table->foreignId('user_cid')->nullable()->default(null)->references('id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->default(null)->references('id')->constrained('users')->onDelete('cascade');
             $table->string('created_by')->nullable()->default(null);
             $table->string('updated_by')->nullable()->default(null);
             $table->timestamp('created_at')->nullable()->default(null);
@@ -142,6 +142,14 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('sectors');
+        Schema::dropIfExists('group_tps');
+        Schema::dropIfExists('group_tds_teachers');
+        Schema::dropIfExists('group_tds');
+        Schema::dropIfExists('groups');
+        Schema::dropIfExists('coordination_sectors');
+        Schema::dropIfExists('plaquette_periodiques');
+        Schema::dropIfExists('departments');
+        Schema::dropIfExists('sector_types');
     }
 };

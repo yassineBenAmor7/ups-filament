@@ -97,7 +97,7 @@ return new class extends Migration {
 
         Schema::create('teachers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('department_id')->nullable()->default(null);
+            $table->foreignId('department_id')->references('id')->on('departments')->onDelete('cascade')->nullable()->default(null);
             $table->string('cin')->nullable()->default(null);
             $table->string('nom')->nullable()->default(null);
             $table->string('name')->nullable()->default(null);
@@ -150,7 +150,11 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        //
-
+        Schema::dropIfExists('users');
+        Schema::dropIfExists('students');
+        Schema::dropIfExists('personals');
+        Schema::dropIfExists('grades');
+        Schema::dropIfExists('teachers');
+        Schema::dropIfExists('students_predefined_lists');
     }
 };
