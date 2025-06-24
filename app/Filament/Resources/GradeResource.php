@@ -32,7 +32,7 @@ class GradeResource extends Resource
                 TextInput::make('designation_en'),
                 TextInput::make('designation_ar'),
                 TextInput::make('type'),
-                TextInput::make('publier')->numeric(),
+                Toggle::make('publier')->label('publier'),
                 TextInput::make('created_by'),
                 TextInput::make('updated_by'),
                 DatePicker::make('created_at'),
@@ -49,7 +49,7 @@ class GradeResource extends Resource
                 TextColumn::make('designation_en'),
                 TextColumn::make('designation_ar'),
                 TextColumn::make('type'),
-                TextColumn::make('publier'),
+                BooleanColumn::make('publier'),
                 TextColumn::make('created_at')->dateTime(),
 
             ])

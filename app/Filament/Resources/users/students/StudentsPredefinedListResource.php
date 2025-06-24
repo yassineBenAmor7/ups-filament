@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\users\students\Resources;
 
 use Filament\Forms;
 use Filament\Tables;
@@ -8,15 +8,15 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Select;
-use App\Models\StudentsPredefinedList;
+use App\Models\users\students\StudentsPredefinedList;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DatePicker;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Columns\BooleanColumn;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\StudentsPredefinedListResource\Pages;
-use App\Filament\Resources\StudentsPredefinedListResource\RelationManagers;
+use App\Filament\Resources\users\students\StudentsPredefinedListResource\Pages;
+use App\Filament\Resources\users\students\StudentsPredefinedListResource\RelationManagers;
 
 class StudentsPredefinedListResource extends Resource
 {

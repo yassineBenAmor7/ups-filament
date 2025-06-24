@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\users;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
@@ -13,7 +13,7 @@ use Illuminate\Testing\Fluent\Concerns\Has;
 use Spatie\Permission\Traits\HasRoles;
 use App\Message;
 use App\Stage;
-use App\Models\StudentsPredefinedList;
+use App\Models\users\students\StudentsPredefinedList;
 use App\Subject;
 use App\Teacher;
 class User extends Authenticatable

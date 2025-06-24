@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\users;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Grade;
 
 class Personal extends Model
 {

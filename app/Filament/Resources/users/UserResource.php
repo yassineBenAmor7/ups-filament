@@ -1,32 +1,34 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Resources\users;
 
 use Filament\Forms;
-use App\Models\User;
 use Filament\Tables;
 use Filament\Forms\Form;
+use App\Models\users\User;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
+use Filament\Tables\Actions\Action;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Forms\Components\TextInput;
-use Filament\Tables\Columns\BadgeColumn;
-use Filament\Forms\Components\DatePicker;
-use Illuminate\Database\Eloquent\Builder;
-use App\Filament\Resources\UserResource\Pages;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\UserResource\RelationManagers;
-
-
-use Filament\Tables\Actions\Action;
-use Filament\Notifications\Notification;
-use Filament\Tables\Enums\ActionsPosition;
-use Filament\Tables\Actions\ActionGroup;
-use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\TextInput;
+use Filament\Notifications\Notification;
+use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Columns\BadgeColumn;
+
+
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\FileUpload;
+use Filament\Tables\Actions\DeleteAction;
+use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Enums\ActionsPosition;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\users\UserResource\Pages;
+use App\Filament\Resources\users\UserResource\RelationManagers;
+
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
@@ -67,7 +69,7 @@ class UserResource extends Resource
                 TextInput::make('name_ar'),
                 TextInput::make('phone'),
                 TextInput::make('cin'),
-                TextInput::make('avatar'),
+                FileUpload::make('avatar'),
                 TextInput::make('nationalite'),
                 TextInput::make('genre'),
                 TextInput::make('address'),

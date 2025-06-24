@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Resources\StudentsPredefinedListResource\Pages;
+namespace App\Filament\Resources\users\students\StudentsPredefinedListResource\Pages;
 
-use App\Filament\Resources\StudentsPredefinedListResource;
+use App\Filament\Resources\users\students\StudentsPredefinedListResource;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 

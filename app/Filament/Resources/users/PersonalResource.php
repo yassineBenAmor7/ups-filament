@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Resources\users;
 
 use Filament\Forms;
 use Filament\Tables;
-use App\Models\Personal;
+use App\Models\users\Personal;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
@@ -14,9 +14,9 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DatePicker;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\BelongsToSelect;
-use App\Filament\Resources\PersonalResource\Pages;
+use App\Filament\Resources\users\PersonalResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\PersonalResource\RelationManagers;
+use App\Filament\Resources\users\PersonalResource\RelationManagers;
 
 class PersonalResource extends Resource
 {
