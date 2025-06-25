@@ -12,14 +12,14 @@ class Department extends Model
     // }
     public function teacher(){
     	// return $this->belongsTo('App\Teacher' , 'chef_id' , 'id');
-    	return $this->belongsTo('App\Teacher' , 'teacher_cin' , 'cin');
+    	return $this->belongsTo('App\Models\Teacher' , 'teacher_cin' , 'cin');
     }
     public function teachers(){
     	// return $this->belongsTo('App\Teacher' , 'chef_id' , 'id');
-    	return $this->hasMany('App\Teacher');
+    	return $this->hasMany('App\Models\Teacher');
     }
     public function sectors(){
-    	return $this->hasMany('App\Sector');
+    	return $this->hasMany('App\Models\Sector');
 
     }
 

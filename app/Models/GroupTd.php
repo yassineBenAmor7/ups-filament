@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class GroupTd extends Model
 {
     public function students(){
-    	return $this->hasMany('App\StudentsPredefinedList' , 'groupe_td_id' , 'id')->orderBy('students_predefined_lists.nom')->orderBy('students_predefined_lists.prenom');
+    	return $this->hasMany('App\Models\StudentsPredefinedList' , 'groupe_td_id' , 'id')->orderBy('students_predefined_lists.nom')->orderBy('students_predefined_lists.prenom');
     }
     protected $fillable = [
         'id',
@@ -32,7 +32,7 @@ class GroupTd extends Model
     }
 
     public function groupTp(){
-    	return $this->hasMany('App\GroupTp' , 'groupe_td_id' , 'id');
+    	return $this->hasMany('App\Models\GroupTp' , 'groupe_td_id' , 'id');
     }
     
     public function groupeTdTeachers()

@@ -23,16 +23,16 @@ class Group extends Model
 
     ];
     public function groupTd(){
-    	return $this->hasMany('App\GroupTd' , 'groupe_id' , 'id');
+    	return $this->hasMany('App\Models\GroupTd' , 'groupe_id' , 'id');
     }
 
     public function groupTp()
     {
-        return $this->hasMany('App\GroupTp' , 'groupe_td_id' , 'id');
+        return $this->hasMany('App\Models\GroupTp' , 'groupe_td_id' , 'id');
     }
 
     public function subjects(){
-    	return $this->hasMany('App\Subject');
+    	return $this->hasMany('App\Models\Subject');
     }
 
     public function studentCourses(){
@@ -40,7 +40,7 @@ class Group extends Model
     }
 
     public function sector(){
-    	return $this->belongsTo('App\Sector');
+    	return $this->belongsTo('App\Models\Sector');
     }
 
 }
