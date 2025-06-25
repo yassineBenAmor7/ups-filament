@@ -33,6 +33,7 @@ class User extends Authenticatable
         'role_id',
         'cin',
         'is_validated',
+        'publier',
     ];
 
     /**
@@ -56,6 +57,7 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
              'is_validated' => 'boolean',
+             'publier'=>'boolean'
         ];
     }
 

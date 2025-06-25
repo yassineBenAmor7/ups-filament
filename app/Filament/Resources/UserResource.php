@@ -61,10 +61,7 @@ class UserResource extends BaseResource
                     ->searchable()
                     ->visible(fn ()=>auth()->user()->hasRole('super_admin')),
 
-                Forms\Components\Toggle::make('is_validated')
-                    ->label('Validated Account')
-                    ->default(false)
-                    ->visible(fn () => auth()->user()->can('validate_user')),
+               
                 TextInput::make('name_ar'),
                 TextInput::make('phone'),
                 TextInput::make('cin'),
@@ -81,7 +78,7 @@ class UserResource extends BaseResource
                 TextInput::make('description_fr'),
                 TextInput::make('created_by'),
                 TextInput::make('updated_by'),
-                TextInput::make('publier'),
+             
                 TextInput::make('folder_name'),
             ]),
         ]);
@@ -101,12 +98,40 @@ class UserResource extends BaseResource
                     ->formatStateUsing(fn ($record) => $record->roles->pluck('name')->join(', '))
                     ->badge()
                     ->searchable(false),
-                ToggleColumn::make('is_validated')
-                    ->label('Validated'),
+               
+              Tables\Columns\ToggleColumn::make('is_validated')
+            ->label('Validated')
+         ->visible(fn(): bool => auth()->user()->can("validate_user"))
+            ->updateStateUsing(function (User $record, $state) {
+                if (!auth()->user()->can('validate_user')) {
+                    return false; // Return current state if unauthorized
+                }
+                $record->update(['is_validated' => $state]);
+                Notification::make()
+                    ->title($state ? 'User Validated' : 'User Unvalidated')
+                    ->success()
+                    ->send();
+                return $state;
+            }),
+
+
+
             static::CustomTextColumn('genre'),
           
-                ToggleColumn::make('publier')
-                ->label("Publish")
+           Tables\Columns\ToggleColumn::make('publier')
+            ->label('Published')
+         ->visible(fn(): bool => auth()->user()->can("publish_user"))
+            ->updateStateUsing(function (User $record, $state) {
+                if (!auth()->user()->can('publish_user')) {
+                    return false; 
+                }
+                $record->update(['publier' => $state]);
+                 Notification::make()
+                    ->title($state ? 'User Published' : 'User Unpublished')
+                    ->success()
+                    ->send();
+                return $state;
+            })
         ];
     }
     public static function getExtraFilters(): array
@@ -134,7 +159,7 @@ class UserResource extends BaseResource
            
 
     }
-
+   
     public static function getRelations(): array
     {
         return [];

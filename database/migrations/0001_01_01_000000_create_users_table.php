@@ -36,7 +36,7 @@ return new class extends Migration
             $table->string('description_fr')->nullable()->default(null);
             $table->string('created_by')->nullable()->default(null);
             $table->string('updated_by')->nullable()->default(null);
-            $table->integer('publier')->nullable()->default(null);
+            $table->boolean('publier')->default(false);
             $table->string('folder_name')->nullable()->default(null);
 
 
