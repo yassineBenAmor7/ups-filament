@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('chats', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->nullable()->default(null)->on('users')->onDelete('set null');
+            $table->foreignId('user_id')->nullable()->default(null)->constrained('users')->onDelete('set null');
             $table->string('designation')->nullable()->default(null);
             $table->integer('etat')->nullable()->default(null);
             $table->timestamps();

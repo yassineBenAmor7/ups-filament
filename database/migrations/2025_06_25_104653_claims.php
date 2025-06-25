@@ -22,8 +22,10 @@ return new class extends Migration {
             $table->string('updated_by')->nullable()->default(null);
             $table->timestamps();
             $table->string('module')->nullable()->default(null);
-            $table->foreignId('responsible_id')->nullable()->default(null)->on('users')->onDelete('set null');
-            $table->foreignId('claim_destination_id')->nullable()->default(null)->on('destinations')->onDelete('set null');
+            // Assuming 'responsible_id' refers to responsible table, which is not defined in this migration
+            $table->integer('responsible_id')->nullable()->default(null);
+            // Assuming 'claim_destination_id' refers to a destination table, which is not defined in this migration
+            $table->integer('claim_destination_id')->nullable()->default(null);
         });
 
         Schema::create('claims', function (Blueprint $table) {
@@ -37,21 +39,23 @@ return new class extends Migration {
             $table->integer('publier')->nullable()->default(null);
             $table->string('name')->nullable()->default(null);
             $table->string('email')->nullable()->default(null);
-            $table->foreignId('destination_id')->nullable()->default(null)->on('destinations')->onDelete('set null');
-            $table->foreignId('user_id')->nullable()->default(null)->on('users')->onDelete('set null');
+            // Assuming 'destination_id' refers to destination table, which is not defined in this migration
+            $table->integer('destination_id')->nullable()->default(null);
+            $table->foreignId('user_id')->nullable()->default(null)->constrained('users')->onDelete('set null');
             $table->string('status')->nullable()->default(null);
             $table->string('priority')->nullable()->default(null);
-            $table->foreignId('claim_type_id')->nullable()->default(null)->on('claim_types')->onDelete('set null');
-            $table->foreignId('responsible_id')->nullable()->default(null)->on('users')->onDelete('set null');
+            $table->foreignId('claim_type_id')->nullable()->default(null)->constrained('claim_types')->onDelete('set null');
+            $table->foreignId('responsible_id')->nullable()->default(null)->constrained('users')->onDelete('set null');
             $table->integer('frigidaire')->nullable()->default(null);
+            // Assuming 'ref_id' refers to ref table, which is not defined in this migration
             $table->integer('ref_id')->nullable()->default(null);
             $table->text('feedback')->nullable()->default(null);
         });
 
         Schema::create('claim_users', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('claim_id')->nullable()->default(null)->on('claims')->onDelete('set null');
-            $table->foreignId('user_id')->nullable()->default(null)->on('users')->onDelete('set null');
+            $table->foreignId('claim_id')->nullable()->default(null)->constrained('claims')->onDelete('set null');
+            $table->foreignId('user_id')->nullable()->default(null)->constrained('users')->onDelete('set null');
             $table->text('message')->nullable()->default(null);
             $table->integer('publier')->nullable()->default(null);
             $table->string('created_by')->nullable()->default(null);

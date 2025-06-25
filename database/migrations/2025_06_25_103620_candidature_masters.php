@@ -45,7 +45,7 @@ return new class extends Migration {
             $table->timestamps();
             $table->text('created_by')->nullable()->default(null);
             $table->text('updated_by')->nullable()->default(null);
-            $table->foreignId('year_id')->nullable()->default(null)->on('years')->onDelete('set null');
+            $table->foreignId('year_id')->nullable()->default(null)->constrained('years')->onDelete('set null');
             $table->float('score')->nullable()->default(null);
         });
     }

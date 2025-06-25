@@ -12,9 +12,10 @@ return new class extends Migration {
     {
         Schema::create('absences', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('group_td_id')->nullable()->default(null)->on('group_tds')->onDelete('cascade');
-            $table->foreignId('subject_id')->nullable()->default(null)->on('subjects')->onDelete('cascade');
-            $table->foreignId('year_id')->nullable()->default(null)->on('years')->onDelete('cascade');
+            $table->foreignId('group_td_id')->nullable()->default(null)->constrained('group_tds')->onDelete('set null');
+            // Assuming 'subject_id' refers to subject table, which is not defined in this migration
+            $table->integer('subject_id')->nullable()->default(null);
+            $table->foreignId('year_id')->nullable()->default(null)->constrained('years')->onDelete('set null');
             $table->string('year_designation')->nullable()->default(null);
             $table->string('subject_designation')->nullable()->default(null);
             $table->string('group_td_designation')->nullable()->default(null);
@@ -26,7 +27,8 @@ return new class extends Migration {
             $table->string('created_by')->nullable()->default(null);
             $table->string('updated_by')->nullable()->default(null);
             $table->timestamps();
-            $table->foreignId('period_id')->nullable()->default(null)->on('periods')->onDelete('cascade');
+            // Assuming 'period_id' refers to period table, which is not defined in this migration
+            $table->integer('period_id')->nullable()->default(null);
             $table->string('slug')->nullable()->default(null);
         });
 
@@ -49,7 +51,7 @@ return new class extends Migration {
             $table->string('created_by')->nullable()->default(null);
             $table->string('updated_by')->nullable()->default(null);
             $table->timestamps();
-            $table->foreignId('absence_id')->nullable()->default(null)->on('absences')->onDelete('cascade');
+            $table->foreignId('absence_id')->nullable()->default(null)->constrained('absences')->onDelete('set null');
         });
     }
 

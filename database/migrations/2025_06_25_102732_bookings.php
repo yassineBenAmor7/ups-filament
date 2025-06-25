@@ -13,7 +13,8 @@ return new class extends Migration {
 
         Schema::create('books', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('theme_id')->nullable()->default(null)->on('themes')->onDelete('set null');
+            // Assuming 'theme_id' refers to theme table, which is not defined in this migration
+            $table->integer('theme_id')->nullable()->default(null);
             $table->string('designation_fr')->nullable()->default(null);
             $table->string('designation_en')->nullable()->default(null);
             $table->string('designation_ar')->nullable()->default(null);
@@ -31,8 +32,8 @@ return new class extends Migration {
 
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->nullable()->default(null)->on('users')->onDelete('set null');
-            $table->foreignId('book_id')->nullable()->default(null)->on('books')->onDelete('set null');
+            $table->foreignId('user_id')->nullable()->default(null)->constrained('users')->onDelete('set null');
+            $table->foreignId('book_id')->nullable()->default(null)->constrained('books')->onDelete('set null');
             $table->string('user_name')->nullable()->default(null);
             $table->string('user_cin')->nullable()->default(null);
             $table->string('book')->nullable()->default(null);

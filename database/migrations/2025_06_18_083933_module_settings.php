@@ -22,7 +22,7 @@ return new class extends Migration {
         Schema::create('coordinates', function (Blueprint $table) {
             $table->id();
             $table->foreignId('current_year_id')->nullable()->default(null)
-                ->references('id')->on('years')->onDelete('cascade');
+                ->constrained('years')->onDelete('set null');
             $table->string('designation_fr')->nullable()->default(null);
             $table->string('designation_en')->nullable()->default(null);
             $table->string('designation_ar')->nullable()->default(null);

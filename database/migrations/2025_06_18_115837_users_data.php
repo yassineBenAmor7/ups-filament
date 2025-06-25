@@ -11,19 +11,6 @@ return new class extends Migration {
     public function up(): void
     {
 
-        Schema::create('grades', function (Blueprint $table) {
-            $table->id();
-            $table->string('designation_fr')->nullable()->default(null);
-            $table->string('designation_en')->nullable()->default(null);
-            $table->string('designation_ar')->nullable()->default(null);
-            $table->string('type')->nullable()->default(null);
-            $table->integer('publier')->nullable()->default(null);
-            $table->string('created_by')->nullable()->default(null);
-            $table->string('updated_by')->nullable()->default(null);
-            $table->timestamp('created_at')->nullable()->default(null);
-            $table->timestamp('updated_at')->nullable()->default(null);
-        });
-
         schema::create('students', function (Blueprint $table) {
             $table->id();
             $table->string('annee_bac')->nullable()->default(null);
@@ -53,7 +40,7 @@ return new class extends Migration {
             $table->id();
             $table->integer('affichage_in_front')->nullable()->default(null);
             $table->string('grade_name')->nullable()->default(null);
-            $table->foreignId('grade_id')->references('id')->on('grades')->onDelete('cascade')->nullable()->default(null);
+            $table->foreignId('grade_id')->nullable()->constrained('grades')->onDelete('set null');
             $table->string('service_fr')->nullable()->default(null);
             $table->string('service_en')->nullable()->default(null);
             $table->string('service_ar')->nullable()->default(null);
@@ -68,47 +55,15 @@ return new class extends Migration {
             $table->string('slug')->nullable()->default(null);
         });
 
-
-
-        Schema::create('teachers', function (Blueprint $table) {
-            $table->id();
-            $table->integer('department_id');
-            $table->string('cin')->nullable()->default(null);
-            $table->string('nom')->nullable()->default(null);
-            $table->string('name')->nullable()->default(null);
-            $table->integer('nb_max_encadement')->nullable()->default(0);
-            $table->string('nb_surveillance')->nullable()->default(null);
-            $table->string('created_by')->nullable()->default(null);
-            $table->string('updated_by')->nullable()->default(null);
-            $table->timestamp('updated_at')->nullable()->default(null);
-            $table->timestamp('created_at')->nullable()->default(null);
-            $table->integer('affichage_in_front')->nullable()->default(null);
-            $table->string('slug')->nullable()->default(null);
-            $table->string('indentifiant_unique')->nullable()->default(null);
-            $table->string('poste')->nullable()->default(null);
-            $table->string('statut_ar')->nullable()->default(null);
-            $table->string('statut_en')->nullable()->default(null);
-            $table->string('statut_fr')->nullable()->default(null);
-            $table->string('specialite_ar')->nullable()->default(null);
-            $table->string('specialite_en')->nullable()->default(null);
-            $table->string('specialite_fr')->nullable()->default(null);
-            $table->foreignId('grade_id')->references('id')->on('grades')->onDelete('cascade')->nullable()->default(null);
-            $table->string('grade_name')->nullable()->default(null);
-            $table->string('email')->nullable()->default(null);
-            $table->string('nom_ar')->nullable()->default(null);
-            $table->string('prenom')->nullable()->default(null);
-            $table->string('prenom_ar')->nullable()->default(null);
-        });
-
         Schema::create('students_predefined_lists', function (Blueprint $table) {
             $table->id();
             $table->string('numero_inscription')->nullable()->default(null);
             $table->string('cin')->nullable()->default(null);
-            $table->foreignId('year_id')->nullable()->default(null);
-            $table->foreignId('groupe_tp_id')->nullable()->default(null);
-            $table->foreignId('groupe_td_id')->nullable()->default(null);
-            $table->foreignId('groupe_id')->nullable()->default(null);
-            $table->foreignId('sector_id')->nullable()->default(null);
+            $table->foreignId('year_id')->nullable()->constrained('years')->onDelete('set null');
+            $table->foreignId('groupe_tp_id')->nullable()->constrained('group_tps')->onDelete('set null');
+            $table->foreignId('groupe_td_id')->nullable()->constrained('group_tds')->onDelete('set null');
+            $table->foreignId('groupe_id')->nullable()->constrained('groups')->onDelete('set null');
+            $table->foreignId('sector_id')->nullable()->constrained('sectors')->onDelete('set null');
             $table->string('nom')->nullable()->default(null);
             $table->string('prenom')->nullable()->default(null);
             $table->string('nom_ar')->nullable()->default(null);
@@ -128,8 +83,6 @@ return new class extends Migration {
 
         Schema::dropIfExists('students');
         Schema::dropIfExists('personals');
-        Schema::dropIfExists('grades');
-        Schema::dropIfExists('teachers');
         Schema::dropIfExists('students_predefined_lists');
     }
 };

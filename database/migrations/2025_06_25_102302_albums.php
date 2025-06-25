@@ -29,7 +29,8 @@ return new class extends Migration {
             $table->string('updated_by')->nullable()->default(null);
             $table->timestamps();
             $table->text('short_description_en')->nullable()->default(null);
-            $table->foreignId('organism_id')->nullable()->default(null)->on('organisms')->onDelete('set null');
+            // Assuming 'organism_id' refers to organism table, which is not defined in this migration
+            $table->integer('organism_id')->nullable()->default(null);
             $table->integer('publier')->nullable()->default(null);
             $table->string('slug')->nullable()->default(null);
             $table->string('short_code')->nullable()->default(null);

@@ -12,7 +12,8 @@ return new class extends Migration {
     {
         Schema::create('chapters', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('course_id')->nullable()->default(null)->on('courses')->onDelete('set null');
+            // Assuming 'course_id' refers to course table, which is not defined in this migration
+            $table->integer('course_id')->nullable()->default(null);
             $table->string('designation_fr')->nullable()->default(null);
             $table->string('designation_en')->nullable()->default(null);
             $table->string('designation_ar')->nullable()->default(null);
