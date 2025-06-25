@@ -57,8 +57,7 @@ class AdminPanelProvider extends PanelProvider
                 FilamentShieldPlugin::make(),
                 ResizedColumnPlugin::make()
                 ->preserveONDB(),
-                ReorderableColumnsPlugin::make()
-                ->persistToSession(),
+               
             ])
             ->authMiddleware([
                 Authenticate::class,
