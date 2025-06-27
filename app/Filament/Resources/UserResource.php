@@ -27,6 +27,7 @@ use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ViewAction;
+
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
@@ -167,10 +168,13 @@ class UserResource extends Resource
     public static function getPages(): array
     {
         return [
-
             'index' => Pages\ListUsers::route('/'),
             'create' => Pages\CreateUser::route('/create'),
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
+    }
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
     }
 }
