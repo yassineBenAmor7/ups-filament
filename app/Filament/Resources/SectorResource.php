@@ -3,74 +3,58 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\SectorResource\Pages;
-use App\Filament\Resources\SectorResource\RelationManagers;
 use App\Models\Sector;
-use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Select;
+use Filament\Forms\Components\{TextInput, RichEditor, Toggle, Grid, Select};
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Tables\Columns\{TextColumn, IconColumn};
+use Filament\Tables\Actions\{EditAction, DeleteBulkAction, BulkActionGroup};
 use Filament\Tables\Table;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Tables\Actions\BulkActionGroup;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class SectorResource extends Resource
 {
     protected static ?string $model = Sector::class;
-
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-   public static function form(Form $form): Form
-{
-    return $form->schema([
-        TextInput::make('designation_fr')->required(),
-        TextInput::make('designation_en'),
-        TextInput::make('designation_ar'),
-        TextInput::make('description_fr'),
-        TextInput::make('description_en'),
-        TextInput::make('description_ar'),
-        TextInput::make('plan_etude'),
-        TextInput::make('slug'),
-
-        Select::make('department_id')
-            ->relationship('department', 'designation_fr')
-            ->required(),
-        Select::make('sector_type_id')
-            ->relationship('sectorType', 'designation_fr')
-            ->required(),
-    ]);
-}
-
-public static function table(Table $table): Table
-{
-    return $table
-        ->columns([
-            TextColumn::make('designation_fr')->searchable(),
-            TextColumn::make('department.designation_fr')->label('Département'),
-            TextColumn::make('sectorType.designation_fr')->label('Type'),
-        ])
-        ->filters([])
-        ->actions([
-            EditAction::make(),
-        ])
-        ->bulkActions([
-            BulkActionGroup::make([
-                DeleteBulkAction::make(),
+    public static function form(\Filament\Forms\Form $form): \Filament\Forms\Form
+    {
+        return $form->schema([
+            Grid::make(2)->schema([
+                Select::make('department_id')
+                    ->relationship('department', 'designation_fr')
+                    ->required(),
+                Select::make('sector_type_id')
+                    ->relationship('sectorType', 'designation_fr')
+                    ->required(),
+                TextInput::make('designation_fr')->required()->maxLength(100),
+                TextInput::make('designation_en')->maxLength(100),
+                TextInput::make('designation_ar')->maxLength(100),
+                Toggle::make('publier')->label('Publié')->default(true),
             ]),
+            Grid::make()->schema([
+                RichEditor::make('description_fr')->label('Description (FR)'),
+                RichEditor::make('description_en')->label('Description (EN)'),
+                RichEditor::make('description_ar')->label('Description (AR)'),
+            ])
         ]);
-}
+    }
 
+    public static function table(Table $table): Table
+    {
+        return $table
+            ->columns([
+                TextColumn::make('designation_fr')->searchable(),
+                TextColumn::make('designation_en'),
+                TextColumn::make('department.designation_fr')->label('Département'),
+                TextColumn::make('sectorType.designation_fr')->label('Type de secteur'),
+                IconColumn::make('publier')->boolean()->label('Publié'),
+            ])
+            ->actions([EditAction::make()])
+            ->bulkActions([BulkActionGroup::make([DeleteBulkAction::make()])]);
+    }
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array

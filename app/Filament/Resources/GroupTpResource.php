@@ -3,21 +3,17 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\GroupTpResource\Pages;
-use App\Filament\Resources\GroupTpResource\RelationManagers;
 use App\Models\GroupTp;
-use Filament\Forms;
+use Filament\Forms\Components\{TextInput, Toggle, Select, Grid};
 use Filament\Forms\Form;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Select;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\{TextColumn, IconColumn};
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\BulkActionGroup;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+
 
 class GroupTpResource extends Resource
 {
@@ -25,46 +21,38 @@ class GroupTpResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    public static function form(Form $form): Form
-{
-    return $form->schema([
-         
-        TextInput::make('designation_fr')->required(),
-        TextInput::make('designation_en'),
-        TextInput::make('designation_ar'), 
-        
-        Select::make('group_id')
-            ->relationship('Group', 'designation_fr')
-            ->required(),
-    ]);
-}
-
-public static function table(Table $table): Table
-{
-    return $table
-        ->columns([
-            TextColumn::make('designation_fr')->searchable(),
-            TextColumn::make('designation_en'),
-            TextColumn::make('designation_ar'),
-            TextColumn::make('Group.designation_fr')->label('Groupe'),
-        ])
-        ->filters([])
-        ->actions([
-            EditAction::make(),
-        ])
-        ->bulkActions([
-            BulkActionGroup::make([
-                DeleteBulkAction::make(),
+   public static function form(Form $form): Form
+    {
+        return $form->schema([
+            Grid::make(2)->schema([
+                Select::make('group_td_id')
+                    ->label('Groupe Td')
+                    ->relationship('GroupTd', 'designation_fr')
+                    ->searchable()
+                    ->required(),
+                TextInput::make('designation_fr')->label('Désignation (FR)')->required()->maxLength(100),
+                TextInput::make('designation_en')->label('Désignation (EN)')->maxLength(100),
+                TextInput::make('designation_ar')->label('Désignation (AR)')->maxLength(100),
+                Toggle::make('publier')->label('Publié')->default(true),
             ]),
         ]);
-}
+    }
 
+    public static function table(Table $table): Table
+    {
+        return $table
+            ->columns([
+                TextColumn::make('groupTd.designation_fr')->label('Groupe'),
+                TextColumn::make('designation_fr')->label('Désignation (FR)')->searchable(),
+                IconColumn::make('publier')->boolean()->label('Publié'),
+            ])
+            ->actions([EditAction::make()])
+            ->bulkActions([BulkActionGroup::make([DeleteBulkAction::make()])]);
+    }
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array
