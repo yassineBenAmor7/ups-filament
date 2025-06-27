@@ -19,7 +19,7 @@ use App\Filament\Resources\UserResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\UserResource\RelationManagers;
 
-
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Actions\Action;
 use Filament\Notifications\Notification;
 use Filament\Tables\Enums\ActionsPosition;
@@ -27,8 +27,9 @@ use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ViewAction;
+use App\Filament\Resources\BaseResource;
 
-class UserResource extends Resource
+class UserResource extends BaseResource
 {
     protected static ?string $model = User::class;
 
@@ -49,22 +50,22 @@ class UserResource extends Resource
 
                 Forms\Components\TextInput::make('password')
                     ->password()
-                    ->required(fn ($context) => $context === 'create')
+                    ->required(fn($context) => $context === 'create')
                     ->maxLength(255)
-                    ->dehydrateStateUsing(fn ($state) => !empty($state) ? bcrypt($state) : null)
-                    ->dehydrated(fn ($state) => filled($state)),
+                    ->dehydrateStateUsing(fn($state) => !empty($state) ? bcrypt($state) : null)
+                    ->dehydrated(fn($state) => filled($state)),
 
                 Forms\Components\Select::make('roles')
                     ->relationship('roles', 'name')
                     ->multiple()
                     ->preload()
                     ->searchable()
-                    ->visible(fn ()=>auth()->user()->hasRole('super_admin')),
+                    ->visible(fn() => auth()->user()->hasRole('super_admin')),
 
                 Forms\Components\Toggle::make('is_validated')
                     ->label('Validated Account')
                     ->default(false)
-                    ->visible(fn () => auth()->user()->can('validate_user')),
+                    ->visible(fn() => auth()->user()->can('validate_user')),
                 TextInput::make('name_ar'),
                 TextInput::make('phone'),
                 TextInput::make('cin'),
@@ -86,80 +87,50 @@ class UserResource extends Resource
             ]),
         ]);
     }
+    public static function getExtraColumns(): array
+    {
+        return [
+            static::CustomTextColumn('id'),
+            static::CustomTextColumn('name'),
+            static::CustomTextColumn('cin'),
+            static::CustomTextColumn('phone'),
+            static::CustomTextColumn('email')
+                ->copyable(),
 
+            Tables\Columns\TextColumn::make('roles')
+                ->label('Roles')
+                ->formatStateUsing(fn($record) => $record->roles->pluck('name')->join(', '))
+                ->badge()
+                ->searchable(false),
+            ToggleColumn::make('is_validated')
+                ->label('Validated'),
+            static::CustomTextColumn('genre'),
+
+            ToggleColumn::make('publier')
+                ->label("Publish")
+        ];
+    }
+    public static function getExtraFilters(): array
+    {
+        return [
+            Tables\Filters\SelectFilter::make('roles')
+                ->relationship('roles', 'name')
+                ->multiple()
+                ->preload(),
+
+            Tables\Filters\Filter::make('validated')
+                ->query(fn(Builder $query): Builder => $query->where('is_validated', true))
+                ->label('Only Validated Users'),
+
+            Tables\Filters\Filter::make('Published')
+                ->query(fn(Builder $query): Builder => $query->where('publier', true))
+                ->label('Only Published Users'),
+        ];
+    }
     public static function table(Table $table): Table
     {
-        return $table
-            ->columns([
-                Tables\Columns\TextColumn::make('id')->sortable(),
-                Tables\Columns\TextColumn::make('name')->searchable()->sortable(),
-                TextColumn::make('cin'),
-                TextColumn::make('phone'),
-                Tables\Columns\TextColumn::make('email')->searchable()->sortable(),
-
-                Tables\Columns\TextColumn::make('roles')
-                    ->label('Roles')
-                    ->formatStateUsing(fn ($record) => $record->roles->pluck('name')->join(', '))
-                    ->badge()
-                    ->searchable(false),
-                Tables\Columns\IconColumn::make('is_validated')
-                    ->label('Validated')
-                    ->boolean()
-                    ->sortable(),
-                TextColumn::make('genre'),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime('Y-m-d H:i')
-                    ->sortable(),
-                TextColumn::make('publier')
-            ])
-            ->filters([
-                Tables\Filters\SelectFilter::make('roles')
-                    ->relationship('roles', 'name')
-                    ->multiple()
-                    ->searchable()
-                    ->preload(),
-                Tables\Filters\SelectFilter::make('validation_status')
-                    ->options([
-                        'pending' => 'Pending Validation',
-                        'validated' => 'Validated',
-                    ])
-                    ->query(fn ($query, array $data) => match ($data['value'] ?? null) {
-                        'pending' => $query->where('is_validated', false),
-                        'validated' => $query->where('is_validated', true),
-                        default => $query,
-                    }),
-            ], layout: \Filament\Tables\Enums\FiltersLayout::AboveContentCollapsible)
-            ->actions([
-                ActionGroup::make([
-                ViewAction::make(),
-                EditAction::make()
-                ->openUrlInNewTab(),
-                DeleteAction::make(),
-            ])->Button()
-            ->label('Actions')
-
-
-            ],position:ActionsPosition::BeforeCells)
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ])
-            ->paginated([1, 5, 10, 20, 50, 100])
-            ->reorderableColumns('users')
-             ->groups([
-            'is_validated'
-        ])
-
-        ->groupRecordsTriggerAction(
-            fn (Action $action) => $action
-                ->button()
-                ->label('Group records'),
-        )
-             ->striped();
-
+        return parent::table($table);
     }
-
     public static function getRelations(): array
     {
         return [];

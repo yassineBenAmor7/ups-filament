@@ -17,8 +17,9 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\StudentResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\StudentResource\RelationManagers;
+use App\Filament\Resources\BaseResource;
 
-class StudentResource extends Resource
+class StudentResource extends BaseResource
 {
     protected static ?string $model = Student::class;
 
@@ -52,31 +53,23 @@ class StudentResource extends Resource
 
             ]);
     }
-
+ public  static function getExtraColumns():array
+ {
+    return [
+         static::CustomTextColumn('annee_bac'),
+                  static::CustomTextColumn('section_bac'),
+                  static::CustomTextColumn('mention_bac'),
+                  static::CustomTextColumn('moyenne_bac'),
+                  static::CustomTextColumn('diploma'),
+                  static::CustomTextColumn('slug'),
+                  static::CustomTextColumn('created_at')->dateTime(),
+              
+    ];
+ }
     public static function table(Table $table): Table
     {
-        return $table
-            ->columns([
-                TextColumn::make('annee_bac'),
-                TextColumn::make('section_bac'),
-                TextColumn::make('mention_bac'),
-                TextColumn::make('moyenne_bac'),
-                TextColumn::make('diploma'),
-                TextColumn::make('slug'),
-                TextColumn::make('created_at')->dateTime(),
+               return parent::table($table);
 
-            ])
-            ->filters([
-                //
-            ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
     }
 
     public static function getRelations(): array
