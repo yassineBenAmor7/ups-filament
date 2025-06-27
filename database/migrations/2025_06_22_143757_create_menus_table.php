@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create(config('filament-menu-builder.tables.menus'), function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('prefix')->nullable()->nullable();
             $table->boolean('is_visible')->default(true);
             $table->timestamps();
         });

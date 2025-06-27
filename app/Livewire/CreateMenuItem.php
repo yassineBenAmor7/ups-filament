@@ -36,6 +36,7 @@ class CreateMenuItem extends CreateCustomLink
     public $is_publier = true;
     public $style_icon='outline';
     public $resource_name='';
+    public string $url='/';
 
 
     public function save(): void
@@ -50,10 +51,6 @@ class CreateMenuItem extends CreateCustomLink
             'mini' => 'm-',
             'micro' => 'c-',
         ];
-
-
-
-
 
         $availableIcons = $this->getNameIcone();
 
@@ -87,6 +84,7 @@ class CreateMenuItem extends CreateCustomLink
             'url' => [
                 'sometimes',
                 'string',
+                'starts_with:/',
             ],
             'resource_name' => [
                 'nullable',
@@ -103,9 +101,10 @@ class CreateMenuItem extends CreateCustomLink
         }
 
 
+
         $this->menu->menuItems()->create([
             'title' => $validated['title'],
-            'url' =>!($validated['resource_name']=='' && $validated['url']=='')?'/'.$this->menu->name.'/'. ($validated['resource_name']==""?$validated['url']:$validated['resource_name']):null ,
+            'url' =>!($validated['resource_name']=='' && $validated['url']=='')?$this->menu->prefix. ($validated['resource_name']==""?$validated['url']:'/'.$validated['resource_name']):null ,
             'target' => $validated['target'],
             'icon' => $validated['icon']?$style[$validated['style_icon']].$validated['icon']:null,
             'cover_image' => $path ?? null,

@@ -83,7 +83,11 @@ class EditMenuItem extends MenuItems
                         ],
                         'cover_image' => ['nullable', 'string'],
                         'is_publier' => ['boolean'],
-                        'url' => ['nullable', 'string'], // ✅ Fix: remove 'required'
+                        'url' => [
+                            'sometimes',
+                            'string',
+                            'starts_with:/',
+                        ],
                         'resource_name' => [
                             'nullable',
                             'sometimes',
@@ -96,7 +100,7 @@ class EditMenuItem extends MenuItems
                     Notification::make()
                         ->title('Validation failed')
                         ->danger()
-                        ->body('Please correct the errors and try again.')
+                        ->body($e->getMessage())
                         ->send();
                     throw $e;
                 }
@@ -176,8 +180,7 @@ class EditMenuItem extends MenuItems
                         ->label('URL')
                         ->maxLength(255)
                         ->hidden(fn (?string $state, Get $get): bool => blank($state) || filled($get('linkable_type')))
-                        ->required(),
-
+                            ,
 
                     Placeholder::make('')
                         ->content('— OR —')
@@ -230,9 +233,13 @@ class EditMenuItem extends MenuItems
         $fullIcon = $icon ? ($style[$styleIcon] ?? 'o-') . $icon : null;
 
 
+        if (!isset($data['url'])){
+            $data['url'] = '/';
+        }
+
         $menuItem->update([
             'title' => $data['title'],
-            'url' =>!($data['resource_name']=='' && $data['url']=='')?'/'.$this->menu->name.'/'. ($data['resource_name']==""?$data['url']:$data['resource_name']):null ,
+            'url' =>!($data['resource_name']=='' && $data['url']=='/')?($data['resource_name']==""?$data['url']:$this->menu->prefix.'/'.$data['resource_name']):null ,
             'target' => $data['target'],
             'cover_image' => $data['cover_image'] ?? null,
             'icon' => $fullIcon,
@@ -267,9 +274,11 @@ class EditMenuItem extends MenuItems
             ->with('linkable')
             ->first()
             ->toArray();
-        $items['url'] = Str::after($items['url'], '/' . $this->menu->name);
+        if ($items['url']===null ||$items['url']==''){
 
+            $items['url']='/';
 
+        }
 
 
 
@@ -284,7 +293,6 @@ class EditMenuItem extends MenuItems
         $url_name=Str::afterLast( $items['url'], '/');
         if (in_array($url_name,$this->getResourcesNames())) {
             $items['resource_name']=$url_name;
-
         }
 
         return $items;
