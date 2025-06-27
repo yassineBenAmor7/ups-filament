@@ -39,6 +39,30 @@ return new class extends Migration {
             $table->string('prenom')->nullable()->default(null);
             $table->string('prenom_ar')->nullable()->default(null);
         });
+
+        Schema::create('teachers_predefined_lists', function (Blueprint $table) {
+            $table->id();
+            $table->string('cin')->nullable()->default(null);
+            $table->string('nom')->nullable()->default(null);
+            $table->string('nom_ar')->nullable()->default(null);
+            $table->string('prenom')->nullable()->default(null);
+            $table->string('prenom_ar')->nullable()->default(null);
+            $table->string('grade_fr')->nullable()->default(null);
+            $table->string('grade_en')->nullable()->default(null);
+            $table->string('grade_ar')->nullable()->default(null);
+            $table->string('specialite_fr')->nullable()->default(null);
+            $table->string('specialite_en')->nullable()->default(null);
+            $table->string('specialite_ar')->nullable()->default(null);
+            $table->foreignId('department_id')->nullable()->default(null)->constrained('departments')->onDelete('set null');
+            $table->string('statut_fr')->nullable()->default(null);
+            $table->string('statut_en')->nullable()->default(null);
+            $table->string('statut_ar')->nullable()->default(null);
+            $table->string('created_by')->nullable()->default(null);
+            $table->string('updated_by')->nullable()->default(null);
+            $table->timestamp('created_at')->nullable()->default(null);
+            $table->timestamp('updated_at')->nullable()->default(null);
+            $table->string('email')->nullable()->default(null);
+        });
     }
 
     /**
@@ -47,5 +71,6 @@ return new class extends Migration {
     public function down(): void
     {
         Schema::dropIfExists('teachers');
+        Schema::dropIfExists('teachers_predefined_lists');
     }
 };

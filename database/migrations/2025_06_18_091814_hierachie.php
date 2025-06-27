@@ -10,23 +10,6 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('departments', function (Blueprint $table) {
-            $table->id();
-            $table->string('teacher_cin');
-            $table->string('designation_fr')->nullable()->default(null);
-            $table->string('designation_en')->nullable()->default(null);
-            $table->string('designation_ar')->nullable()->default(null);
-            $table->string('cover')->nullable()->default(null);
-            $table->longtext('description_en')->nullable()->default(null);
-            $table->longtext('description_fr')->nullable()->default(null);
-            $table->longtext('description_ar')->nullable()->default(null);
-            $table->string('created_by')->nullable()->default(null);
-            $table->string('updated_by')->nullable()->default(null);
-            $table->timestamp('created_at')->nullable()->default(null);
-            $table->timestamp('updated_at')->nullable()->default(null);
-            $table->integer('publier')->nullable()->default(null);
-        });
-
         Schema::create('sector_types', function (Blueprint $table) {
             $table->id();
             $table->string('designation_fr')->nullable()->default(null);
@@ -153,7 +136,6 @@ return new class extends Migration {
         Schema::dropIfExists('groups');
         Schema::dropIfExists('coordination_sectors');
         Schema::dropIfExists('plaquette_periodiques');
-        Schema::dropIfExists('departments');
         Schema::dropIfExists('sector_types');
     }
 };
