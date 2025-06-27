@@ -146,6 +146,15 @@ class UserResource extends Resource
             ])
             ->paginated([1, 5, 10, 20, 50, 100])
             ->reorderableColumns('users')
+             ->groups([
+            'is_validated'
+        ])
+
+        ->groupRecordsTriggerAction(
+            fn (Action $action) => $action
+                ->button()
+                ->label('Group records'),
+        )
              ->striped();
 
     }
