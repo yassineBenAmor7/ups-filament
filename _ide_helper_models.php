@@ -127,11 +127,6 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property int|null $publier
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\GroupTd> $groupTd
- * @property-read int|null $group_td_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\GroupTp> $groupTp
- * @property-read int|null $group_tp_count
- * @property-read \App\Models\Sector|null $sector
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Group newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Group newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Group query()
@@ -591,7 +586,7 @@ namespace App\Models{
  * @property string|null $description_fr
  * @property string|null $created_by
  * @property string|null $updated_by
- * @property int|null $publier
+ * @property bool $publier
  * @property string|null $folder_name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
