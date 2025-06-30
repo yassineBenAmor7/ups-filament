@@ -43,7 +43,6 @@ public static function form(Form $form): Form
         return $table
             ->columns([
                 TextColumn::make('designation_fr')->searchable(),
-                TextColumn::make('designation_en'),
                 IconColumn::make('publier')->boolean()->label('Publié'),
             ])
             ->filters([

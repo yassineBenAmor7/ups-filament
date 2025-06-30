@@ -35,6 +35,7 @@ class GroupeTdTeacherResource extends Resource
         Select::make('teacher_id')
             ->relationship('teacher', 'nom')
             ->required(),
+            
     ]);
 }
 
