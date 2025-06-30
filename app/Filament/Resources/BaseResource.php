@@ -62,6 +62,7 @@ abstract class BaseResource extends Resource implements HasShieldPermissions
             ->label($label ?? Str::headline($name))
             ->searchable()
             ->sortable()
+            ->toggleable()
             ;
     }
 
@@ -101,7 +102,7 @@ abstract class BaseResource extends Resource implements HasShieldPermissions
    protected static function getGenericStatusBulkAction(string $action, string $field): ?Tables\Actions\BulkAction
 {
     $model = static::getModel();
-
+    $table=(new $model)->getTable();
 
 
     return Tables\Actions\BulkAction::make($action)
@@ -120,16 +121,16 @@ abstract class BaseResource extends Resource implements HasShieldPermissions
         ->modalHeading(ucfirst($action).' Selected Records')
         ->modalDescription("Are you sure you want to {$action} these records?")
         ->modalSubmitActionLabel("Yes, {$action} them")
-       ->action(function (iterable $records) use ($field, $action) {
-            $collection = collect($records);
-            $count = $collection->reduce(function (int $count, Model $record) use ($field) {
-                return $count + ($record->update([$field => true]) ? 1 : 0);
-            }, 0);
-
-
+       ->action(function (iterable $records) use ($field) {
+            collect($records)->each(function (Model $record) use ($field) {
+                $record->update([$field => true]);
+            });
         })
         ->deselectRecordsAfterCompletion()
-         ->visible(fn(): bool => auth()->user()->can("{$action}_" . strtolower(class_basename(static::getModel()))));
+        ->visible(fn (): bool =>
+            Schema::hasColumn($table, $field) &&
+            auth()->user()->can("{$action}_" . strtolower(class_basename($model)))
+        );
 }
 
 
@@ -184,7 +185,10 @@ abstract class BaseResource extends Resource implements HasShieldPermissions
     return $filters;
 }
 
-
+protected static function getExtraColumns():array
+{
+    return [];
+}
 protected static function getExtraFilters(): array
 {
     return [];
@@ -200,7 +204,7 @@ protected static function getExtraFilters(): array
     public static function table(Table $table): Table
     {
         return $table
-
+            ->columns(static::getExtraColumns())
             ->filters( array_merge(
                     static::getDynamicFilters(),
                     static::getExtraFilters(),
