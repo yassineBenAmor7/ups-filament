@@ -21,7 +21,6 @@ class GroupTpResource extends BaseResource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-<<<<<<< HEAD
    public static function form(Form $form): Form
     {
         return $form->schema([
@@ -35,38 +34,6 @@ class GroupTpResource extends BaseResource
                 TextInput::make('designation_en')->label('Désignation (EN)')->maxLength(100),
                 TextInput::make('designation_ar')->label('Désignation (AR)')->maxLength(100),
                 Toggle::make('publier')->label('Publié')->default(true),
-=======
-    public static function form(Form $form): Form
-{
-    return $form->schema([
-
-        TextInput::make('designation_fr')->required(),
-        TextInput::make('designation_en'),
-        TextInput::make('designation_ar'),
-
-        Select::make('group_id')
-            ->relationship('Group', 'designation_fr')
-            ->required(),
-    ]);
-}
-
-public static function table(Table $table): Table
-{
-    return $table
-        ->columns([
-            TextColumn::make('designation_fr')->searchable(),
-            TextColumn::make('designation_en'),
-            TextColumn::make('designation_ar'),
-            TextColumn::make('Group.designation_fr')->label('Groupe'),
-        ])
-        ->filters([])
-        ->actions([
-            EditAction::make(),
-        ])
-        ->bulkActions([
-            BulkActionGroup::make([
-                DeleteBulkAction::make(),
->>>>>>> 100e4faa278a4d48908cc11a5a59910f85031e98
             ]),
         ]);
     }
