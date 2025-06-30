@@ -19,7 +19,7 @@ use Filament\Tables\Actions\BulkActionGroup;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class PlaquettePedagogiqueResource extends Resource
+class PlaquettePedagogiqueResource extends BaseResource
 {
     protected static ?string $model = PlaquettePedagogique::class;
 
@@ -47,7 +47,7 @@ public static function table(Table $table): Table
         ->columns([
             TextColumn::make('description_fr'),
             TextColumn::make('description_en'),
-            TextColumn::make('description_ar'),    
+            TextColumn::make('description_ar'),
             TextColumn::make('Sector.designation_fr'),
             TextColumn::make('year.designation'),
         ])

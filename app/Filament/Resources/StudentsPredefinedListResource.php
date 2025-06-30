@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\StudentsPredefinedListResource\Pages;
 use App\Filament\Resources\StudentsPredefinedListResource\RelationManagers;
 
-class StudentsPredefinedListResource extends Resource
+class StudentsPredefinedListResource extends BaseResource
 {
     protected static ?string $model = StudentsPredefinedList::class;
 

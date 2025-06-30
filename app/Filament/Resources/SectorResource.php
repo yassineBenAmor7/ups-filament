@@ -10,7 +10,7 @@ use Filament\Tables\Columns\{TextColumn, IconColumn};
 use Filament\Tables\Actions\{EditAction, DeleteBulkAction, BulkActionGroup};
 use Filament\Tables\Table;
 
-class SectorResource extends Resource
+class SectorResource extends BaseResource
 {
     protected static ?string $model = Sector::class;
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';

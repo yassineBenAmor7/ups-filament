@@ -18,7 +18,7 @@ use App\Filament\Resources\PersonalResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\PersonalResource\RelationManagers;
 
-class PersonalResource extends Resource
+class PersonalResource extends BaseResource
 {
     protected static ?string $model = Personal::class;
 

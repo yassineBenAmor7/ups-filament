@@ -4,15 +4,18 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\GroupResource\Pages;
 use App\Models\Group;
-use Filament\Forms\Components\{TextInput, Toggle, Select, Grid};
+use BezhanSalleh\FilamentShield\Traits\HasPageShield;
+use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Forms\Components\{TextInput, Toggle, Select, Grid};
 use Filament\Tables\Columns\{TextColumn, IconColumn};
 use Filament\Tables\Actions\{EditAction, DeleteBulkAction, BulkActionGroup};
 use Filament\Tables\Table;
 
-class GroupResource extends Resource
+class GroupResource extends BaseResource
 {
+
     protected static ?string $model = Group::class;
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 

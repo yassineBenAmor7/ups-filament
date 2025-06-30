@@ -18,8 +18,9 @@ use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Table;
 
-class DepartmentResource extends Resource
+class DepartmentResource extends BaseResource
 {
+
     protected static ?string $model = Department::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';

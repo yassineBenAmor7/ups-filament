@@ -11,27 +11,24 @@ use Filament\Tables\Columns\{TextColumn, IconColumn};
 use Filament\Tables\Actions\{EditAction, DeleteBulkAction, BulkActionGroup};
 use Filament\Tables\Table;
 
-class GroupTdResource extends Resource
+class GroupTdResource extends BaseResource
 {
     protected static ?string $model = GroupTd::class;
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-group';
 
     public static function form(Form $form): Form
-    {
-        return $form->schema([
-            Grid::make(2)->schema([
-                Select::make('group_id')
-                    ->label('Groupe')
-                    ->relationship('group', 'designation_fr')
-                    ->searchable()
-                    ->required(),
-                TextInput::make('designation_fr')->label('Désignation (FR)')->required()->maxLength(100),
-                TextInput::make('designation_en')->label('Désignation (EN)')->maxLength(100),
-                TextInput::make('designation_ar')->label('Désignation (AR)')->maxLength(100),
-                Toggle::make('publier')->label('Publié')->default(true),
-            ]),
-        ]);
-    }
+{
+    return $form->schema([
+
+        TextInput::make('designation_fr')->required(),
+        TextInput::make('designation_en'),
+        TextInput::make('designation_ar'),
+
+        Select::make('group_id')
+            ->relationship('Group', 'designation_fr')
+            ->required(),
+       ]);
+}
 
     public static function table(Table $table): Table
     {

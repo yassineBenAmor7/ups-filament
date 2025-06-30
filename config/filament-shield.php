@@ -24,7 +24,7 @@ return [
         'enabled' => true,
         'name' => 'super_admin',
         'define_via_gate' => false,
-        'intercept_gate' => 'before', 
+        'intercept_gate' => 'before', // after
     ],
 
     'panel_user' => [
@@ -47,7 +47,6 @@ return [
             'force_delete',
             'force_delete_any',
             'validate'
-            
         ],
 
         'page' => 'page',
@@ -90,5 +89,6 @@ return [
     'register_role_policy' => [
         'enabled' => true,
     ],
+    'register_policies' => true,
 
 ];

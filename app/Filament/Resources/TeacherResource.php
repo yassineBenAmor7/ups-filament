@@ -18,7 +18,7 @@ use App\Filament\Resources\TeacherResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\TeacherResource\RelationManagers;
 
-class TeacherResource extends Resource
+class TeacherResource extends BaseResource
 {
     protected static ?string $model = Teacher::class;
 

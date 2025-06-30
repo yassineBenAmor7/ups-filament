@@ -20,7 +20,7 @@ use Filament\Tables\Actions\BulkActionGroup;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class GroupeTdTeacherResource extends Resource
+class GroupeTdTeacherResource extends BaseResource
 {
     protected static ?string $model = GroupTdTeacher::class;
 
