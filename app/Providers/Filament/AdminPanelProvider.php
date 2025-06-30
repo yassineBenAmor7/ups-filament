@@ -2,11 +2,13 @@
 
 namespace App\Providers\Filament;
 
+use Asmit\ResizedColumn\ResizedColumnPlugin;
 use App\Filament\Plugins\MenuResource;
 use Datlechin\FilamentMenuBuilder\FilamentMenuBuilderPlugin;
 use Datlechin\FilamentMenuBuilder\Models\Menu;
 use Datlechin\FilamentMenuBuilder\Models\MenuItem;
 use Filament\Http\Middleware\Authenticate;
+use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -24,7 +26,7 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-
+use Bostos\ReorderableColumns\ReorderableColumnsPlugin;
 class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
@@ -58,6 +60,12 @@ class AdminPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
             ])
+            ->plugins([
+                FilamentShieldPlugin::make(),
+                ResizedColumnPlugin::make()
+                ->preserveONDB(),
+
+            ])
             ->navigationItems($this->getNavigation())
             ->authMiddleware([
                 Authenticate::class,
@@ -81,7 +89,7 @@ class AdminPanelProvider extends PanelProvider
             ->orderBy('order')
             ->get();
 
-        \Log::info($menuItems);
+      //  \Log::info($menuItems);
 
         $top = $menuItems->whereNull('parent_id');
 

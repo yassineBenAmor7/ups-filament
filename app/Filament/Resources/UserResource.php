@@ -2,87 +2,148 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\UserResource\Pages;
-use App\Models\User;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use App\Models\User;
 use Filament\Tables;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Resources\Resource;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\BadgeColumn;
+use Filament\Forms\Components\DatePicker;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\UserResource\Pages;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\UserResource\RelationManagers;
 
-class UserResource extends Resource
+use Filament\Tables\Columns\ToggleColumn;
+use Filament\Tables\Actions\Action;
+use Filament\Notifications\Notification;
+use Filament\Tables\Enums\ActionsPosition;
+use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
+use App\Filament\Resources\BaseResource;
+use Illuminate\Support\Facades\Auth;
+
+class UserResource extends BaseResource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-user';
-    protected static ?string $navigationLabel = 'Utilisateurs';
-    protected static ?string $pluralModelLabel = 'Utilisateurs';
-    protected static ?string $modelLabel = 'Utilisateur';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
-        return $form
-            ->schema([
+        return $form->schema([
+            Forms\Components\Fieldset::make('User Information')->schema([
                 Forms\Components\TextInput::make('name')
                     ->required()
-                    ->maxLength(255)
-                    ->label('Nom complet'),
+                    ->maxLength(255),
 
                 Forms\Components\TextInput::make('email')
                     ->email()
                     ->required()
-                    ->maxLength(255)
-                    ->unique(ignoreRecord: true)
-                    ->label('Adresse email'),
+                    ->maxLength(255),
 
                 Forms\Components\TextInput::make('password')
                     ->password()
-                    ->required(fn ($context) => $context === 'create') // requis uniquement à la création
-                    ->dehydrated(fn ($state) => filled($state))
-                    ->label('Mot de passe')
-                    ->maxLength(255),
+                    ->required(fn($context) => $context === 'create')
+                    ->maxLength(255)
+                    ->dehydrateStateUsing(fn($state) => !empty($state) ? bcrypt($state) : null)
+                    ->dehydrated(fn($state) => filled($state)),
 
-                Forms\Components\Toggle::make('email_verified_at')
-                    ->label("Email vérifié")
-                    ->default(false)
-                    ->dehydrated(false)
-            ]);
+                Forms\Components\Select::make('roles')
+                    ->relationship('roles', 'name')
+                    ->multiple()
+                    ->preload()
+                    ->searchable()
+                    ->visible(fn() => Auth::user()->hasRole('super_admin')),
+
+
+                TextInput::make('name_ar'),
+                TextInput::make('phone'),
+                TextInput::make('cin'),
+                TextInput::make('avatar'),
+                TextInput::make('nationalite'),
+                TextInput::make('genre'),
+                TextInput::make('address'),
+                TextInput::make('cnss'),
+                DatePicker::make('date_naissance'),
+                TextInput::make('lieu_naissance'),
+                Textarea::make('cv'),
+                TextInput::make('description_ar'),
+                TextInput::make('description_en'),
+                TextInput::make('description_fr'),
+                TextInput::make('created_by'),
+                TextInput::make('updated_by'),
+
+                TextInput::make('folder_name'),
+            ]),
+        ]);
     }
 
+    public static function getExtraFilters(): array
+    {
+        return [
+            Tables\Filters\SelectFilter::make('roles')
+                ->relationship('roles', 'name')
+                ->multiple()
+                ->preload(),
+
+            Tables\Filters\Filter::make('validated')
+                ->query(fn(Builder $query): Builder => $query->where('is_validated', true))
+                ->label('Only Validated Users'),
+
+            Tables\Filters\Filter::make('Published')
+                ->query(fn(Builder $query): Builder => $query->where('publier', true))
+                ->label('Only Published Users'),
+        ];
+    }
     public static function table(Table $table): Table
     {
-        return $table
-            ->columns([
-                Tables\Columns\TextColumn::make('id')->sortable()->label('ID'),
-                Tables\Columns\TextColumn::make('name')->searchable()->label('Nom'),
-                Tables\Columns\TextColumn::make('email')->searchable()->label('Email'),
-                Tables\Columns\IconColumn::make('email_verified_at')
-                    ->boolean()
-                    ->label('Email vérifié'),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->label('Créé le'),
+        return parent::table($table)
+         ->columns([
+             static::CustomTextColumn('id'),
+            static::CustomTextColumn('name'),
+            static::CustomTextColumn('cin'),
+            static::CustomTextColumn('phone'),
+            static::CustomTextColumn('email')
+             ->copyable(),
+
+                Tables\Columns\TextColumn::make('roles')
+                    ->label('Roles')
+                    ->formatStateUsing(fn ($record) => $record->roles->pluck('name')->join(', '))
+                    ->badge()
+                    ->searchable(false),
+
+              Tables\Columns\ToggleColumn::make('is_validated')
+            ->label('Validated')
+         ->visible(fn(): bool => Auth::user()->can("validate_user"))
+            ->updateStateUsing(function (User $record, $state) {
+                if (!Auth::user()->can('validate_user')) {
+                    return false; // Return current state if unauthorized
+                }
+                $record->update(['is_validated' => $state]);
+                Notification::make()
+                    ->title($state ? 'User Validated' : 'User Unvalidated')
+                    ->success()
+                    ->send();
+                return $state;
+                  }),
             ])
-            ->filters([
-                //
-            ])
-            ->actions([
-                Tables\Actions\EditAction::make()->label('Modifier'),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make()->label('Supprimer'),
-                ]),
-            ]);
+        ;
+
+
+
     }
 
     public static function getRelations(): array
     {
-        return [
-            UserResource\RelationManagers\ArticlesRelationManager::class
-        ];
+        return [];
     }
 
     public static function getPages(): array
@@ -93,9 +154,8 @@ class UserResource extends Resource
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
     }
-
-    public static function shouldRegisterNavigation(): bool
-    {
-        return true; // changer à true pour apparaître dans la navigation
-    }
+    // public static function shouldRegisterNavigation(): bool
+    // {
+    //     return false;
+    // }
 }
