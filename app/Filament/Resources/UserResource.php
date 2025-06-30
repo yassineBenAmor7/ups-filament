@@ -83,10 +83,30 @@ class UserResource extends BaseResource
             ]),
         ]);
     }
-    public static function getExtraColumns():array
+   
+    public static function getExtraFilters(): array
+{
+    return [
+        Tables\Filters\SelectFilter::make('roles')
+                    ->relationship('roles', 'name')
+                    ->multiple()
+                    ->preload(),
+                    
+                Tables\Filters\Filter::make('validated')
+                    ->query(fn (Builder $query): Builder => $query->where('is_validated', true))
+                    ->label('Only Validated Users'),
+
+                     Tables\Filters\Filter::make('Published')
+                    ->query(fn (Builder $query): Builder => $query->where('publier', true))
+                    ->label('Only Published Users'),
+    ];
+}
+
+    public static function table(Table $table): Table
     {
-        return [
-            static::CustomTextColumn('id'),
+        return parent::table($table)
+         ->columns([
+             static::CustomTextColumn('id'),
             static::CustomTextColumn('name'),
             static::CustomTextColumn('cin'),
             static::CustomTextColumn('phone'),
@@ -112,49 +132,9 @@ class UserResource extends BaseResource
                     ->success()
                     ->send();
                 return $state;
-            }),
-
-
-
-            static::CustomTextColumn('genre'),
-          
-           Tables\Columns\ToggleColumn::make('publier')
-            ->label('Published')
-         ->visible(fn(): bool => auth()->user()->can("publish_user"))
-            ->updateStateUsing(function (User $record, $state) {
-                if (!auth()->user()->can('publish_user')) {
-                    return false; 
-                }
-                $record->update(['publier' => $state]);
-                 Notification::make()
-                    ->title($state ? 'User Published' : 'User Unpublished')
-                    ->success()
-                    ->send();
-                return $state;
-            })
-        ];
-    }
-    public static function getExtraFilters(): array
-{
-    return [
-        Tables\Filters\SelectFilter::make('roles')
-                    ->relationship('roles', 'name')
-                    ->multiple()
-                    ->preload(),
-                    
-                Tables\Filters\Filter::make('validated')
-                    ->query(fn (Builder $query): Builder => $query->where('is_validated', true))
-                    ->label('Only Validated Users'),
-
-                     Tables\Filters\Filter::make('Published')
-                    ->query(fn (Builder $query): Builder => $query->where('publier', true))
-                    ->label('Only Published Users'),
-    ];
-}
-
-    public static function table(Table $table): Table
-    {
-        return parent::table($table);
+                  }),
+            ])
+        ;
         
            
 

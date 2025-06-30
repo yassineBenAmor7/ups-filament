@@ -182,11 +182,7 @@ abstract class BaseResource extends Resource implements HasShieldPermissions
 
     return $filters;
 }
-// Add a hook so children can add columns and filters
-protected static function getExtraColumns(): array
-{
-    return [];
-}
+
 
 protected static function getExtraFilters(): array
 {
@@ -203,7 +199,7 @@ protected static function getExtraFilters(): array
     public static function table(Table $table): Table
     {
         return $table
-            ->columns(static::getExtraColumns())
+           
             ->filters( array_merge(
                     static::getDynamicFilters(),
                     static::getExtraFilters(),
