@@ -141,10 +141,4 @@ class UserPolicy
     {
         return $user->can('reorder_user');
     }
-   public function validate(User $user, User $model): bool
-{
-    return $user->can('validate_user') &&
-        !$model->is_validated &&
-        $user->id !== $model->id;
-}
 }

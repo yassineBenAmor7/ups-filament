@@ -144,8 +144,8 @@ class UserResource extends BaseResource
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
     }
-    public static function shouldRegisterNavigation(): bool
-    {
-        return false;
-    }
+    // public static function shouldRegisterNavigation(): bool
+    // {
+    //     return false;
+    // }
 }

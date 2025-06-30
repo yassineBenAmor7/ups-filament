@@ -89,7 +89,7 @@ class AdminPanelProvider extends PanelProvider
             ->orderBy('order')
             ->get();
 
-        \Log::info($menuItems);
+      //  \Log::info($menuItems);
 
         $top = $menuItems->whereNull('parent_id');
 

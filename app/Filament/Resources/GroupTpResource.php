@@ -19,7 +19,7 @@ use Filament\Tables\Actions\BulkActionGroup;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class GroupTpResource extends Resource
+class GroupTpResource extends BaseResource
 {
     protected static ?string $model = GroupTp::class;
 
@@ -28,11 +28,11 @@ class GroupTpResource extends Resource
     public static function form(Form $form): Form
 {
     return $form->schema([
-         
+
         TextInput::make('designation_fr')->required(),
         TextInput::make('designation_en'),
-        TextInput::make('designation_ar'), 
-        
+        TextInput::make('designation_ar'),
+
         Select::make('group_id')
             ->relationship('Group', 'designation_fr')
             ->required(),

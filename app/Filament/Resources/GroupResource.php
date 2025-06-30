@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\GroupResource\Pages;
 use App\Filament\Resources\GroupResource\RelationManagers;
 use App\Models\Group;
+use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Forms\Components\TextInput;
@@ -19,8 +20,9 @@ use Filament\Tables\Actions\BulkActionGroup;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class GroupResource extends Resource
+class GroupResource extends BaseResource
 {
+
     protected static ?string $model = Group::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';

@@ -18,7 +18,7 @@ use App\Filament\Resources\GradeResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\GradeResource\RelationManagers;
 
-class GradeResource extends Resource
+class GradeResource extends BaseResource
 {
     protected static ?string $model = Grade::class;
 

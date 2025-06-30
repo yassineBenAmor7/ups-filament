@@ -16,6 +16,33 @@ namespace App\Models{
  * 
  *
  * @property int $id
+ * @property int $sector_id
+ * @property int $user_id
+ * @property string|null $created_by
+ * @property string|null $updated_by
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int|null $publier
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CoordinationSector newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CoordinationSector newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CoordinationSector query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CoordinationSector whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CoordinationSector whereCreatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CoordinationSector whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CoordinationSector wherePublier($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CoordinationSector whereSectorId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CoordinationSector whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CoordinationSector whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CoordinationSector whereUserId($value)
+ */
+	class CoordinationSector extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
  * @property string $teacher_cin
  * @property string|null $designation_fr
  * @property string|null $designation_en
@@ -211,7 +238,7 @@ namespace App\Models{
  * @property int $id
  * @property int|null $affichage_in_front
  * @property string|null $grade_name
- * @property int $grade_id
+ * @property int|null $grade_id
  * @property string|null $service_fr
  * @property string|null $service_en
  * @property string|null $service_ar
@@ -224,7 +251,7 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $cin
  * @property string|null $slug
- * @property-read \App\Models\Grade $grade
+ * @property-read \App\Models\Grade|null $grade
  * @property-read \App\Models\User|null $user
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Personal newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Personal newQuery()
@@ -253,10 +280,34 @@ namespace App\Models{
 /**
  * 
  *
+ * @property int $id
+ * @property string|null $file
+ * @property int|null $sector_id
+ * @property int|null $year_id
+ * @property string|null $description_fr
+ * @property string|null $description_en
+ * @property string|null $description_ar
+ * @property string|null $created_by
+ * @property string|null $updated_by
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int|null $publier
  * @property-read \App\Models\Sector|null $sector
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PlaquettePedagogique newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PlaquettePedagogique newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PlaquettePedagogique query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PlaquettePedagogique whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PlaquettePedagogique whereCreatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PlaquettePedagogique whereDescriptionAr($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PlaquettePedagogique whereDescriptionEn($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PlaquettePedagogique whereDescriptionFr($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PlaquettePedagogique whereFile($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PlaquettePedagogique whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PlaquettePedagogique wherePublier($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PlaquettePedagogique whereSectorId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PlaquettePedagogique whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PlaquettePedagogique whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PlaquettePedagogique whereYearId($value)
  */
 	class PlaquettePedagogique extends \Eloquent {}
 }
@@ -266,7 +317,7 @@ namespace App\Models{
  * 
  *
  * @property int $id
- * @property int $sector_type_id
+ * @property int|null $sector_type_id
  * @property string|null $designation_fr
  * @property string|null $designation_en
  * @property string|null $designation_ar
@@ -274,7 +325,7 @@ namespace App\Models{
  * @property string|null $description_en
  * @property string|null $description_fr
  * @property string|null $description_ar
- * @property int $department_id
+ * @property int|null $department_id
  * @property string|null $created_by
  * @property string|null $updated_by
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -283,10 +334,12 @@ namespace App\Models{
  * @property string|null $slug
  * @property string|null $educational_coordinator
  * @property string|null $internship_coordinator
- * @property-read \App\Models\Department $department
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\CoordinationSector> $coordinationSectors
+ * @property-read int|null $coordination_sectors_count
+ * @property-read \App\Models\Department|null $department
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\PlaquettePedagogique> $plaquettePedagogiques
  * @property-read int|null $plaquette_pedagogiques_count
- * @property-read \App\Models\SectorType $sectorType
+ * @property-read \App\Models\SectorType|null $sectorType
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Sector newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Sector newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Sector query()
@@ -469,13 +522,13 @@ namespace App\Models{
  * @property string|null $specialite_ar
  * @property string|null $specialite_en
  * @property string|null $specialite_fr
- * @property int $grade_id
+ * @property int|null $grade_id
  * @property string|null $grade_name
  * @property string|null $email
  * @property string|null $nom_ar
  * @property string|null $prenom
  * @property string|null $prenom_ar
- * @property-read \App\Models\Grade $grade
+ * @property-read \App\Models\Grade|null $grade
  * @property-read \App\Models\User|null $user
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Teacher newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Teacher newQuery()

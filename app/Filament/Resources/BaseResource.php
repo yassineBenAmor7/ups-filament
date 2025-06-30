@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use Filament\Forms;
 use Filament\Tables;
 use Filament\Forms\Form;
@@ -23,6 +24,7 @@ use Filament\Tables\Columns\Column;
 use Filament\Tables\Columns\TextColumn;
 abstract class BaseResource extends Resource
 {
+    //use HasPageShield;
     /**
      * A helper to quickly create a searchable/sortable column.
      */
@@ -34,7 +36,7 @@ abstract class BaseResource extends Resource
             ->sortable()
             ;
     }
-   
+
 
     /**
      * Get the base actions that all resources should have
@@ -47,8 +49,8 @@ abstract class BaseResource extends Resource
                 EditAction::make()->openUrlInNewTab(),
                 DeleteAction::make(),
             ])->tooltip("Actions")
-           
-            
+
+
         ];
     }
 
@@ -65,9 +67,9 @@ abstract class BaseResource extends Resource
         ];
     }
 
-   
-   
-   
+
+
+
 
 
     /**
@@ -130,9 +132,9 @@ protected static function getExtraFilters(): array
     return [];
 }
 
-    
 
-   
+
+
 
     /**
      * Configure the base table with common settings
@@ -147,16 +149,16 @@ protected static function getExtraFilters(): array
                 ), layout: FiltersLayout::Modal)
             ->actions(static::getBaseActions(), position: ActionsPosition::BeforeCells)
             ->bulkActions(static::getBaseBulkActions())
-            
+
             ->striped()
-            ->searchable() 
-            
+            ->searchable()
+
             ->paginated([10, 25, 50, 100]);
     }
 
-   
 
 
-    
+
+
 }
 

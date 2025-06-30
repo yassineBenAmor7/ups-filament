@@ -22785,6 +22785,175 @@ namespace Illuminate\Support\Facades {
             }
     }
 
+namespace Althinect\FilamentSpatieRolesPermissions {
+    /**
+     * 
+     *
+     */
+    class FilamentSpatieRolesPermissionsFacade {
+        /**
+         * Run a Closure when the facade has been resolved.
+         *
+         * @param \Closure $callback
+         * @return void 
+         * @static 
+         */
+        public static function resolved($callback)
+        {
+            //Method inherited from \Illuminate\Support\Facades\Facade 
+            \Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsFacade::resolved($callback);
+        }
+
+        /**
+         * Convert the facade into a Mockery spy.
+         *
+         * @return \Mockery\MockInterface 
+         * @static 
+         */
+        public static function spy()
+        {
+            //Method inherited from \Illuminate\Support\Facades\Facade 
+            return \Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsFacade::spy();
+        }
+
+        /**
+         * Initiate a partial mock on the facade.
+         *
+         * @return \Mockery\MockInterface 
+         * @static 
+         */
+        public static function partialMock()
+        {
+            //Method inherited from \Illuminate\Support\Facades\Facade 
+            return \Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsFacade::partialMock();
+        }
+
+        /**
+         * Initiate a mock expectation on the facade.
+         *
+         * @return \Mockery\Expectation 
+         * @static 
+         */
+        public static function shouldReceive()
+        {
+            //Method inherited from \Illuminate\Support\Facades\Facade 
+            return \Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsFacade::shouldReceive();
+        }
+
+        /**
+         * Initiate a mock expectation on the facade.
+         *
+         * @return \Mockery\Expectation 
+         * @static 
+         */
+        public static function expects()
+        {
+            //Method inherited from \Illuminate\Support\Facades\Facade 
+            return \Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsFacade::expects();
+        }
+
+        /**
+         * Hotswap the underlying instance behind the facade.
+         *
+         * @param mixed $instance
+         * @return void 
+         * @static 
+         */
+        public static function swap($instance)
+        {
+            //Method inherited from \Illuminate\Support\Facades\Facade 
+            \Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsFacade::swap($instance);
+        }
+
+        /**
+         * Determines whether a "fake" has been set as the facade instance.
+         *
+         * @return bool 
+         * @static 
+         */
+        public static function isFake()
+        {
+            //Method inherited from \Illuminate\Support\Facades\Facade 
+            return \Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsFacade::isFake();
+        }
+
+        /**
+         * Get the root object behind the facade.
+         *
+         * @return mixed 
+         * @static 
+         */
+        public static function getFacadeRoot()
+        {
+            //Method inherited from \Illuminate\Support\Facades\Facade 
+            return \Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsFacade::getFacadeRoot();
+        }
+
+        /**
+         * Clear a resolved facade instance.
+         *
+         * @param string $name
+         * @return void 
+         * @static 
+         */
+        public static function clearResolvedInstance($name)
+        {
+            //Method inherited from \Illuminate\Support\Facades\Facade 
+            \Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsFacade::clearResolvedInstance($name);
+        }
+
+        /**
+         * Clear all of the resolved instances.
+         *
+         * @return void 
+         * @static 
+         */
+        public static function clearResolvedInstances()
+        {
+            //Method inherited from \Illuminate\Support\Facades\Facade 
+            \Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsFacade::clearResolvedInstances();
+        }
+
+        /**
+         * Get the application default aliases.
+         *
+         * @return \Illuminate\Support\Collection 
+         * @static 
+         */
+        public static function defaultAliases()
+        {
+            //Method inherited from \Illuminate\Support\Facades\Facade 
+            return \Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsFacade::defaultAliases();
+        }
+
+        /**
+         * Get the application instance behind the facade.
+         *
+         * @return \Illuminate\Contracts\Foundation\Application|null 
+         * @static 
+         */
+        public static function getFacadeApplication()
+        {
+            //Method inherited from \Illuminate\Support\Facades\Facade 
+            return \Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsFacade::getFacadeApplication();
+        }
+
+        /**
+         * Set the application instance.
+         *
+         * @param \Illuminate\Contracts\Foundation\Application|null $app
+         * @return void 
+         * @static 
+         */
+        public static function setFacadeApplication($app)
+        {
+            //Method inherited from \Illuminate\Support\Facades\Facade 
+            \Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsFacade::setFacadeApplication($app);
+        }
+
+            }
+    }
+
 namespace AnourValar\EloquentSerialize\Facades {
     /**
      * 
@@ -24185,34 +24354,6 @@ namespace Illuminate\Database\Query {
         public static function getSelect()
         {
             return \Illuminate\Database\Query\Builder::getSelect();
-        }
-
-            }
-    /**
-     * 
-     *
-     */
-    class JoinClause {
-        /**
-         * 
-         *
-         * @see \Kirschbaum\PowerJoins\Mixins\QueryBuilderExtraMethods::getGroupBy()
-         * @static 
-         */
-        public static function getGroupBy()
-        {
-            return \Illuminate\Database\Query\JoinClause::getGroupBy();
-        }
-
-        /**
-         * 
-         *
-         * @see \Kirschbaum\PowerJoins\Mixins\QueryBuilderExtraMethods::getSelect()
-         * @static 
-         */
-        public static function getSelect()
-        {
-            return \Illuminate\Database\Query\JoinClause::getSelect();
         }
 
             }
@@ -27400,48 +27541,6 @@ namespace Filament {
      *
      */
     class Panel {
-            }
-    }
-
-namespace Illuminate\Database\Eloquent {
-    /**
-     * 
-     *
-     * @template TKey of array-key
-     * @template TModel of \Illuminate\Database\Eloquent\Model
-     * @extends \Illuminate\Support\Collection<TKey, TModel>
-     */
-    class Collection {
-        /**
-         * 
-         *
-         * @see \Maatwebsite\Excel\Mixins\DownloadCollectionMixin::downloadExcel()
-         * @param string $fileName
-         * @param string|null $writerType
-         * @param mixed $withHeadings
-         * @param array $responseHeaders
-         * @static 
-         */
-        public static function downloadExcel($fileName, $writerType = null, $withHeadings = false, $responseHeaders = [])
-        {
-            return \Illuminate\Database\Eloquent\Collection::downloadExcel($fileName, $writerType, $withHeadings, $responseHeaders);
-        }
-
-        /**
-         * 
-         *
-         * @see \Maatwebsite\Excel\Mixins\StoreCollectionMixin::storeExcel()
-         * @param string $filePath
-         * @param string|null $disk
-         * @param string|null $writerType
-         * @param mixed $withHeadings
-         * @static 
-         */
-        public static function storeExcel($filePath, $disk = null, $writerType = null, $withHeadings = false)
-        {
-            return \Illuminate\Database\Eloquent\Collection::storeExcel($filePath, $disk, $writerType, $withHeadings);
-        }
-
             }
     }
 
@@ -32910,6 +33009,7 @@ namespace  {
     class Validator extends \Illuminate\Support\Facades\Validator {}
     class View extends \Illuminate\Support\Facades\View {}
     class Vite extends \Illuminate\Support\Facades\Vite {}
+    class FilamentSpatieRolesPermissions extends \Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsFacade {}
     class EloquentSerialize extends \AnourValar\EloquentSerialize\Facades\EloquentSerializeFacade {}
     class FilamentShield extends \BezhanSalleh\FilamentShield\Facades\FilamentShield {}
     class ReorderableColumns extends \Bostos\ReorderableColumns\Facades\ReorderableColumns {}

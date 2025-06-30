@@ -19,8 +19,9 @@ use Filament\Tables\Actions\BulkActionGroup;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class DepartmentResource extends Resource
+class DepartmentResource extends BaseResource
 {
+
     protected static ?string $model = Department::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';

@@ -23,24 +23,24 @@ class Group extends Model
 
     ];
     public function groupTd(){
-    	return $this->hasMany('App\Models\GroupTd' , 'groupe_id' , 'id');
+    	//return $this->hasMany('App\Models\GroupTd' , 'groupe_id' , 'id');
     }
 
     public function groupTp()
     {
-        return $this->hasMany('App\Models\GroupTp' , 'groupe_td_id' , 'id');
+        //return $this->hasMany('App\Models\GroupTp' , 'groupe_td_id' , 'id');
     }
 
     public function subjects(){
-    	return $this->hasMany('App\Models\Subject');
+    	//return $this->hasMany('App\Models\Subject');
     }
 
     public function studentCourses(){
-    	return $this->belongsToMany(Course::class, 'cours_groups', 'group_id', 'course_id');
+    	//return $this->belongsToMany(Course::class, 'cours_groups', 'group_id', 'course_id');
     }
 
     public function sector(){
-    	return $this->belongsTo('App\Models\Sector');
+    	//return $this->belongsTo('App\Models\Sector');
     }
 
 }

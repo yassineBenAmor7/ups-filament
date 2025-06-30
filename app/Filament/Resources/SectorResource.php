@@ -19,7 +19,7 @@ use Filament\Tables\Actions\BulkActionGroup;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class SectorResource extends Resource
+class SectorResource extends BaseResource
 {
     protected static ?string $model = Sector::class;
 
