@@ -26,7 +26,6 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-use Bostos\ReorderableColumns\ReorderableColumnsPlugin;
 class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
