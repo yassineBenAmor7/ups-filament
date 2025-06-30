@@ -49,7 +49,7 @@ class GradeResource extends BaseResource
                 TextColumn::make('designation_en'),
                 TextColumn::make('designation_ar'),
                 TextColumn::make('type'),
-                TextColumn::make('publier'),
+                Tables\Columns\ToggleColumn::make('publier'),
                 TextColumn::make('created_at')->dateTime(),
 
             ])

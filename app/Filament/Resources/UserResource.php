@@ -23,10 +23,7 @@ use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Actions\Action;
 use Filament\Notifications\Notification;
 use Filament\Tables\Enums\ActionsPosition;
-use Filament\Tables\Actions\ActionGroup;
-use Filament\Tables\Actions\DeleteAction;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\ViewAction;
+
 use App\Filament\Resources\BaseResource;
 use Illuminate\Support\Facades\Auth;
 
@@ -98,44 +95,61 @@ class UserResource extends BaseResource
                 ->query(fn(Builder $query): Builder => $query->where('is_validated', true))
                 ->label('Only Validated Users'),
 
-            Tables\Filters\Filter::make('Published')
-                ->query(fn(Builder $query): Builder => $query->where('publier', true))
-                ->label('Only Published Users'),
+            // Tables\Filters\Filter::make('Published')
+            //     ->query(fn(Builder $query): Builder => $query->where('publier', true))
+            //     ->label('Only Published Users'),
         ];
+    }
+    public static function getExtraColumns():array
+    {
+        return [
+            static::CustomTextColumn('id'),
+            static::CustomTextColumn('name'),
+            static::CustomTextColumn('name_ar'),
+            static::CustomTextColumn('email')->copyable(),
+            static::CustomTextColumn('phone'),
+            static::CustomTextColumn('cin'),
+            static::CustomTextColumn('avatar'),
+            static::CustomTextColumn('nationalite'),
+            static::CustomTextColumn('genre'),
+            static::CustomTextColumn('address'),
+            static::CustomTextColumn('cnss'),
+            static::CustomTextColumn('date_naissance'),
+            static::CustomTextColumn('lieu_naissance'),
+            static::CustomTextColumn('cv'),
+            static::CustomTextColumn('description_ar'),
+            static::CustomTextColumn('description_en'),
+            static::CustomTextColumn('description_fr'),
+            static::CustomTextColumn('created_by'),
+            static::CustomTextColumn('updated_by'),
+            static::CustomTextColumn('folder_name'),
+
+            // Show roles
+            TextColumn::make('roles')
+                ->label('Roles')
+                ->formatStateUsing(fn ($record) => $record->roles->pluck('name')->join(', '))
+                ->badge()
+                ->searchable(false),
+
+            ToggleColumn::make('is_validated')
+                ->label('Validated')
+                ->visible(fn(): bool => Auth::user()->can("validate_user"))
+                ->updateStateUsing(function (User $record, $state) {
+                    if (!Auth::user()->can('validate_user')) {
+                        return false;
+                    }
+                    $record->update(['is_validated' => $state]);
+                    Notification::make()
+                        ->title($state ? 'User Validated' : 'User Unvalidated')
+                        ->success()
+                        ->send();
+                    return $state;
+                }),
+            ];
     }
     public static function table(Table $table): Table
     {
-        return parent::table($table)
-         ->columns([
-             static::CustomTextColumn('id'),
-            static::CustomTextColumn('name'),
-            static::CustomTextColumn('cin'),
-            static::CustomTextColumn('phone'),
-            static::CustomTextColumn('email')
-             ->copyable(),
-
-                Tables\Columns\TextColumn::make('roles')
-                    ->label('Roles')
-                    ->formatStateUsing(fn ($record) => $record->roles->pluck('name')->join(', '))
-                    ->badge()
-                    ->searchable(false),
-
-              Tables\Columns\ToggleColumn::make('is_validated')
-            ->label('Validated')
-         ->visible(fn(): bool => Auth::user()->can("validate_user"))
-            ->updateStateUsing(function (User $record, $state) {
-                if (!Auth::user()->can('validate_user')) {
-                    return false; // Return current state if unauthorized
-                }
-                $record->update(['is_validated' => $state]);
-                Notification::make()
-                    ->title($state ? 'User Validated' : 'User Unvalidated')
-                    ->success()
-                    ->send();
-                return $state;
-                  }),
-            ])
-        ;
+        return parent::table($table);
 
 
 
@@ -154,8 +168,5 @@ class UserResource extends BaseResource
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
     }
-    // public static function shouldRegisterNavigation(): bool
-    // {
-    //     return false;
-    // }
+   
 }
