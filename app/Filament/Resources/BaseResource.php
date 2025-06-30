@@ -22,9 +22,37 @@ use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Columns\Column;
 use Filament\Tables\Columns\TextColumn;
-abstract class BaseResource extends Resource
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
+abstract class BaseResource extends Resource implements HasShieldPermissions
 {
-    //use HasPageShield;
+      /**
+     * Get permission prefixes for all resources
+     */
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'view_any',
+            'create',
+            'update',
+            'delete',
+            'delete_any',
+            'restore',
+            'restore_any',
+            'force_delete',
+            'force_delete_any',
+            'replicate',
+            'reorder',
+            'validate',
+            'publish',
+        ];
+    }
+
+
+
+
+
+
     /**
      * A helper to quickly create a searchable/sortable column.
      */
@@ -48,7 +76,8 @@ abstract class BaseResource extends Resource
                 ViewAction::make(),
                 EditAction::make()->openUrlInNewTab(),
                 DeleteAction::make(),
-            ])->tooltip("Actions")
+
+            ])->tooltip("Actions"),
 
 
         ];
@@ -62,13 +91,46 @@ abstract class BaseResource extends Resource
         return [
             Tables\Actions\BulkActionGroup::make([
                 Tables\Actions\DeleteBulkAction::make(),
-                 ExportBulkAction::make()
+                 ExportBulkAction::make(),
+                  static::getGenericStatusBulkAction('validate', 'is_validated'),
+            static::getGenericStatusBulkAction('publish', 'publier'),
             ]),
         ];
     }
 
+   protected static function getGenericStatusBulkAction(string $action, string $field): ?Tables\Actions\BulkAction
+{
+    $model = static::getModel();
 
 
+
+    return Tables\Actions\BulkAction::make($action)
+        ->label(ucfirst($action).' Selected')
+        ->icon(match($action) {
+            'validate' => 'heroicon-o-check-circle',
+            'publish' => 'heroicon-o-arrow-up-tray',
+            default => null,
+        })
+        ->color(match($action) {
+            'validate' => 'success',
+            'publish' => 'primary',
+            default => null,
+        })
+        ->requiresConfirmation()
+        ->modalHeading(ucfirst($action).' Selected Records')
+        ->modalDescription("Are you sure you want to {$action} these records?")
+        ->modalSubmitActionLabel("Yes, {$action} them")
+       ->action(function (iterable $records) use ($field, $action) {
+            $collection = collect($records);
+            $count = $collection->reduce(function (int $count, Model $record) use ($field) {
+                return $count + ($record->update([$field => true]) ? 1 : 0);
+            }, 0);
+
+
+        })
+        ->deselectRecordsAfterCompletion()
+         ->visible(fn(): bool => auth()->user()->can("{$action}_" . strtolower(class_basename(static::getModel()))));
+}
 
 
 
@@ -121,11 +183,7 @@ abstract class BaseResource extends Resource
 
     return $filters;
 }
-// Add a hook so children can add columns and filters
-protected static function getExtraColumns(): array
-{
-    return [];
-}
+
 
 protected static function getExtraFilters(): array
 {
@@ -142,7 +200,7 @@ protected static function getExtraFilters(): array
     public static function table(Table $table): Table
     {
         return $table
-            ->columns(static::getExtraColumns())
+
             ->filters( array_merge(
                     static::getDynamicFilters(),
                     static::getExtraFilters(),

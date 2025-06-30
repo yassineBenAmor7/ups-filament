@@ -28,6 +28,7 @@ use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ViewAction;
 use App\Filament\Resources\BaseResource;
+use Illuminate\Support\Facades\Auth;
 
 class UserResource extends BaseResource
 {
@@ -60,12 +61,9 @@ class UserResource extends BaseResource
                     ->multiple()
                     ->preload()
                     ->searchable()
-                    ->visible(fn() => auth()->user()->hasRole('super_admin')),
+                    ->visible(fn() => Auth::user()->hasRole('super_admin')),
 
-                Forms\Components\Toggle::make('is_validated')
-                    ->label('Validated Account')
-                    ->default(false)
-                    ->visible(fn() => auth()->user()->can('validate_user')),
+
                 TextInput::make('name_ar'),
                 TextInput::make('phone'),
                 TextInput::make('cin'),
@@ -82,34 +80,12 @@ class UserResource extends BaseResource
                 TextInput::make('description_fr'),
                 TextInput::make('created_by'),
                 TextInput::make('updated_by'),
-                TextInput::make('publier'),
+
                 TextInput::make('folder_name'),
             ]),
         ]);
     }
-    public static function getExtraColumns(): array
-    {
-        return [
-            static::CustomTextColumn('id'),
-            static::CustomTextColumn('name'),
-            static::CustomTextColumn('cin'),
-            static::CustomTextColumn('phone'),
-            static::CustomTextColumn('email')
-                ->copyable(),
 
-            Tables\Columns\TextColumn::make('roles')
-                ->label('Roles')
-                ->formatStateUsing(fn($record) => $record->roles->pluck('name')->join(', '))
-                ->badge()
-                ->searchable(false),
-            ToggleColumn::make('is_validated')
-                ->label('Validated'),
-            static::CustomTextColumn('genre'),
-
-            ToggleColumn::make('publier')
-                ->label("Publish")
-        ];
-    }
     public static function getExtraFilters(): array
     {
         return [
@@ -129,8 +105,42 @@ class UserResource extends BaseResource
     }
     public static function table(Table $table): Table
     {
-        return parent::table($table);
+        return parent::table($table)
+         ->columns([
+             static::CustomTextColumn('id'),
+            static::CustomTextColumn('name'),
+            static::CustomTextColumn('cin'),
+            static::CustomTextColumn('phone'),
+            static::CustomTextColumn('email')
+             ->copyable(),
+
+                Tables\Columns\TextColumn::make('roles')
+                    ->label('Roles')
+                    ->formatStateUsing(fn ($record) => $record->roles->pluck('name')->join(', '))
+                    ->badge()
+                    ->searchable(false),
+
+              Tables\Columns\ToggleColumn::make('is_validated')
+            ->label('Validated')
+         ->visible(fn(): bool => Auth::user()->can("validate_user"))
+            ->updateStateUsing(function (User $record, $state) {
+                if (!Auth::user()->can('validate_user')) {
+                    return false; // Return current state if unauthorized
+                }
+                $record->update(['is_validated' => $state]);
+                Notification::make()
+                    ->title($state ? 'User Validated' : 'User Unvalidated')
+                    ->success()
+                    ->send();
+                return $state;
+                  }),
+            ])
+        ;
+
+
+
     }
+
     public static function getRelations(): array
     {
         return [];
