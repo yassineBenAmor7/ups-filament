@@ -14,6 +14,12 @@ class ListUsers extends ListRecords
     {
         return [
             Actions\CreateAction::make(),
+            \EightyNine\ExcelImport\ExcelImportAction::make()
+                ->color("primary")->acceptedFileTypes([
+                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                    'application/vnd.ms-excel',
+                    'text/csv',
+                ]),
         ];
     }
 }
