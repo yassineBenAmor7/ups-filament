@@ -2,27 +2,29 @@
 
 namespace App\Filament\Resources;
 
-use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use Filament\Forms;
 use Filament\Tables;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
-use Filament\Resources\Resource;
-use Filament\Tables\Actions\Action;
-use Filament\Tables\Actions\ActionGroup;
-use Filament\Tables\Actions\DeleteAction;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\ViewAction;
-use Filament\Tables\Enums\ActionsPosition;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Filament\Resources\Resource;
+use Illuminate\Support\Collection;
+use Filament\Tables\Actions\Action;
+use Filament\Tables\Columns\Column;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
-use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
-use Filament\Tables\Enums\FiltersLayout;
-use Filament\Tables\Columns\Column;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
+use Illuminate\Database\Eloquent\Model;
+use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Enums\FiltersLayout;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Enums\ActionsPosition;
+use BezhanSalleh\FilamentShield\Traits\HasPageShield;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
+
 abstract class BaseResource extends Resource implements HasShieldPermissions
 {
       /**
@@ -95,6 +97,7 @@ abstract class BaseResource extends Resource implements HasShieldPermissions
                  ExportBulkAction::make(),
                   static::getGenericStatusBulkAction('validate', 'is_validated'),
             static::getGenericStatusBulkAction('publish', 'publier'),
+            static::getEmailPreviewBulkAction(),
             ]),
         ];
     }
@@ -218,7 +221,34 @@ protected static function getExtraFilters(): array
             ->paginated([10, 25, 50, 100]);
     }
 
+    protected static function getEmailPreviewBulkAction(): ?Tables\Actions\BulkAction
+{
+    $model = static::getModel();
+    $table = (new $model)->getTable();
 
+    return Tables\Actions\BulkAction::make('preview_emails')
+        ->label('Show Emails')
+        ->icon('heroicon-o-envelope')
+        ->color('info')
+        ->modalHeading('Emails of Selected Items')
+        ->modalSubmitAction(false) // Just closes the modal
+        ->modalCancelActionLabel('Close')
+        ->modalContent(function (Collection $records) {
+            $emails = $records->pluck('email')->filter()->unique();
+
+            if ($emails->isEmpty()) {
+                return 'No valid email addresses found.';
+            }
+
+            return view('filament.components.bulk-email-preview', [
+                'emails' => $emails,
+            ]);
+        })
+        ->deselectRecordsAfterCompletion()
+        ->visible(fn (): bool =>
+            Schema::hasColumn($table, 'email')
+        );
+}
 
 
 
