@@ -20,7 +20,7 @@ return new class extends Migration {
             $table->foreignId('year_id')->nullable()->default(null)->constrained('years')->onDelete('set null');
             $table->string('created_by')->nullable()->default(null);
             $table->string('updated_by')->nullable()->default(null);
-            $table->integer('publier')->nullable()->default(null);
+            $table->boolean('publier')->default(false);
             $table->string('slug')->nullable()->default(null);
             $table->timestamp('created_at')->nullable()->default(null);
             $table->timestamp('updated_at')->nullable()->default(null);
@@ -37,7 +37,7 @@ return new class extends Migration {
             $table->timestamp('updated_at')->nullable()->default(null);
             $table->string('created_by')->nullable()->default(null);
             $table->string('updated_by')->nullable()->default(null);
-            $table->integer('publier')->nullable()->default(null);
+            $table->boolean('publier')->default(false);
             $table->text('result')->nullable()->default(null);
             $table->foreignId('department_id')->nullable()->default(null)->constrained('departments')->onDelete('set null');
             $table->foreignId('soutenance_session_id')->nullable()->default(null)->constrained('soutenance_sessions')->onDelete('set null');
@@ -46,9 +46,8 @@ return new class extends Migration {
 
         Schema::create('soutenance_teachers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->nullable()->default(null)->constrained('users')->onDelete('set null');
+            $table->foreignId('teacher_id') ->nullable()->default(null) ->constrained('teachers')->onDelete('set null');    
             $table->foreignId('soutenance_id')->nullable()->default(null)->constrained('soutenances')->onDelete('set null');
-            $table->string('user_name')->nullable()->default(null);
             $table->string('poste')->nullable()->default(null);
             $table->string('etat')->nullable()->default(null);
             $table->string('created_by')->nullable()->default(null);

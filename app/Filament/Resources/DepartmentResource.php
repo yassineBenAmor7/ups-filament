@@ -29,6 +29,8 @@ class DepartmentResource extends BaseResource
     public static function form(Form $form): Form
 {
     return $form->schema([
+        TextInput::make('teacher_cin')->required(),
+
         TextInput::make('designation_fr')->required(),
         TextInput::make('designation_en'),
         TextInput::make('designation_ar'),

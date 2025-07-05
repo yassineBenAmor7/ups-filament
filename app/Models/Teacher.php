@@ -1,9 +1,14 @@
 <?php
 
 namespace App\Models;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Grade;
+use App\Models\SoutenanceTeacher;
+use App\Models\Department;
 
 class Teacher extends Model
 {
@@ -48,4 +53,19 @@ class Teacher extends Model
 
         return $acceptedStages < $max; // Assuming you have `max_stage_count` column in users table
     }
+     public function soutenanceTeacher(): HasMany
+{
+    return $this->hasMany(SoutenanceTeacher::class,'user_id');
+}
+public function department(): BelongsTo
+{
+    return $this->belongsTo(Department::class);
+}
+public function jurySoutenances(): BelongsToMany
+{
+    return $this->belongsToMany(Soutenance::class,'soutenance_teachers')
+        ->withPivot(['poste'])
+        ->withTimestamps();
+}
+
 }

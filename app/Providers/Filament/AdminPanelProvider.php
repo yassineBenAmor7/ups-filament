@@ -80,48 +80,48 @@ class AdminPanelProvider extends PanelProvider
 
         $items = [];
 
-        $menuItems = MenuItem::select('menu_items.*')
-            ->join('menus', 'menus.id', '=', 'menu_items.menu_id')
-            ->where('menus.name', 'admin')
-            ->where('menus.is_visible',1)
-            ->with(['children.children' => fn($q) => $q->orderBy('order')])
-            ->orderBy('order')
-            ->get();
+    //     $menuItems = MenuItem::select('menu_items.*')
+    //         ->join('menus', 'menus.id', '=', 'menu_items.menu_id')
+    //         ->where('menus.name', 'admin')
+    //         ->where('menus.is_visible',1)
+    //         ->with(['children.children' => fn($q) => $q->orderBy('order')])
+    //         ->orderBy('order')
+    //         ->get();
 
-      //  \Log::info($menuItems);
+    //   //  \Log::info($menuItems);
 
-        $top = $menuItems->whereNull('parent_id');
+    //     $top = $menuItems->whereNull('parent_id');
 
-        foreach ($top as $parent) {
-            if ($parent->children->isEmpty()) {
-                $items[] = NavigationItem::make($parent->title)
-                    ->url($parent->url)
-                    ->icon($parent->icon ?"heroicon-".$parent->icon: 'heroicon-o-link')
-                    ->sort($parent->order * 1000);
-            } else {
-                foreach ($parent->children as $child) {
-                    $items[] = NavigationItem::make($child->title)
-                        ->url($child->url)
-                        ->icon($child->icon ?"heroicon-".$child->icon:'heroicon-o-link')
-                        ->group($parent->title)
+    //     foreach ($top as $parent) {
+    //         if ($parent->children->isEmpty()) {
+    //             $items[] = NavigationItem::make($parent->title)
+    //                 ->url($parent->url)
+    //                 ->icon($parent->icon ?"heroicon-".$parent->icon: 'heroicon-o-link')
+    //                 ->sort($parent->order * 1000);
+    //         } else {
+    //             foreach ($parent->children as $child) {
+    //                 $items[] = NavigationItem::make($child->title)
+    //                     ->url($child->url)
+    //                     ->icon($child->icon ?"heroicon-".$child->icon:'heroicon-o-link')
+    //                     ->group($parent->title)
 
-                        ->sort($parent->order * 1000 + $child->order * 10);
+    //                     ->sort($parent->order * 1000 + $child->order * 10);
 
-                    foreach ($child->children as $grandchild) {
-                        $items[] = NavigationItem::make($grandchild->title)
-                            ->url($grandchild->url)
-                            ->icon($grandchild->icon ?"heroicon-".$grandchild->icon: 'heroicon-o-link')
-                            ->group($parent->title)
-                            ->label('  ' . $grandchild->title)
-                            ->sort(
-                                $parent->order * 1000 +
-                                $child->order   * 10 +
-                                $grandchild->order
-                            );
-                    }
-                }
-            }
-        }
+    //                 foreach ($child->children as $grandchild) {
+    //                     $items[] = NavigationItem::make($grandchild->title)
+    //                         ->url($grandchild->url)
+    //                         ->icon($grandchild->icon ?"heroicon-".$grandchild->icon: 'heroicon-o-link')
+    //                         ->group($parent->title)
+    //                         ->label('  ' . $grandchild->title)
+    //                         ->sort(
+    //                             $parent->order * 1000 +
+    //                             $child->order   * 10 +
+    //                             $grandchild->order
+    //                         );
+    //                 }
+    //             }
+    //         }
+    //     }
 
         return $items;
     }

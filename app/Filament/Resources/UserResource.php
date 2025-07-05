@@ -95,9 +95,9 @@ class UserResource extends BaseResource
                 ->query(fn(Builder $query): Builder => $query->where('is_validated', true))
                 ->label('Only Validated Users'),
 
-            // Tables\Filters\Filter::make('Published')
-            //     ->query(fn(Builder $query): Builder => $query->where('publier', true))
-            //     ->label('Only Published Users'),
+            Tables\Filters\Filter::make('Published')
+                ->query(fn(Builder $query): Builder => $query->where('publier', true))
+                ->label('Only Published Users'),
         ];
     }
     public static function getExtraColumns():array

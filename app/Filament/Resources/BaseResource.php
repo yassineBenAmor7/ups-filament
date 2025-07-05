@@ -23,6 +23,7 @@ use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Columns\Column;
 use Filament\Tables\Columns\TextColumn;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
+
 abstract class BaseResource extends Resource implements HasShieldPermissions
 {
       /**
@@ -73,17 +74,17 @@ abstract class BaseResource extends Resource implements HasShieldPermissions
     protected static function getBaseActions(): array
     {
         return [
-            ActionGroup::make([
-                ViewAction::make(),
-                EditAction::make()->openUrlInNewTab(),
-                DeleteAction::make(),
-
-            ])->tooltip("Actions"),
+          ActionGroup::make([
+    ViewAction::make(),
+    EditAction::make()->openUrlInNewTab(),
+    DeleteAction::make(),
+        ])
+->tooltip("Actions"),
 
 
         ];
     }
-
+  
     /**
      * Get the base bulk actions that all resources should have
      */
@@ -209,7 +210,9 @@ protected static function getExtraFilters(): array
                     static::getDynamicFilters(),
                     static::getExtraFilters(),
                 ), layout: FiltersLayout::Modal)
-            ->actions(static::getBaseActions(), position: ActionsPosition::BeforeCells)
+            ->actions(
+                static::getBaseActions(),
+                position: ActionsPosition::BeforeCells)
             ->bulkActions(static::getBaseBulkActions())
 
             ->striped()

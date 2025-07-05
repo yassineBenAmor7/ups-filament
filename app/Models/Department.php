@@ -7,23 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Department extends Model
 {
-    // public function chef(){
-    // 	return $this->belongsTo('App\Models\User' , 'chef_id' , 'id');
-    // }
-    public function teacher(){
-    	// return $this->belongsTo('App\Teacher' , 'chef_id' , 'id');
-    	return $this->belongsTo('App\Models\Teacher' , 'teacher_cin' , 'cin');
-    }
-    public function teachers(){
-    	// return $this->belongsTo('App\Teacher' , 'chef_id' , 'id');
-    	return $this->hasMany('App\Models\Teacher');
-    }
-    public function sectors(){
-    	return $this->hasMany('App\Models\Sector');
-
-    }
-
-    protected $fillable = [
+     protected $fillable = [
         'id',
         'teacher_cin',
         'designation_fr',
@@ -40,4 +24,25 @@ class Department extends Model
         'updated_at'
 
     ];
+    // public function chef(){
+    // 	return $this->belongsTo('App\Models\User' , 'chef_id' , 'id');
+    // }
+    public function teacher(){
+    	// return $this->belongsTo('App\Teacher' , 'chef_id' , 'id');
+    	return $this->belongsTo('App\Models\Teacher' , 'teacher_cin' , 'cin');
+    }
+    public function teachers(){
+    	// return $this->belongsTo('App\Teacher' , 'chef_id' , 'id');
+    	return $this->hasMany('App\Models\Teacher');
+    }
+    public function sectors(){
+    	return $this->hasMany('App\Models\Sector');
+
+    }
+
+   
+    public function soutenances(): HasMany
+    {
+        return $this->hasMany(Soutenance::class, 'department_id', 'id');
+    }
 }

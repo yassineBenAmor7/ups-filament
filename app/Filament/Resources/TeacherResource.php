@@ -28,7 +28,11 @@ class TeacherResource extends BaseResource
     {
         return $form
             ->schema([
-                Select::make('department_id')->nullable(),
+                Select::make('department_id')
+                 ->relationship('department', 'designation_fr')
+                    
+                    ->preload()
+                    ->searchable(),
                 TextInput::make('cin'),
                 TextInput::make('nom'),
                 TextInput::make('name'),

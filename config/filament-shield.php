@@ -46,7 +46,6 @@ return [
             'delete_any',
             'force_delete',
             'force_delete_any',
-            'validate'
         ],
 
         'page' => 'page',
@@ -89,6 +88,5 @@ return [
     'register_role_policy' => [
         'enabled' => true,
     ],
-    'register_policies' => true,
 
 ];
