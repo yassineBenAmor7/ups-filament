@@ -44,8 +44,8 @@ public function department(): BelongsTo
         return $this->belongsTo(SoutenanceSessions::class, 'soutenance_session_id', 'id');
     }
     public function juries(){
-        return $this->belongsToMany(Teacher::class,'soutenance_teachers' )
-        ->withPivot(['poste'])
+        return $this->belongsToMany(Teacher::class,'soutenance_teachers','soutenance_id', 'teacher_id' )
+        ->withPivot('poste')
         ->withTimestamps() ;
     }
 }

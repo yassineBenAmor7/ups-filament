@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Filament\Resources;
-
 use App\Filament\Resources\SoutenanceResource\Pages;
 use App\Filament\Resources\SoutenanceResource\RelationManagers;
 use App\Models\Soutenance;
@@ -24,7 +23,9 @@ use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Enums\ActionsPosition;
 use Filament\Notifications\Notification;
-
+use Filament\Support\Enums\Alignment;
+use Filament\Forms\Get;
+use Closure;
 class SoutenanceResource extends BaseResource
 {
     protected static ?string $model = Soutenance::class;
@@ -51,7 +52,7 @@ class SoutenanceResource extends BaseResource
             ->required(),
             TimePicker::make('horaire_end')
              ->label('Heure de fin')
-           
+             ->after('horaire_start')
             ->withoutSeconds()
             ->required(),
             Forms\Components\Select::make('department_id')
@@ -61,7 +62,28 @@ class SoutenanceResource extends BaseResource
                 // ->required(),
             TextInput::make('salle')
                 ->label('Salle')
-                ->required(),
+                ->required()
+                ->rules([
+        fn (Get $get): Closure => function (string $attribute, $value, Closure $fail) use ($get) {
+            $date = $get('date');
+            $startTime = $get('horaire_start');
+            $recordId = request()->route('record')?->id; // For edit page
+
+            if ($date && $startTime) {
+                $query = Soutenance::where('salle', $value)
+                    ->where('date', $date)
+                    ->where('horaire_start', $startTime);
+
+                if ($recordId) {
+                    $query->where('id', '!=', $recordId);
+                }
+
+                if ($query->exists()) {
+                    $fail("Il y a déjà une soutenance prévue dans cette salle à la même date et heure.");
+                }
+            }
+        },
+    ]),
 Forms\Components\Select::make('soutenance_session_id')
                 ->label('Session de soutenance')
                 ->relationship('soutenanceSession', 'designation_fr') 
@@ -74,7 +96,10 @@ Forms\Components\Select::make('soutenance_session_id')
                 ->label('PV')
                 ->rows(3),
               
-            ]);
+            ])
+             ;
+            
+            
     }
  public static function getExtraColumns():array
  {
@@ -110,17 +135,23 @@ Forms\Components\Select::make('soutenance_session_id')
             ->label('Juries')
             ->action(
                 Action::make('view_jury')
-                    ->label('Voir Jury')
-                    ->modalHeading('Membres du Jury')
+                    
+ ->modalHeading('Membres du Jury')
                     ->modalSubheading(fn (Soutenance $record): string => 
                         'Soutenance le ' . $record->date . ' de ' . $record->horaire_start . ' à ' . $record->horaire_end
-                    )
-                    ->modalContent(fn (Soutenance $record) => view('filament.soutenances.jury-modal', [
-                        'juryMembers' => $record->soutenanceTeacher()->with('teacher')->get(),
+                    )                    ->modalContent(fn (Soutenance $record) => view('filament.component.modal', [
+                        'data' => $record->juries()->withPivot('poste')->get(),
+                       
+                        'columns'=>['Nom','Poste'],
+                        'row'=>fn ($item) => [
+        $item->name ,
+        ucfirst(str_replace('_', ' ', $item->pivot->poste ?? '')),
+    ],
                     ]))
-                    ->modalWidth('2xl')
+                    
                     ->modalSubmitAction(false)
-                     
+                    //   ->modalCancelAction(false)
+                      ->modalAlignment(Alignment::Center)
             )
             ->formatStateUsing(fn () => 'Voir Jury')
             
