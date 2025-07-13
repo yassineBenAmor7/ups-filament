@@ -23186,6 +23186,176 @@ namespace BezhanSalleh\FilamentShield\Facades {
             }
     }
 
+namespace Bostos\ReorderableColumns\Facades {
+    /**
+     * 
+     *
+     * @see \Bostos\ReorderableColumns\ReorderableColumns
+     */
+    class ReorderableColumns {
+        /**
+         * Run a Closure when the facade has been resolved.
+         *
+         * @param \Closure $callback
+         * @return void 
+         * @static 
+         */
+        public static function resolved($callback)
+        {
+            //Method inherited from \Illuminate\Support\Facades\Facade 
+            \Bostos\ReorderableColumns\Facades\ReorderableColumns::resolved($callback);
+        }
+
+        /**
+         * Convert the facade into a Mockery spy.
+         *
+         * @return \Mockery\MockInterface 
+         * @static 
+         */
+        public static function spy()
+        {
+            //Method inherited from \Illuminate\Support\Facades\Facade 
+            return \Bostos\ReorderableColumns\Facades\ReorderableColumns::spy();
+        }
+
+        /**
+         * Initiate a partial mock on the facade.
+         *
+         * @return \Mockery\MockInterface 
+         * @static 
+         */
+        public static function partialMock()
+        {
+            //Method inherited from \Illuminate\Support\Facades\Facade 
+            return \Bostos\ReorderableColumns\Facades\ReorderableColumns::partialMock();
+        }
+
+        /**
+         * Initiate a mock expectation on the facade.
+         *
+         * @return \Mockery\Expectation 
+         * @static 
+         */
+        public static function shouldReceive()
+        {
+            //Method inherited from \Illuminate\Support\Facades\Facade 
+            return \Bostos\ReorderableColumns\Facades\ReorderableColumns::shouldReceive();
+        }
+
+        /**
+         * Initiate a mock expectation on the facade.
+         *
+         * @return \Mockery\Expectation 
+         * @static 
+         */
+        public static function expects()
+        {
+            //Method inherited from \Illuminate\Support\Facades\Facade 
+            return \Bostos\ReorderableColumns\Facades\ReorderableColumns::expects();
+        }
+
+        /**
+         * Hotswap the underlying instance behind the facade.
+         *
+         * @param mixed $instance
+         * @return void 
+         * @static 
+         */
+        public static function swap($instance)
+        {
+            //Method inherited from \Illuminate\Support\Facades\Facade 
+            \Bostos\ReorderableColumns\Facades\ReorderableColumns::swap($instance);
+        }
+
+        /**
+         * Determines whether a "fake" has been set as the facade instance.
+         *
+         * @return bool 
+         * @static 
+         */
+        public static function isFake()
+        {
+            //Method inherited from \Illuminate\Support\Facades\Facade 
+            return \Bostos\ReorderableColumns\Facades\ReorderableColumns::isFake();
+        }
+
+        /**
+         * Get the root object behind the facade.
+         *
+         * @return mixed 
+         * @static 
+         */
+        public static function getFacadeRoot()
+        {
+            //Method inherited from \Illuminate\Support\Facades\Facade 
+            return \Bostos\ReorderableColumns\Facades\ReorderableColumns::getFacadeRoot();
+        }
+
+        /**
+         * Clear a resolved facade instance.
+         *
+         * @param string $name
+         * @return void 
+         * @static 
+         */
+        public static function clearResolvedInstance($name)
+        {
+            //Method inherited from \Illuminate\Support\Facades\Facade 
+            \Bostos\ReorderableColumns\Facades\ReorderableColumns::clearResolvedInstance($name);
+        }
+
+        /**
+         * Clear all of the resolved instances.
+         *
+         * @return void 
+         * @static 
+         */
+        public static function clearResolvedInstances()
+        {
+            //Method inherited from \Illuminate\Support\Facades\Facade 
+            \Bostos\ReorderableColumns\Facades\ReorderableColumns::clearResolvedInstances();
+        }
+
+        /**
+         * Get the application default aliases.
+         *
+         * @return \Illuminate\Support\Collection 
+         * @static 
+         */
+        public static function defaultAliases()
+        {
+            //Method inherited from \Illuminate\Support\Facades\Facade 
+            return \Bostos\ReorderableColumns\Facades\ReorderableColumns::defaultAliases();
+        }
+
+        /**
+         * Get the application instance behind the facade.
+         *
+         * @return \Illuminate\Contracts\Foundation\Application|null 
+         * @static 
+         */
+        public static function getFacadeApplication()
+        {
+            //Method inherited from \Illuminate\Support\Facades\Facade 
+            return \Bostos\ReorderableColumns\Facades\ReorderableColumns::getFacadeApplication();
+        }
+
+        /**
+         * Set the application instance.
+         *
+         * @param \Illuminate\Contracts\Foundation\Application|null $app
+         * @return void 
+         * @static 
+         */
+        public static function setFacadeApplication($app)
+        {
+            //Method inherited from \Illuminate\Support\Facades\Facade 
+            \Bostos\ReorderableColumns\Facades\ReorderableColumns::setFacadeApplication($app);
+        }
+
+            }
+    }
+
 namespace Livewire {
     /**
      * 
@@ -24493,51 +24663,6 @@ namespace Illuminate\Database\Eloquent\Relations {
         public static function getPowerJoinExistenceCompareKey()
         {
             return \Illuminate\Database\Eloquent\Relations\Relation::getPowerJoinExistenceCompareKey();
-        }
-
-            }
-    }
-
-namespace Illuminate\Routing {
-    /**
-     * 
-     *
-     */
-    class Route {
-        /**
-         * 
-         *
-         * @see \Livewire\Features\SupportLazyLoading\SupportLazyLoading::registerRouteMacro()
-         * @param mixed $enabled
-         * @static 
-         */
-        public static function lazy($enabled = true)
-        {
-            return \Illuminate\Routing\Route::lazy($enabled);
-        }
-
-        /**
-         * 
-         *
-         * @see \Spatie\Permission\PermissionServiceProvider::registerMacroHelpers()
-         * @param mixed $roles
-         * @static 
-         */
-        public static function role($roles = [])
-        {
-            return \Illuminate\Routing\Route::role($roles);
-        }
-
-        /**
-         * 
-         *
-         * @see \Spatie\Permission\PermissionServiceProvider::registerMacroHelpers()
-         * @param mixed $permissions
-         * @static 
-         */
-        public static function permission($permissions = [])
-        {
-            return \Illuminate\Routing\Route::permission($permissions);
         }
 
             }
@@ -27366,6 +27491,84 @@ namespace Livewire\Features\SupportTesting {
             return \Livewire\Features\SupportTesting\Testable::assertTableColumnSummarizerExists($columnName, $summarizerId);
         }
 
+            }
+    }
+
+namespace Filament\Tables {
+    /**
+     * 
+     *
+     */
+    class Table {
+            }
+    }
+
+namespace Filament\Support\Components {
+    /**
+     * 
+     *
+     */
+    class ViewComponent {
+            }
+    /**
+     * 
+     *
+     */
+    class Component {
+            }
+    }
+
+namespace Illuminate\Routing {
+    /**
+     * 
+     *
+     */
+    class Route {
+        /**
+         * 
+         *
+         * @see \Livewire\Features\SupportLazyLoading\SupportLazyLoading::registerRouteMacro()
+         * @param mixed $enabled
+         * @static 
+         */
+        public static function lazy($enabled = true)
+        {
+            return \Illuminate\Routing\Route::lazy($enabled);
+        }
+
+        /**
+         * 
+         *
+         * @see \Spatie\Permission\PermissionServiceProvider::registerMacroHelpers()
+         * @param mixed $roles
+         * @static 
+         */
+        public static function role($roles = [])
+        {
+            return \Illuminate\Routing\Route::role($roles);
+        }
+
+        /**
+         * 
+         *
+         * @see \Spatie\Permission\PermissionServiceProvider::registerMacroHelpers()
+         * @param mixed $permissions
+         * @static 
+         */
+        public static function permission($permissions = [])
+        {
+            return \Illuminate\Routing\Route::permission($permissions);
+        }
+
+            }
+    }
+
+namespace Filament {
+    /**
+     * 
+     *
+     */
+    class Panel {
             }
     }
 
@@ -32879,6 +33082,7 @@ namespace  {
     class FilamentSpatieRolesPermissions extends \Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsFacade {}
     class EloquentSerialize extends \AnourValar\EloquentSerialize\Facades\EloquentSerializeFacade {}
     class FilamentShield extends \BezhanSalleh\FilamentShield\Facades\FilamentShield {}
+    class ReorderableColumns extends \Bostos\ReorderableColumns\Facades\ReorderableColumns {}
     class Livewire extends \Livewire\Livewire {}
     class Excel extends \Maatwebsite\Excel\Facades\Excel {}
 }

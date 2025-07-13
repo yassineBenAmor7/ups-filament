@@ -12,18 +12,24 @@ use Illuminate\Support\Collection;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\Column;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Schema;
+use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
+use Filament\Notifications\Notification;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Enums\FiltersLayout;
+use Filament\Forms\Components\RichEditor;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Enums\ActionsPosition;
+use Filament\Forms\Components\CheckboxList;
 use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
+
 
 abstract class BaseResource extends Resource implements HasShieldPermissions
 {
@@ -97,7 +103,8 @@ abstract class BaseResource extends Resource implements HasShieldPermissions
                  ExportBulkAction::make(),
                   static::getGenericStatusBulkAction('validate', 'is_validated'),
             static::getGenericStatusBulkAction('publish', 'publier'),
-            static::getEmailPreviewBulkAction(),
+            //static::getEmailPreviewBulkAction(),
+            static::getBulkEmailSendAction(),
             ]),
         ];
     }
@@ -221,35 +228,63 @@ protected static function getExtraFilters(): array
             ->paginated([10, 25, 50, 100]);
     }
 
-    protected static function getEmailPreviewBulkAction(): ?Tables\Actions\BulkAction
+protected static function getBulkEmailSendAction(): ?BulkAction
 {
     $model = static::getModel();
     $table = (new $model)->getTable();
 
-    return Tables\Actions\BulkAction::make('preview_emails')
-        ->label('Show Emails')
+    return BulkAction::make('send_email')
+        ->label('Send Email')
         ->icon('heroicon-o-envelope')
         ->color('info')
-        ->modalHeading('Emails of Selected Items')
-        ->modalSubmitAction(false) // Just closes the modal
-        ->modalCancelActionLabel('Close')
-        ->modalContent(function (Collection $records) {
-            $emails = $records->pluck('email')->filter()->unique();
+        ->requiresConfirmation()
+        ->modalHeading('Send Email to Selected')
+        ->form(fn (BulkAction $action): array => [
+            CheckboxList::make('selected_emails')
+                ->label('Choose Emails')
+                ->options(fn () => $action->getRecords()
+                    ->pluck('email', 'email')
+                    ->filter()
+                    ->unique()
+                    ->toArray()
+                )
+                ->default(fn () => $action->getRecords()
+                    ->pluck('email')
+                    ->filter()
+                    ->unique()
+                    ->values()
+                    ->toArray()
+                )
+                ->required(),
 
-            if ($emails->isEmpty()) {
-                return 'No valid email addresses found.';
+            RichEditor::make('email_content')
+                ->label('Email Content')
+                ->required(),
+        ])
+
+        ->action(function (Collection $records, array $data) {
+            $emails = $data['selected_emails'] ?? [];
+            $content = $data['email_content'] ?? '';
+
+            foreach ($emails as $email) {
+                Mail::raw(strip_tags($content), function ($message) use ($email) {
+                    $message->to($email)
+                        ->subject('Message from Admin');
+                });
             }
-
-            return view('filament.components.bulk-email-preview', [
-                'emails' => $emails,
-            ]);
+        Notification::make()
+                ->title('Emails Sent')
+                ->body(count($emails) . ' emails have been sent successfully.')
+                ->success()
+                ->send();
         })
+        ->modalSubmitActionLabel('Send')
+        ->modalCancelActionLabel('Cancel')
         ->deselectRecordsAfterCompletion()
         ->visible(fn (): bool =>
             Schema::hasColumn($table, 'email')
         );
 }
-
 
 
 }

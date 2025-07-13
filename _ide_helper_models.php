@@ -231,6 +231,109 @@ namespace App\Models{
  * 
  *
  * @property int $id
+ * @property string|null $email
+ * @property string|null $created_by
+ * @property string|null $updated_by
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Newsletter newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Newsletter newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Newsletter query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Newsletter whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Newsletter whereCreatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Newsletter whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Newsletter whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Newsletter whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Newsletter whereUpdatedBy($value)
+ */
+	class Newsletter extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
+ * @property int|null $author_id
+ * @property string|null $image
+ * @property string $slug
+ * @property string|null $meta_description
+ * @property string|null $meta_keywords
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $created_by
+ * @property string|null $updated_by
+ * @property int $publier
+ * @property string|null $pdf
+ * @property string|null $designation_fr
+ * @property string|null $designation_en
+ * @property string|null $designation_ar
+ * @property string|null $short_description_fr
+ * @property string|null $short_description_en
+ * @property string|null $short_description_ar
+ * @property string|null $description_fr
+ * @property string|null $description_en
+ * @property string|null $description_ar
+ * @property string|null $target
+ * @property int|null $parent_id
+ * @property string|null $display_type
+ * @property string|null $link
+ * @property string|null $files
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Page newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Page newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Page query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Page whereAuthorId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Page whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Page whereCreatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Page whereDescriptionAr($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Page whereDescriptionEn($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Page whereDescriptionFr($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Page whereDesignationAr($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Page whereDesignationEn($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Page whereDesignationFr($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Page whereDisplayType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Page whereFiles($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Page whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Page whereImage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Page whereLink($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Page whereMetaDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Page whereMetaKeywords($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Page whereParentId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Page wherePdf($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Page wherePublier($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Page whereShortDescriptionAr($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Page whereShortDescriptionEn($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Page whereShortDescriptionFr($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Page whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Page whereTarget($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Page whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Page whereUpdatedBy($value)
+ */
+	class Page extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property string $email
+ * @property string $token
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PasswordReset newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PasswordReset newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PasswordReset query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PasswordReset whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PasswordReset whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PasswordReset whereToken($value)
+ */
+	class PasswordReset extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
  * @property int|null $affichage_in_front
  * @property string|null $grade_name
  * @property int|null $grade_id
