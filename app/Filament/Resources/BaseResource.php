@@ -28,6 +28,13 @@ abstract class BaseResource extends Resource implements HasShieldPermissions
       /**
      * Get permission prefixes for all resources
      */
+    protected function log_creation() {
+        $resourceType = get_class($this);
+        $logFile = __DIR__ . '/laravel.log';
+        $date = date('Y-m-d H:i:s');
+        $log = "[$date] Création de la ressource : $resourceType | ID : {$this->id}\n";
+        file_put_contents($logFile, $log, FILE_APPEND);
+    }
     public static function getPermissionPrefixes(): array
     {
         return [
@@ -187,7 +194,12 @@ abstract class BaseResource extends Resource implements HasShieldPermissions
 
 protected static function getExtraColumns():array
 {
-    return [];
+    return [Tables\Columns\TextColumn::make('table_name')->label('Table'),
+        Tables\Columns\TextColumn::make('action')->label('Action'),
+        Tables\Columns\TextColumn::make('description')->label('Description'),
+        Tables\Columns\TextColumn::make('user_id')->label('User'),
+        Tables\Columns\TextColumn::make('created_at')->label('Date')->dateTime('d/m/Y H:i'),
+        Tables\Columns\TextColumn::make('data')->label('Données')->formatStateUsing(fn($state) => json_encode($state)),];
 }
 protected static function getExtraFilters(): array
 {
@@ -223,4 +235,3 @@ protected static function getExtraFilters(): array
 
 
 }
-

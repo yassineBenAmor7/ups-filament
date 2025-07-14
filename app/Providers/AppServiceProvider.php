@@ -3,9 +3,12 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\App;
+use Illuminate\Database\Eloquent\Model;
+use App\Observers\GlobalLogObserver;
 use Carbon\Carbon;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -21,11 +24,40 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        if (app()->environment('local')) {
+        // Nettoyage des fichiers Livewire temporaires en local
+        if (App::environment('local')) {
             $this->cleanLivewireTempFiles();
+        }
+
+        // Observation automatique de tous les modèles sauf Log
+        foreach ($this->getObservableModels() as $model) {
+            $model::observe(GlobalLogObserver::class);
         }
     }
 
+    /**
+     * Récupère dynamiquement tous les modèles de app/Models sauf Log
+     */
+    protected function getObservableModels(): array
+    {
+        $modelPath = app_path('Models');
+        $files = scandir($modelPath);
+
+        return collect($files)
+            ->filter(fn($file) => str_ends_with($file, '.php'))
+            ->map(fn($file) => '\App\Models\\' . str_replace('.php', '', $file))
+            ->filter(fn($class) =>
+                class_exists($class) &&
+                is_subclass_of($class, Model::class) &&
+                $class !== \App\Models\Log::class
+            )
+            ->values()
+            ->toArray();
+    }
+
+    /**
+     * Supprime les fichiers Livewire temporaires vieux de plus de 24h
+     */
     protected function cleanLivewireTempFiles()
     {
         $directory = storage_path('app/private/livewire-tmp');

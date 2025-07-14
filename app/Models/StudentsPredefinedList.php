@@ -29,7 +29,10 @@ class StudentsPredefinedList extends Model
     public function user(){
         return $this->belongsTo(User::class ,'cin' , 'cin');
     }
-
+    public function student()
+    {
+    return $this->belongsTo(Student::class);
+    }
     public function department(){
         return $this->sector?->department_id;
     }
