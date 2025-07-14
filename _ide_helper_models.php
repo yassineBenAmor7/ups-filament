@@ -13,7 +13,30 @@
 
 namespace App\Models{
 /**
+ * 
  *
+ * @property int $id
+ * @property string $title
+ * @property string|null $content
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $users
+ * @property-read int|null $users_count
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Article newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Article newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Article query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Article whereContent($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Article whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Article whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Article whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Article whereUpdatedAt($value)
+ */
+	class Article extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
  *
  * @property int $id
  * @property int $sector_id
@@ -40,7 +63,7 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- *
+ * 
  *
  * @property int $id
  * @property string $teacher_cin
@@ -84,7 +107,7 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- *
+ * 
  *
  * @property int $id
  * @property string|null $designation_fr
@@ -115,7 +138,7 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- *
+ * 
  *
  * @property int $id
  * @property string|null $designation_fr
@@ -146,7 +169,7 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- *
+ * 
  *
  * @property int $id
  * @property int|null $group_id
@@ -184,7 +207,7 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- *
+ * 
  *
  * @property-read \App\Models\GroupTd|null $groupTd
  * @property-read \App\Models\Teacher|null $teacher
@@ -197,7 +220,7 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- *
+ * 
  *
  * @property int $id
  * @property int|null $group_td_id
@@ -228,7 +251,7 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- *
+ * 
  *
  * @property int $id
  * @property int|null $affichage_in_front
@@ -273,7 +296,7 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- *
+ * 
  *
  * @property int $id
  * @property string|null $file
@@ -309,7 +332,7 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- *
+ * 
  *
  * @property int $id
  * @property int|null $sector_type_id
@@ -362,7 +385,7 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- *
+ * 
  *
  * @property int $id
  * @property string|null $designation_fr
@@ -395,7 +418,7 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- *
+ * 
  *
  * @property int $id
  * @property string|null $annee_bac
@@ -450,7 +473,7 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- *
+ * 
  *
  * @property int $id
  * @property string|null $numero_inscription
@@ -494,7 +517,7 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- *
+ * 
  *
  * @property int $id
  * @property int $department_id
@@ -561,7 +584,7 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- *
+ * 
  *
  * @property int $id
  * @property string $name
@@ -590,6 +613,8 @@ namespace App\Models{
  * @property string|null $folder_name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Article> $articles
+ * @property-read int|null $articles_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Permission> $permissions
@@ -633,5 +658,26 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutRole($roles, $guard = null)
  */
 	class User extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
+ * @property int $idUser
+ * @property int $idArticle
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UserArticle newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UserArticle newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UserArticle query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UserArticle whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UserArticle whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UserArticle whereIdArticle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UserArticle whereIdUser($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UserArticle whereUpdatedAt($value)
+ */
+	class UserArticle extends \Eloquent {}
 }
 

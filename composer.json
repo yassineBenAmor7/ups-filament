@@ -11,6 +11,7 @@
         "asmit/resized-column": "^1.0",
         "bezhansalleh/filament-shield": "^3.3",
         "datlechin/filament-menu-builder": "^0.7.0",
+        "doctrine/dbal": "^4.2",
         "eightynine/filament-excel-import": "^3.1",
         "filament/filament": "3.3",
         "laravel/framework": "^12.0",

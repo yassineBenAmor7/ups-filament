@@ -19,8 +19,6 @@ class EditMenuAction extends EditMenu
 
 
 
-
-
         return [
             Actions\DeleteAction::make(),
             $this->getLocationAction(),

@@ -104,6 +104,8 @@ return [
             explode(',', env('APP_PREVIOUS_KEYS', ''))
         ),
     ],
+    'queue_status' => env('QUEUE_STATUS', 'inactive'),
+
 
     /*
     |--------------------------------------------------------------------------
@@ -122,6 +124,6 @@ return [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
-    
+
 
 ];
