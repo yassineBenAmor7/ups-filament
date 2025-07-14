@@ -231,6 +231,36 @@ namespace App\Models{
  * 
  *
  * @property int $id
+ * @property int $user_id
+ * @property string $table_name
+ * @property string $action
+ * @property string $description
+ * @property array<array-key, mixed> $data
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read mixed $designation_fr
+ * @property-read string|null $numero_inscription
+ * @property-read \App\Models\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Log newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Log newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Log query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Log whereAction($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Log whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Log whereData($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Log whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Log whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Log whereTableName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Log whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Log whereUserId($value)
+ */
+	class Log extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
  * @property int|null $affichage_in_front
  * @property string|null $grade_name
  * @property int|null $grade_id
@@ -468,6 +498,7 @@ namespace App\Models{
  * @property string|null $updated_by
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Student|null $student
  * @property-read \App\Models\User|null $user
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StudentsPredefinedList newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StudentsPredefinedList newQuery()
@@ -590,6 +621,7 @@ namespace App\Models{
  * @property string|null $folder_name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $custom_fields
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Permission> $permissions
@@ -608,6 +640,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCnss($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCreatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCustomFields($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCv($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereDateNaissance($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereDescriptionAr($value)
