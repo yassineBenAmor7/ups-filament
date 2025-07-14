@@ -81,7 +81,7 @@ class AdminPanelProvider extends PanelProvider
 
         $items = [];
 
-        $menuItems = MenuItem::select('menu_items.*')
+/*        $menuItems = MenuItem::select('menu_items.*')
             ->join('menus', 'menus.id', '=', 'menu_items.menu_id')
             ->where('menus.name', 'admin')
             ->where('menus.is_visible',1)
@@ -123,7 +123,7 @@ class AdminPanelProvider extends PanelProvider
                 }
             }
         }
-
+*/
         return $items;
     }
 }

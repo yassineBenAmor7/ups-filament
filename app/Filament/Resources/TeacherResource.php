@@ -29,7 +29,7 @@ class TeacherResource extends BaseResource
         return $form
             ->schema([
                 Select::make('department_id')->nullable(),
-                TextInput::make('cin'),
+                TextInput::make('cin')->label('N°CIN'),
                 TextInput::make('nom'),
                 TextInput::make('name'),
                 TextInput::make('nb_max_encadement')->numeric(),
