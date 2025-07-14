@@ -35,7 +35,7 @@ class GlobalLogObserver
     }
 
         Log::create([
-            'user_id'     => Auth::id(),
+            'user_id'     => Auth::id() ?? 0, // 0 si pas d'utilisateur connecté
             'table_name'  => $model->getTable(),
             'action'      => $action,
             'description' => class_basename($model) . " {$action}",
