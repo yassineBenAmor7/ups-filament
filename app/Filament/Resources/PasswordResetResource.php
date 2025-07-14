@@ -12,6 +12,7 @@ use App\Filament\Resources\PasswordResetResource\Pages;
 class PasswordResetResource extends BaseResource
 {
     protected static ?string $model = PasswordReset::class;
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
     protected static array $extraPermissions = [];
 
     public static function form(Form $form): Form

@@ -13,6 +13,7 @@ use App\Filament\Resources\RegimeEtudeResource\Pages;
 class RegimeEtudeResource extends BaseResource
 {
     protected static ?string $model = RegimeEtude::class;
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static array $extraPermissions = ['publish'];
 

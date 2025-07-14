@@ -13,6 +13,7 @@ use App\Filament\Resources\RessourceSupplierResource\Pages;
 class RessourceSupplierResource extends BaseResource
 {
     protected static ?string $model = RessourceSupplier::class;
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static array $extraPermissions = [];
 

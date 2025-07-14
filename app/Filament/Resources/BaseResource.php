@@ -13,6 +13,7 @@ use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\Column;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Filament\Forms\Components\Select;
 use Illuminate\Support\Facades\Schema;
 use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Actions\EditAction;
@@ -25,7 +26,6 @@ use Filament\Tables\Enums\FiltersLayout;
 use Filament\Forms\Components\RichEditor;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Enums\ActionsPosition;
-use Filament\Forms\Components\CheckboxList;
 use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
@@ -228,6 +228,7 @@ protected static function getExtraFilters(): array
             ->paginated([10, 25, 50, 100]);
     }
 
+
 protected static function getBulkEmailSendAction(): ?BulkAction
 {
     $model = static::getModel();
@@ -240,14 +241,17 @@ protected static function getBulkEmailSendAction(): ?BulkAction
         ->requiresConfirmation()
         ->modalHeading('Send Email to Selected')
         ->form(fn (BulkAction $action): array => [
-            CheckboxList::make('selected_emails')
+            Select::make('selected_emails')
                 ->label('Choose Emails')
-                ->options(fn () => $action->getRecords()
-                    ->pluck('email', 'email')
-                    ->filter()
-                    ->unique()
-                    ->toArray()
-                )
+                ->multiple()
+                ->searchable()
+                ->preload()
+                ->getSearchResultsUsing(function (string $search) use ($model) {
+                    return $model::query()
+                        ->where('email', 'like', "%{$search}%")
+                        ->pluck('email', 'email')
+                        ->toArray();
+                })
                 ->default(fn () => $action->getRecords()
                     ->pluck('email')
                     ->filter()
@@ -261,18 +265,18 @@ protected static function getBulkEmailSendAction(): ?BulkAction
                 ->label('Email Content')
                 ->required(),
         ])
-
         ->action(function (Collection $records, array $data) {
             $emails = $data['selected_emails'] ?? [];
             $content = $data['email_content'] ?? '';
 
             foreach ($emails as $email) {
-                Mail::raw(strip_tags($content), function ($message) use ($email) {
+                Mail::html($content, function ($message) use ($email) {
                     $message->to($email)
                         ->subject('Message from Admin');
                 });
             }
-        Notification::make()
+
+            Notification::make()
                 ->title('Emails Sent')
                 ->body(count($emails) . ' emails have been sent successfully.')
                 ->success()
@@ -281,9 +285,7 @@ protected static function getBulkEmailSendAction(): ?BulkAction
         ->modalSubmitActionLabel('Send')
         ->modalCancelActionLabel('Cancel')
         ->deselectRecordsAfterCompletion()
-        ->visible(fn (): bool =>
-            Schema::hasColumn($table, 'email')
-        );
+        ->visible(fn (): bool => Schema::hasColumn($table, 'email'));
 }
 
 

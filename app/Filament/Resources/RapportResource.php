@@ -15,6 +15,7 @@ use App\Filament\Resources\RapportResource\Pages;
 class RapportResource extends BaseResource
 {
     protected static ?string $model = Rapport::class;
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static array $extraPermissions = [];
 

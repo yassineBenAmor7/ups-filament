@@ -12,6 +12,7 @@ use App\Filament\Resources\RessourceCategoryResource\Pages;
 class RessourceCategoryResource extends BaseResource
 {
     protected static ?string $model = RessourceCategory::class;
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static array $extraPermissions = [];
 

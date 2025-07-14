@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Models\Page;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Textarea;
 use App\Filament\Resources\BaseResource;
 use Filament\Forms\Components\TextInput;
@@ -27,7 +28,7 @@ class PageResource extends BaseResource
             Textarea::make('meta_keywords')->nullable(),
             TextInput::make('created_by')->nullable(),
             TextInput::make('updated_by')->nullable(),
-            TextInput::make('publier')->default(1),
+            Toggle::make('publier')->default(1),
             Textarea::make('pdf')->nullable(),
             TextInput::make('designation_fr')->nullable(),
             TextInput::make('designation_en')->nullable(),

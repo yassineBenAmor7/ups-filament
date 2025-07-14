@@ -13,6 +13,7 @@ use App\Filament\Resources\PeriodResource\Pages;
 class PeriodResource extends BaseResource
 {
     protected static ?string $model = Period::class;
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static array $extraPermissions = [];
 

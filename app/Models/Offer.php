@@ -13,9 +13,9 @@ class Offer extends Model
     ];
 
     public function offer_users(){
-        return $this->hasMany('App\OfferUser');
+        return $this->hasMany(OfferUser::class);
     }
-    public function entreprise(){
-        return $this->belongsTo('App\Entreprise');
-    }
+    // public function entreprise(){
+    //     return $this->belongsTo(Entreprise::class);
+    // }
 }
