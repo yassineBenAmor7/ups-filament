@@ -65,7 +65,7 @@ return [
 
     'temporary_file_upload' => [
         'disk' => 'local',  // Utilise le stockage local
-        'rules' => ['file', 'mimes:jpeg,png,xls,xlsx'],  // Limite à 2MB, formats JPEG/PNG
+        'rules' => ['file', 'mimes:jpeg,png', 'max:2048'],  // Limite à 2MB, formats JPEG/PNG
         'directory' => 'livewire-tmp',  // Dossier de stockage temporaire
         'middleware' => 'throttle:30,1',  // Limite à 30 requêtes par minute
         'preview_mimes' => [

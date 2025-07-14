@@ -24498,6 +24498,51 @@ namespace Illuminate\Database\Eloquent\Relations {
             }
     }
 
+namespace Illuminate\Routing {
+    /**
+     * 
+     *
+     */
+    class Route {
+        /**
+         * 
+         *
+         * @see \Livewire\Features\SupportLazyLoading\SupportLazyLoading::registerRouteMacro()
+         * @param mixed $enabled
+         * @static 
+         */
+        public static function lazy($enabled = true)
+        {
+            return \Illuminate\Routing\Route::lazy($enabled);
+        }
+
+        /**
+         * 
+         *
+         * @see \Spatie\Permission\PermissionServiceProvider::registerMacroHelpers()
+         * @param mixed $roles
+         * @static 
+         */
+        public static function role($roles = [])
+        {
+            return \Illuminate\Routing\Route::role($roles);
+        }
+
+        /**
+         * 
+         *
+         * @see \Spatie\Permission\PermissionServiceProvider::registerMacroHelpers()
+         * @param mixed $permissions
+         * @static 
+         */
+        public static function permission($permissions = [])
+        {
+            return \Illuminate\Routing\Route::permission($permissions);
+        }
+
+            }
+    }
+
 namespace Livewire\Features\SupportTesting {
     /**
      * 
@@ -27324,46 +27369,43 @@ namespace Livewire\Features\SupportTesting {
             }
     }
 
-namespace Illuminate\Routing {
+namespace Illuminate\Database\Eloquent {
     /**
      * 
      *
+     * @template TKey of array-key
+     * @template TModel of \Illuminate\Database\Eloquent\Model
+     * @extends \Illuminate\Support\Collection<TKey, TModel>
      */
-    class Route {
+    class Collection {
         /**
          * 
          *
-         * @see \Livewire\Features\SupportLazyLoading\SupportLazyLoading::registerRouteMacro()
-         * @param mixed $enabled
+         * @see \Maatwebsite\Excel\Mixins\DownloadCollectionMixin::downloadExcel()
+         * @param string $fileName
+         * @param string|null $writerType
+         * @param mixed $withHeadings
+         * @param array $responseHeaders
          * @static 
          */
-        public static function lazy($enabled = true)
+        public static function downloadExcel($fileName, $writerType = null, $withHeadings = false, $responseHeaders = [])
         {
-            return \Illuminate\Routing\Route::lazy($enabled);
+            return \Illuminate\Database\Eloquent\Collection::downloadExcel($fileName, $writerType, $withHeadings, $responseHeaders);
         }
 
         /**
          * 
          *
-         * @see \Spatie\Permission\PermissionServiceProvider::registerMacroHelpers()
-         * @param mixed $roles
+         * @see \Maatwebsite\Excel\Mixins\StoreCollectionMixin::storeExcel()
+         * @param string $filePath
+         * @param string|null $disk
+         * @param string|null $writerType
+         * @param mixed $withHeadings
          * @static 
          */
-        public static function role($roles = [])
+        public static function storeExcel($filePath, $disk = null, $writerType = null, $withHeadings = false)
         {
-            return \Illuminate\Routing\Route::role($roles);
-        }
-
-        /**
-         * 
-         *
-         * @see \Spatie\Permission\PermissionServiceProvider::registerMacroHelpers()
-         * @param mixed $permissions
-         * @static 
-         */
-        public static function permission($permissions = [])
-        {
-            return \Illuminate\Routing\Route::permission($permissions);
+            return \Illuminate\Database\Eloquent\Collection::storeExcel($filePath, $disk, $writerType, $withHeadings);
         }
 
             }

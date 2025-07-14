@@ -2,8 +2,6 @@
 
 namespace App\Providers;
 
-use App\Models\Article;
-use App\Models\User;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
@@ -23,8 +21,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-
-
         if (app()->environment('local')) {
             $this->cleanLivewireTempFiles();
         }
