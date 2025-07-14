@@ -23186,6 +23186,16 @@ namespace BezhanSalleh\FilamentShield\Facades {
             }
     }
 
+namespace Leandrocfe\FilamentApexCharts\Facades {
+    /**
+     * 
+     *
+     * @see \Leandrocfe\FilamentApexCharts\FilamentApexCharts
+     */
+    class FilamentApexCharts {
+            }
+    }
+
 namespace Livewire {
     /**
      * 
@@ -32879,6 +32889,7 @@ namespace  {
     class FilamentSpatieRolesPermissions extends \Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsFacade {}
     class EloquentSerialize extends \AnourValar\EloquentSerialize\Facades\EloquentSerializeFacade {}
     class FilamentShield extends \BezhanSalleh\FilamentShield\Facades\FilamentShield {}
+    class FilamentApexCharts extends \Leandrocfe\FilamentApexCharts\Facades\FilamentApexCharts {}
     class Livewire extends \Livewire\Livewire {}
     class Excel extends \Maatwebsite\Excel\Facades\Excel {}
 }
