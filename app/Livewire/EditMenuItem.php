@@ -8,7 +8,7 @@ use Datlechin\FilamentMenuBuilder\Livewire\MenuItems;
 use Datlechin\FilamentMenuBuilder\Models\MenuItem;
 use Filament\Actions\Action;
 use Filament\Facades\Filament;
-use Filament\Forms\Components\Card;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Component as FormComponent;
 use Filament\Forms\Components\FileUpload;
@@ -166,7 +166,7 @@ class EditMenuItem extends MenuItems
                 ->label('Publier')
                 ->default(true)
                 ->helperText('Visible sur le site'),
-            Card::make()
+            Section::make()
                 ->schema([
                     Placeholder::make('')
                         ->content('Link item :')

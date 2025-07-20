@@ -231,7 +231,7 @@ namespace App\Models{
  * 
  *
  * @property int $id
- * @property int $user_id
+ * @property int|null $user_id
  * @property string $table_name
  * @property string $action
  * @property string $description
@@ -240,7 +240,7 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read mixed $designation_fr
  * @property-read string|null $numero_inscription
- * @property-read \App\Models\User $user
+ * @property-read \App\Models\User|null $user
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Log newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Log newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Log query()
@@ -604,7 +604,6 @@ namespace App\Models{
  * @property string|null $name_ar
  * @property string|null $phone
  * @property string|null $cin
- * @property string|null $avatar
  * @property string|null $nationalite
  * @property string|null $genre
  * @property string|null $address
@@ -622,6 +621,7 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $custom_fields
+ * @property string|null $avatar_url
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Permission> $permissions
@@ -635,7 +635,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User query()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User role($roles, $guard = null, $without = false)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereAddress($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereAvatar($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereAvatarUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCin($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCnss($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCreatedAt($value)
@@ -665,6 +665,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutPermission($permissions)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutRole($roles, $guard = null)
  */
-	class User extends \Eloquent {}
+	class User extends \Eloquent implements \Filament\Models\Contracts\HasAvatar {}
 }
 
