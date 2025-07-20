@@ -23,18 +23,43 @@ class AppServiceProvider extends ServiceProvider
      * Bootstrap any application services.
      */
     public function boot(): void
-    {
-        // Nettoyage des fichiers Livewire temporaires en local
-        if (App::environment('local')) {
-            $this->cleanLivewireTempFiles();
-        }
-
-        // Observation automatique de tous les modèles sauf Log
-        foreach ($this->getObservableModels() as $model) {
-            $model::observe(GlobalLogObserver::class);
-        }
+{
+    // Configuration existante
+    if (App::environment('local')) {
+        $this->cleanLivewireTempFiles();
     }
 
+    foreach ($this->getObservableModels() as $model) {
+        $model::observe(GlobalLogObserver::class);
+    }
+
+    // Ajoutez cette configuration pour Filament Edit Profile
+    $this->configureFilamentEditProfile();
+}
+
+protected function configureFilamentEditProfile(): void
+{
+    if (!class_exists(\Joaopaulolndev\FilamentEditProfile\FilamentEditProfile::class)) {
+        return;
+    }
+
+    // Configuration spécifique pour la v1.0
+    config([
+        'filament-edit-profile.avatar' => [
+            'enabled' => true,
+            'disk' => 'public',
+            'directory' => 'users/avatars',
+            'rules' => [
+                'image',
+                'mimes:jpeg,png,jpg,gif,webp',
+                'max:2048',
+                'dimensions:min_width=100,min_height=100',
+            ],
+            'visibility' => 'public',
+            'column' => 'avatar_url',
+        ],
+    ]);
+}
     /**
      * Récupère dynamiquement tous les modèles de app/Models sauf Log
      */

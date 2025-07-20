@@ -9,12 +9,12 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
-{
-   Schema::table('users', function (Blueprint $table) {
-});
-}
-
+    public function up(): void
+    {
+        Schema::table('users', function (Blueprint $table) {
+            $table->string(config('filament-edit-profile.avatar_column', 'avatar_url'))->nullable();
+        });
+    }
 
     /**
      * Reverse the migrations.
@@ -22,8 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-                    $table->dropColumn('avatar_url');
-
+            $table->dropColumn(config('filament-edit-profile.avatar_column', 'avatar_url'));
         });
     }
 };

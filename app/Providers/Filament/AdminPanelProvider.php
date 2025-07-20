@@ -1,12 +1,10 @@
 <?php
 
 namespace App\Providers\Filament;
-
 use Asmit\ResizedColumn\ResizedColumnPlugin;
 use App\Filament\Plugins\MenuResource;
 use Datlechin\FilamentMenuBuilder\FilamentMenuBuilderPlugin;
 use Datlechin\FilamentMenuBuilder\Models\Menu;
-use Datlechin\FilamentMenuBuilder\Models\MenuItem;
 use Filament\Http\Middleware\Authenticate;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -26,11 +24,17 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
+use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
+use Datlechin\FilamentMenuBuilder\Models\MenuItem as BuilderMenuItem; 
+use Datlechin\FilamentMenuBuilder\Models\MenuItem;
+
 class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
         return $panel
+            ->Profile()
             ->default()
             ->id('admin')
             ->path('admin')
@@ -59,12 +63,37 @@ class AdminPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
             ])
-            ->plugins([
-                FilamentShieldPlugin::make(),
-                ResizedColumnPlugin::make()
-                ->preserveONDB(),
-
+            ->authMiddleware([
+                Authenticate::class
             ])
+            ->plugins([
+                
+    FilamentEditProfilePlugin::make()
+        ->slug('my-profile')
+        ->setTitle('My Profile')
+        ->setNavigationLabel('My Profile')
+        ->setNavigationGroup('Group Profile')
+        ->setIcon('heroicon-o-user')
+        ->setSort(10)
+        ->shouldShowDeleteAccountForm(false)
+        ->shouldShowSanctumTokens()
+        ->shouldShowBrowserSessionsForm()
+        ->shouldShowAvatarForm(
+    value: true,
+    directory: 'users/avatars', 
+    rules: 'mimes:jpeg,png,jpg|max:1024' 
+        ),
+    FilamentShieldPlugin::make(),
+    ResizedColumnPlugin::make()
+        ->preserveONDB(),
+])
+            ->userMenuItems([
+    'profile' => \Filament\Navigation\MenuItem::make()
+        ->label(fn() => auth()->name ?? 'Profil')
+        ->url(fn (): string => EditProfilePage::getUrl())
+        ->icon('heroicon-m-user-circle'),
+])
+
             ->navigationItems($this->getNavigation())
             ->authMiddleware([
                 Authenticate::class,
@@ -88,7 +117,7 @@ class AdminPanelProvider extends PanelProvider
             ->orderBy('order')
             ->get();
 
-      //  \Log::info($menuItems);
+        //\Log::info($menuItems);
 
         $top = $menuItems->whereNull('parent_id');
 
@@ -112,7 +141,9 @@ class AdminPanelProvider extends PanelProvider
                             ->url($grandchild->url)
                             ->icon($grandchild->icon ?"heroicon-".$grandchild->icon: 'heroicon-o-link')
                             ->group($parent->title)
-                            ->label('  ' . $grandchild->title)
+                            // Remplacé car MenuItem n'a pas de méthode label()
+// ->label('  ' . $grandchild->title)
+
                             ->sort(
                                 $parent->order * 1000 +
                                 $child->order   * 10 +

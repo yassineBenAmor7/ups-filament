@@ -9,3 +9,7 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+.filament-avatar {
+    border: 2px solid #3b82f6 !important; /* Bleu Filament */
+    background-size: cover !important;
+}
