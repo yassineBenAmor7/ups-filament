@@ -17,6 +17,7 @@ class LogResource extends BaseResource
             ->columns(static::getExtraColumns());
     }
 
+    // test
     protected static function getExtraColumns(): array
     {
         return [
