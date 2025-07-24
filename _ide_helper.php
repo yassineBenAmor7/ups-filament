@@ -23186,6 +23186,72 @@ namespace BezhanSalleh\FilamentShield\Facades {
             }
     }
 
+namespace Intervention\Image\Facades {
+    /**
+     * 
+     *
+     */
+    class Image {
+        /**
+         * Overrides configuration settings
+         *
+         * @param array $config
+         * @return self 
+         * @static 
+         */
+        public static function configure($config = [])
+        {
+            /** @var \Intervention\Image\ImageManager $instance */
+            return $instance->configure($config);
+        }
+
+        /**
+         * Initiates an Image instance from different input types
+         *
+         * @param mixed $data
+         * @return \Intervention\Image\Image 
+         * @static 
+         */
+        public static function make($data)
+        {
+            /** @var \Intervention\Image\ImageManager $instance */
+            return $instance->make($data);
+        }
+
+        /**
+         * Creates an empty image canvas
+         *
+         * @param int $width
+         * @param int $height
+         * @param mixed $background
+         * @return \Intervention\Image\Image 
+         * @static 
+         */
+        public static function canvas($width, $height, $background = null)
+        {
+            /** @var \Intervention\Image\ImageManager $instance */
+            return $instance->canvas($width, $height, $background);
+        }
+
+        /**
+         * Create new cached image and run callback
+         * (requires additional package intervention/imagecache)
+         *
+         * @param \Closure $callback
+         * @param int $lifetime
+         * @param boolean $returnObj
+         * @return \Image 
+         * @static 
+         */
+        public static function cache($callback, $lifetime = null, $returnObj = false)
+        {
+            /** @var \Intervention\Image\ImageManager $instance */
+            return $instance->cache($callback, $lifetime, $returnObj);
+        }
+
+            }
+    }
+
 namespace Livewire {
     /**
      * 
@@ -24493,6 +24559,30 @@ namespace Illuminate\Database\Eloquent\Relations {
         public static function getPowerJoinExistenceCompareKey()
         {
             return \Illuminate\Database\Eloquent\Relations\Relation::getPowerJoinExistenceCompareKey();
+        }
+
+            }
+    }
+
+namespace Illuminate\Database\Eloquent\Factories {
+    /**
+     * 
+     *
+     * @template TModel of \Illuminate\Database\Eloquent\Model
+     * @method $this trashed()
+     */
+    class Factory {
+        /**
+         * 
+         *
+         * @see \Spatie\Translatable\TranslatableServiceProvider::packageRegistered()
+         * @param array|string $locales
+         * @param mixed|null $value
+         * @static 
+         */
+        public static function translations($locales, $value)
+        {
+            return \Illuminate\Database\Eloquent\Factories\Factory::translations($locales, $value);
         }
 
             }
@@ -32879,6 +32969,7 @@ namespace  {
     class FilamentSpatieRolesPermissions extends \Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsFacade {}
     class EloquentSerialize extends \AnourValar\EloquentSerialize\Facades\EloquentSerializeFacade {}
     class FilamentShield extends \BezhanSalleh\FilamentShield\Facades\FilamentShield {}
+    class Image extends \Intervention\Image\Facades\Image {}
     class Livewire extends \Livewire\Livewire {}
     class Excel extends \Maatwebsite\Excel\Facades\Excel {}
 }

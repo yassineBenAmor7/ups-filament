@@ -8,7 +8,10 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Database\Eloquent\Model;
 use App\Observers\GlobalLogObserver;
 use Carbon\Carbon;
-
+use App\Filament\Facades\Designer;
+use LaraZeus\Bolt\Filament\Resources\FormResource;
+use App\Observers\ResponseObserver;
+use App\Models\Formulaire\Response;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -16,7 +19,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+         FormResource::getBoltFormSchemaUsing(fn(): array => Designer::getMainFormSchema());
     }
 
     /**
@@ -33,6 +36,8 @@ class AppServiceProvider extends ServiceProvider
         foreach ($this->getObservableModels() as $model) {
             $model::observe(GlobalLogObserver::class);
         }
+
+         Response::observe(ResponseObserver::class);
     }
 
     /**

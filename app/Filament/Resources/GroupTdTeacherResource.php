@@ -2,9 +2,8 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\GroupeTdTeacherResource\Pages;
-use App\Filament\Resources\GroupeTdTeacherResource\RelationManagers;
-use App\Models\GroupeTdTeacher;
+use App\Filament\Resources\GroupTdTeacherResource\Pages;
+use App\Filament\Resources\GroupTdTeacherResource\RelationManagers;
 use App\Models\GroupTdTeacher;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -20,7 +19,7 @@ use Filament\Tables\Actions\BulkActionGroup;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class GroupeTdTeacherResource extends BaseResource
+class GroupTdTeacherResource extends BaseResource
 {
     protected static ?string $model = GroupTdTeacher::class;
 
@@ -66,9 +65,9 @@ public static function table(Table $table): Table
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListGroupeTdTeachers::route('/'),
-            'create' => Pages\CreateGroupeTdTeacher::route('/create'),
-            'edit' => Pages\EditGroupeTdTeacher::route('/{record}/edit'),
+            'index' => Pages\ListGroupTdTeachers::route('/'),
+            'create' => Pages\CreateGroupTdTeacher::route('/create'),
+            'edit' => Pages\EditGroupTdTeacher::route('/{record}/edit'),
         ];
     }
 }

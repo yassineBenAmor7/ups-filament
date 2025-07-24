@@ -26,6 +26,9 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use LaraZeus\Bolt\BoltPlugin;
+use Filament\SpatieLaravelTranslatablePlugin;
+
 class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
@@ -63,7 +66,10 @@ class AdminPanelProvider extends PanelProvider
                 FilamentShieldPlugin::make(),
                 ResizedColumnPlugin::make()
                 ->preserveONDB(),
-
+                SpatieLaravelTranslatablePlugin::make()->defaultLocales([config('app.locale')]),
+                BoltPlugin::make()
+                 ->navigationGroupLabel('Form Builder')
+                 
             ])
             ->navigationItems($this->getNavigation())
             ->authMiddleware([

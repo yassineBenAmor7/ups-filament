@@ -82,6 +82,308 @@ namespace App\Models{
 	class Department extends \Eloquent {}
 }
 
+namespace App\Models\Formulaire{
+/**
+ * 
+ *
+ * @property int $id
+ * @property array<array-key, mixed> $name
+ * @property string $slug
+ * @property bool $is_active
+ * @property array<array-key, mixed>|null $description
+ * @property string|null $logo
+ * @property int $ordering
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property int|null $created_by
+ * @property int|null $updated_by
+ * @property-read \App\Models\User|null $creator
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Formulaire\Form> $forms
+ * @property-read int|null $forms_count
+ * @property-read string $last_updated
+ * @property-read mixed $logo_url
+ * @property-read mixed $translations
+ * @property-read \App\Models\User|null $updater
+ * @method static \LaraZeus\Bolt\Database\Factories\CategoryFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category whereCreatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category whereIsActive($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category whereJsonContainsLocale(string $column, string $locale, ?mixed $value, string $operand = '=')
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category whereJsonContainsLocales(string $column, array $locales, ?mixed $value, string $operand = '=')
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category whereLocale(string $column, string $locale)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category whereLocales(string $column, array $locales)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category whereLogo($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category whereOrdering($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category withoutTrashed()
+ */
+	class Category extends \Eloquent {}
+}
+
+namespace App\Models\Formulaire{
+/**
+ * 
+ *
+ * @property int $id
+ * @property int $form_id
+ * @property int $field_id
+ * @property int|null $section_id
+ * @property array<array-key, mixed> $name
+ * @property string $type
+ * @property string $label
+ * @property string|null $placeholder
+ * @property array<array-key, mixed>|null $options
+ * @property string|null $default_value
+ * @property int $is_required
+ * @property int $is_disabled
+ * @property int $is_visible
+ * @property int|null $ordering
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \App\Models\User|null $creator
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \LaraZeus\Bolt\Models\FieldResponse> $fieldResponses
+ * @property-read int|null $field_responses_count
+ * @property-read \LaraZeus\Bolt\Models\Section|null $section
+ * @property-read mixed $translations
+ * @property-read \App\Models\User|null $updater
+ * @method static \LaraZeus\Bolt\Database\Factories\FieldFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Field newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Field newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Field onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Field query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Field whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Field whereDefaultValue($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Field whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Field whereFieldId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Field whereFormId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Field whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Field whereIsDisabled($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Field whereIsRequired($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Field whereIsVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Field whereJsonContainsLocale(string $column, string $locale, ?mixed $value, string $operand = '=')
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Field whereJsonContainsLocales(string $column, array $locales, ?mixed $value, string $operand = '=')
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Field whereLabel($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Field whereLocale(string $column, string $locale)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Field whereLocales(string $column, array $locales)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Field whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Field whereOptions($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Field whereOrdering($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Field wherePlaceholder($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Field whereSectionId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Field whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Field whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Field withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Field withoutTrashed()
+ */
+	class Field extends \Eloquent {}
+}
+
+namespace App\Models\Formulaire{
+/**
+ * 
+ *
+ * @property int $id
+ * @property array<array-key, mixed> $name
+ * @property string $slug
+ * @property array<array-key, mixed>|null $description
+ * @property bool $is_active
+ * @property int $ordering
+ * @property string|null $action
+ * @property string $method
+ * @property bool $accept_files
+ * @property bool $has_decision
+ * @property string|null $target
+ * @property bool $single_submission
+ * @property \Illuminate\Support\Carbon|null $start_date
+ * @property \Illuminate\Support\Carbon|null $end_date
+ * @property string|null $header
+ * @property string|null $footer
+ * @property string|null $supplementary_image_1
+ * @property string|null $supplementary_image_2
+ * @property string|null $image_1_position
+ * @property string|null $image_2_position
+ * @property array<array-key, mixed>|null $response_template
+ * @property string|null $response_header
+ * @property string|null $response_footer
+ * @property int $user_id
+ * @property int|null $category_id
+ * @property int|null $created_by
+ * @property int|null $updated_by
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \App\Models\Formulaire\Category|null $category
+ * @property-read \App\Models\User|null $creator
+ * @property-read mixed $date_available
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Formulaire\Field> $fields
+ * @property-read int|null $fields_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \LaraZeus\Bolt\Models\FieldResponse> $fieldsResponses
+ * @property-read int|null $fields_responses_count
+ * @property-read string $is_active_desc
+ * @property-read string $last_updated
+ * @property-read mixed $need_login
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Formulaire\Response> $responses
+ * @property-read int|null $responses_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \LaraZeus\Bolt\Models\Section> $sections
+ * @property-read int|null $sections_count
+ * @property-read mixed $slug_url
+ * @property-read mixed $translations
+ * @property-read \App\Models\User|null $updater
+ * @property-read \App\Models\User $user
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Formulaire\WorkflowStep> $workflowSteps
+ * @property-read int|null $workflow_steps_count
+ * @method static \LaraZeus\Bolt\Database\Factories\FormFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Form newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Form newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Form onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Form query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereAcceptFiles($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereAction($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereCategoryId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereCreatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereEndDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereFooter($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereHasDecision($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereHeader($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereImage1Position($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereImage2Position($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereIsActive($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereJsonContainsLocale(string $column, string $locale, ?mixed $value, string $operand = '=')
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereJsonContainsLocales(string $column, array $locales, ?mixed $value, string $operand = '=')
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereLocale(string $column, string $locale)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereLocales(string $column, array $locales)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereMethod($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereOrdering($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereResponseFooter($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereResponseHeader($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereResponseTemplate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereSingleSubmission($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereStartDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereSupplementaryImage1($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereSupplementaryImage2($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereTarget($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Form withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Form withoutTrashed()
+ */
+	class Form extends \Eloquent {}
+}
+
+namespace App\Models\Formulaire{
+/**
+ * 
+ *
+ * @property-read \App\Models\Formulaire\Form|null $form
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormPermission newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormPermission newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormPermission query()
+ */
+	class FormPermission extends \Eloquent {}
+}
+
+namespace App\Models\Formulaire{
+/**
+ * 
+ *
+ * @property int $id
+ * @property int $form_id
+ * @property int|null $user_id
+ * @property string $status
+ * @property string|null $confirmation_code
+ * @property \Illuminate\Support\Carbon|null $submitted_at
+ * @property \Illuminate\Support\Carbon|null $processed_at
+ * @property string|null $notes
+ * @property string|null $paper_response
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property int|null $created_by
+ * @property int|null $updated_by
+ * @property-read \App\Models\User|null $creator
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \LaraZeus\Bolt\Models\FieldResponse> $fieldsResponses
+ * @property-read int|null $fields_responses_count
+ * @property-read \App\Models\Formulaire\Form $form
+ * @property-read string $last_updated
+ * @property-read \App\Models\User|null $updater
+ * @property-read \App\Models\User|null $user
+ * @method static \LaraZeus\Bolt\Database\Factories\ResponseFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Response newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Response newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Response onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Response query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Response whereConfirmationCode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Response whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Response whereCreatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Response whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Response whereFormId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Response whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Response whereNotes($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Response wherePaperResponse($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Response whereProcessedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Response whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Response whereSubmittedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Response whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Response whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Response whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Response withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Response withoutTrashed()
+ */
+	class Response extends \Eloquent {}
+}
+
+namespace App\Models\Formulaire{
+/**
+ * 
+ *
+ * @property-read \App\Models\User|null $approver
+ * @property-read \App\Models\Formulaire\Response|null $response
+ * @property-read \App\Models\User|null $updater
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ResponseApproval newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ResponseApproval newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ResponseApproval query()
+ */
+	class ResponseApproval extends \Eloquent {}
+}
+
+namespace App\Models\Formulaire{
+/**
+ * 
+ *
+ * @property-read \App\Models\User|null $creator
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Formulaire\Form> $forms
+ * @property-read int|null $forms_count
+ * @property-read \App\Models\User|null $updater
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowStep newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowStep newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowStep onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowStep query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowStep withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkflowStep withoutTrashed()
+ */
+	class WorkflowStep extends \Eloquent {}
+}
+
 namespace App\Models{
 /**
  * 
@@ -224,6 +526,36 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|GroupTp whereUpdatedBy($value)
  */
 	class GroupTp extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
+ * @property int $user_id
+ * @property string $table_name
+ * @property string $action
+ * @property string $description
+ * @property array<array-key, mixed> $data
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read mixed $designation_fr
+ * @property-read string|null $numero_inscription
+ * @property-read \App\Models\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Log newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Log newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Log query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Log whereAction($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Log whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Log whereData($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Log whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Log whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Log whereTableName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Log whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Log whereUserId($value)
+ */
+	class Log extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -468,6 +800,7 @@ namespace App\Models{
  * @property string|null $updated_by
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Student|null $student
  * @property-read \App\Models\User|null $user
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StudentsPredefinedList newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StudentsPredefinedList newQuery()
@@ -590,6 +923,7 @@ namespace App\Models{
  * @property string|null $folder_name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read string $full_name
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Permission> $permissions

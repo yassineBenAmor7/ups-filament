@@ -12,13 +12,16 @@
         "bezhansalleh/filament-shield": "^3.3",
         "datlechin/filament-menu-builder": "^0.7.0",
         "filament/filament": "3.3",
+        "filament/spatie-laravel-translatable-plugin": "^3.3",
+        "lara-zeus/bolt": "^3.0",
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
         "livewire/livewire": "^3.6",
         "owenvoke/blade-fontawesome": "^2.9",
         "pxlrbt/filament-excel": "^2.4",
         "spatie/laravel-permission": "^6.20",
-        "spatie/laravel-query-builder": "^6.3"
+        "spatie/laravel-query-builder": "^6.3",
+        "spatie/laravel-translatable": "^6.11"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^3.5",
