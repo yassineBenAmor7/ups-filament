@@ -82,7 +82,10 @@ class AdminPanelProvider extends PanelProvider
     value: true,
     directory: 'users/avatars', 
     rules: 'mimes:jpeg,png,jpg|max:1024' 
-        ),
+        )
+        ->customProfileComponents([
+            \App\Livewire\CustomProfileComponent::class,
+        ]),
     FilamentShieldPlugin::make(),
     ResizedColumnPlugin::make()
         ->preserveONDB(),

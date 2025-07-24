@@ -601,6 +601,14 @@ namespace App\Models{
  * @property string $password
  * @property string|null $remember_token
  * @property bool $is_validated
+ * @property string|null $created_by
+ * @property string|null $updated_by
+ * @property bool $publier
+ * @property string|null $folder_name
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property array<array-key, mixed>|null $custom_fields
+ * @property string|null $avatar_url
  * @property string|null $name_ar
  * @property string|null $phone
  * @property string|null $cin
@@ -608,20 +616,12 @@ namespace App\Models{
  * @property string|null $genre
  * @property string|null $address
  * @property string|null $cnss
- * @property string|null $date_naissance
+ * @property \Illuminate\Support\Carbon|null $date_naissance
  * @property string|null $lieu_naissance
  * @property string|null $cv
  * @property string|null $description_ar
  * @property string|null $description_en
  * @property string|null $description_fr
- * @property string|null $created_by
- * @property string|null $updated_by
- * @property bool $publier
- * @property string|null $folder_name
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property string|null $custom_fields
- * @property string|null $avatar_url
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Permission> $permissions

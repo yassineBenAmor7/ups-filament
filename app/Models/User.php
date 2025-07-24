@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use Filament\Models\Contracts\HasAvatar;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,11 +16,23 @@ class User extends Authenticatable implements HasAvatar
 
     protected $fillable = [
         'name',
+        'name_ar',
         'email',
         'password',
         'avatar_url',
         'role_id',
         'cin',
+        'phone',
+        'nationalite',
+        'genre',
+        'address',
+        'cnss',
+        'date_naissance',
+        'lieu_naissance',
+        'cv',
+        'description_ar',
+        'description_en',
+        'description_fr',
         'is_validated',
         'publier',
         'custom_fields',
@@ -38,39 +51,36 @@ class User extends Authenticatable implements HasAvatar
             'is_validated' => 'boolean',
             'publier' => 'boolean',
             'custom_fields' => 'array',
+            'date_naissance' => 'date',
         ];
     }
-  public function getFilamentAvatarUrl(): ?string
+
+    public function getFilamentAvatarUrl(): ?string
     {
         $avatarColumn = config('filament-edit-profile.avatar_column', 'avatar_url');
         return $this->$avatarColumn ? Storage::url($this->$avatarColumn) : null;
     }
 
-
-    // Relations et méthodes métier existantes...
     public function department()
     {
-        if($this->isRole('Enseignant')) {
+        if ($this->isRole('Enseignant')) {
             return $this->teacher?->department;
-        } else if($this->isRole('Etudiant')) {
+        } elseif ($this->isRole('Etudiant')) {
             $stp = StudentsPredefinedList::where('cin', $this->cin)->first();
-            if($stp) {
+            if ($stp) {
                 return $stp->group?->sector?->department;
             }
         }
         return null;
     }
-protected static function booted()
-{
-    static::saving(function ($user) {
-        if ($user->avatar_url && is_string($user->avatar_url)) {
-            $user->avatar_url = preg_replace('/[\x00-\x1F\x7F]/u', '', $user->avatar_url);
-            $user->avatar_url = rtrim($user->avatar_url, '/');
-        }
-    });
+
+    protected static function booted()
+    {
+        static::saving(function ($user) {
+            if ($user->avatar_url && is_string($user->avatar_url)) {
+                $user->avatar_url = preg_replace('/[\x00-\x1F\x7F]/u', '', $user->avatar_url);
+                $user->avatar_url = rtrim($user->avatar_url, '/');
+            }
+        });
+    }
 }
-
-
-}
-    // Autres relations commentées...
-

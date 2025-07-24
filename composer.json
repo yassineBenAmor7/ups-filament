@@ -19,6 +19,8 @@
         "laravel/tinker": "^2.10.1",
         "livewire/livewire": "^3.6",
         "owenvoke/blade-fontawesome": "^2.9",
+        "patrickschur/language-detection": "^5.3",
+        "pear/text_languagedetect": "^1.0",
         "pxlrbt/filament-excel": "^2.4",
         "spatie/laravel-permission": "^6.20",
         "spatie/laravel-query-builder": "^6.3",

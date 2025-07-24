@@ -65,11 +65,11 @@ return [
 
     'temporary_file_upload' => [
         'disk' => 'public',  // Utilise le stockage local
-        'rules' => ['file', 'mimes:jpeg,png', 'max:2048'],  // Limite à 2MB, formats JPEG/PNG
+        'rules' => 'file',  // Limite à 2MB, formats JPEG/PNG
         'directory' => 'livewire-tmp',  // Dossier de stockage temporaire
         'middleware' => 'throttle:30,1',  // Limite à 30 requêtes par minute
         'preview_mimes' => [
-            'png', 'jpg', 'jpeg', 'gif', 'webp'  // Formats de prévisualisation
+            'png', 'jpg', 'jpeg', 'gif', 'webp', 'pdf'  // Formats de prévisualisation
         ],
         'expiration' => 5,  // Expiration en MINUTES (1 minute)
         'cleanup' => true,  // Active le nettoyage automatique
