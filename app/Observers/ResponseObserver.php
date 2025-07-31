@@ -1,6 +1,7 @@
 <?php 
 namespace App\Observers;
 use App\Models\Formulaire\Response;
+use App\Models\Formulaire\ResponseApproval;
 class ResponseObserver
 {
     public function created(Response $response)

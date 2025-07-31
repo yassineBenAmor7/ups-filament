@@ -76,8 +76,10 @@ return new class extends Migration {
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->json('options')->nullable();
+            $table->json('extensions')->nullable();
             $table->timestamps();
-            $table->softDeletes();
+             $table->softDeletes();
+           
         });
 
         // ======================
@@ -96,7 +98,8 @@ return new class extends Migration {
             $table->boolean('borderless')->default(false);
             $table->json('options')->nullable();
             $table->timestamps();
-            $table->softDeletes();
+             $table->softDeletes();
+          
         });
 
         // ======================
@@ -119,7 +122,7 @@ return new class extends Migration {
             $table->boolean('is_visible')->default(true);
             $table->unsignedInteger('ordering')->nullable();
     $table->timestamps();
-    $table->softDeletes();
+ $table->softDeletes();
         });
 
        
@@ -158,7 +161,7 @@ return new class extends Migration {
       
         ->constrained(config('zeus-bolt.table-prefix') . 'forms')
         ->onDelete('cascade');
-            $table->text('value')->nullable();
+            $table->text('response')->nullable();
              $table->unsignedBigInteger('author_id')->nullable();
 
              $table->softDeletes();
@@ -176,7 +179,7 @@ return new class extends Migration {
             $table->string('name');
             $table->text('description')->nullable();
             $table->timestamps();
-            $table->softDeletes();
+           
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
         });

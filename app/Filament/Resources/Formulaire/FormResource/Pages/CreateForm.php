@@ -4,7 +4,7 @@ namespace App\Filament\Resources\Formulaire\FormResource\Pages;
 
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
-use App\BoltPlugin;
+use LaraZeus\Bolt\BoltPlugin;
 use App\Filament\Resources\Formulaire\FormResource;
 
 class CreateForm extends CreateRecord
@@ -24,4 +24,7 @@ class CreateForm extends CreateRecord
             Actions\LocaleSwitcher::make(),
         ];
     }
+   
+
+
 }

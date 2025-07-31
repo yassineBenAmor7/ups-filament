@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class FormPermission extends Model
 {
-     protected $table = 'bolt_form_permissions';
+     protected $table = 'nachd_form_permissions';
     
     protected $fillable = [
         'form_id',

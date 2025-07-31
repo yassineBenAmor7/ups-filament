@@ -7,7 +7,7 @@ use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Enums\ActionsPosition;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
-use App\BoltPlugin;
+use LaraZeus\Bolt\BoltPlugin;
 use App\Filament\Actions\SetResponseStatus;
 use App\Filament\Resources\Formulaire\FormResource;
 use App\Models\Formulaire\Form;

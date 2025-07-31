@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Filament\Resources\Formulaire;
+use Filament\Navigation\NavigationItem;
+use Illuminate\Support\Facades\Log;
+
 use LaraZeus\Bolt\Filament\Resources\BoltResource; 
 use Closure;
 use Filament\Forms\Form;
@@ -36,7 +39,7 @@ use LaraZeus\Bolt\Filament\Actions\ReplicateFormAction;
 use App\Filament\Resources\Formulaire\FormResource\Pages;
 use App\Models\Formulaire\Form as ZeusForm;
 use LaraZeus\ListGroup\Infolists\ListEntry;
-
+use App\Filament\Handler\FormWorkflowHandler;
 class FormResource extends BoltResource
 {
     use HasOptions;
@@ -130,6 +133,7 @@ class FormResource extends BoltResource
     public static function form(Form $form): Form
     {
         return $form->schema(static::$boltFormSchema ?? static::getMainFormSchema());
+      
     }
 
     public function getBoltFormSchema(): array | Closure | null
@@ -214,12 +218,7 @@ class FormResource extends BoltResource
             'viewResponse' => Pages\ViewResponse::route('/{record}/response/{responseID}'),
         ];
 
-        if (Bolt::hasPro()) {
-            // @phpstan-ignore-next-line
-            $pages['prefilled'] = \LaraZeus\BoltPro\Livewire\PrefilledForm::route('/{record}/prefilled');
-            // @phpstan-ignore-next-line
-            $pages['share'] = \LaraZeus\BoltPro\Livewire\ShareForm::route('/{record}/share');
-        }
+       
 
         return $pages;
     }
@@ -233,10 +232,7 @@ class FormResource extends BoltResource
             FormResource\Widgets\ResponsesPerFields::class,
         ];
 
-        if (Bolt::hasPro()) {
-            // @phpstan-ignore-next-line
-            $widgets[] = \LaraZeus\BoltPro\Widgets\ResponsesPerCollection::class;
-        }
+       
 
         return $widgets;
     }
@@ -264,14 +260,7 @@ class FormResource extends BoltResource
 
         $advancedActions = $moreActions = [];
 
-        if (Bolt::hasPro()) {
-            $advancedActions[] = Action::make('prefilledLink')
-                ->label(__('Prefilled Link'))
-                ->icon('tabler-input-spark')
-                ->tooltip(__('Get Prefilled Link'))
-                ->visible(Bolt::hasPro())
-                ->url(fn (ZeusForm $record): string => FormResource::getUrl('prefilled', ['record' => $record]));
-        }
+       
 
         if (class_exists(\LaraZeus\Helen\HelenServiceProvider::class)) {
             // @phpstan-ignore-next-line
@@ -292,19 +281,19 @@ class FormResource extends BoltResource
             Pages\EditForm::class,
         ];
 
-        if (Bolt::hasPro()) {
-            // @phpstan-ignore-next-line
-            $formNavs[] = \LaraZeus\BoltPro\Livewire\ShareForm::class;
-        }
 
         $respNavs = [
             Pages\ManageResponses::class,
             Pages\BrowseResponses::class,
         ];
 
-        return $page->generateNavigationItems([
-            ...$formNavs,
-            ...$respNavs,
-        ]);
+        $navItems = $page->generateNavigationItems([
+        ...$formNavs,
+        ...$respNavs,
+    ]);
+      
+
+    return $navItems;
     }
+  
 }

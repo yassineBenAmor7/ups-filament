@@ -11,6 +11,7 @@
         "asmit/resized-column": "^1.0",
         "bezhansalleh/filament-shield": "^3.3",
         "datlechin/filament-menu-builder": "^0.7.0",
+        "doctrine/dbal": "^4.3",
         "filament/filament": "3.3",
         "filament/spatie-laravel-translatable-plugin": "^3.3",
         "lara-zeus/bolt": "^3.0",

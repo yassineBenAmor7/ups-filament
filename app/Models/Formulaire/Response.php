@@ -49,4 +49,15 @@ public function currentApproval()
 {
     return $this->hasOne(ResponseApproval::class)->latestOfMany();
 }
+ protected static function booted(): void
+{
+    static::creating(function ($model) {
+        $model->created_by = auth()->id();
+        $model->updated_by = auth()->id();
+    });
+
+    static::updating(function ($model) {
+        $model->updated_by = auth()->id();
+    });
+}
 }

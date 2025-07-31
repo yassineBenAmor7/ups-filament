@@ -20,7 +20,7 @@ class WorkflowStepResource extends BoltResource
 
     protected static ?string $navigationIcon = 'heroicon-o-numbered-list';
      protected static ?int $navigationSort =4;
- protected static ?string $navigationLabel = 'Étapes de Decision';
+  protected static ?string $navigationLabel = 'Étapes de Decision';
     protected static ?string $recordTitleAttribute = 'name';
 public static function getNavigationBadge(): ?string
 {
@@ -45,10 +45,11 @@ public static function getNavigationBadge(): ?string
             ->columns([
                   Tables\Columns\TextColumn::make('name')
                 ->label('Nom')
-                ->searchable(),
-            Tables\Columns\TextColumn::make('forms_count')
-                ->counts('forms')
-                ->label('Utilisé dans (formulaires)'),
+                ->searchable()
+                ->description(fn (WorkflowStep $record): string => $record->description ?? ''),
+
+                
+           
             ])
             ->filters([
                 //
@@ -63,13 +64,7 @@ public static function getNavigationBadge(): ?string
             ]);
     }
 
-    public static function getRelations(): array
-    {
-        return [
-             RelationManagers\FormsRelationManager::class,
-             RelationManagers\ApprovalsRelationManager::class,
-        ];
-    }
+    
 
     public static function getPages(): array
     {

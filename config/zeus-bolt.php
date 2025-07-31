@@ -9,12 +9,12 @@ return [
     /**
      * set the default path for the forms homepage.
      */
-    'prefix' => 'bolt',
+    'prefix' => 'forms',
 
     /*
      * set database table prefix
      */
-    'table-prefix' => 'bolt_',
+    'table-prefix' => 'nachd_',
 
     /**
      * the middleware you want to apply on all the blog routes

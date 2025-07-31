@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 class ResponseApproval extends Model
 {
-     protected $table = 'bolt_response_approvals';
+     protected $table = 'nachd_response_approvals';
     protected $fillable = [
     'response_id',
     'workflow_step_id',
@@ -40,6 +40,17 @@ public function approver()
     public function workflowStep()
 {
     return $this->belongsTo(WorkflowStep::class);
+}
+ protected static function booted(): void
+{
+    static::creating(function ($model) {
+        $model->approved_by = auth()->id();
+        $model->updated_by = auth()->id();
+    });
+
+    static::updating(function ($model) {
+        $model->updated_by = auth()->id();
+    });
 }
 
 }

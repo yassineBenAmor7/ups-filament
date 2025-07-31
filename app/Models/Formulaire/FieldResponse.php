@@ -7,8 +7,10 @@ class FieldResponse extends BaseFieldResponse {
     protected $fillable=[
         'response_id',
         'form_id',
-        'value'
+        'field_id',
+        'response'
     ];
+    
    public function field(): BelongsTo
 {
     return $this->belongsTo(Field::class);

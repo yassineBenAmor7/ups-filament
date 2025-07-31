@@ -31,4 +31,15 @@ protected $casts = [
     {
         return $this->belongsTo(config('auth.providers.users.model'), 'updated_by');
     }
+     protected static function booted(): void
+{
+    static::creating(function ($model) {
+        $model->created_by = auth()->id();
+        $model->updated_by = auth()->id();
+    });
+
+    static::updating(function ($model) {
+        $model->updated_by = auth()->id();
+    });
+}
 }

@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Filament\Concerns;
-
 use Filament\Facades\Filament;
+use Filament\Forms\Components\Actions;
 use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Component;
 use Filament\Forms\Components\DateTimePicker;
@@ -30,7 +30,8 @@ use LaraZeus\Accordion\Forms\Accordions;
 use LaraZeus\Bolt\BoltPlugin;
 use LaraZeus\Bolt\Facades\Bolt;
 use App\Models\Formulaire\Category;
-
+use App\Models\Formulaire\WorkflowStep;
+use App\Models\Formulaire\Form; 
 trait Schemata
 {
     protected static function getVisibleFields(array $sections, array $arguments): array
@@ -217,22 +218,22 @@ trait Schemata
                 ->columns(2)
                 ->schema([
                     Grid::make()->schema([
-                        Toggle::make('is_active')->label('Actif')->default(true),
-                        Toggle::make('options.require-login')->label('Connexion requise')->live(),
-                        Toggle::make('options.one-entry-per-user')->label('Une soumission par utilisateur')
-                            ->visible(fn (Get $get) => $get('options.require-login')),
+                       Select::make('roles')
+                    ->relationship('roles', 'name')
+                    ->multiple()
+                    ->preload()
+                    ->searchable()
+                        ->label('Rôles autorisés à accéder au formulaire')
                     ]),
                     Grid::make()->schema([
-                        Radio::make('options.show-as')->label('Mode d\'affichage')
-                            ->options([
-                                'page' => 'Page unique',
-                                'wizard' => 'Assistant (par étapes)',
-                                'tabs' => 'Onglets',
-                            ])
-                            ->default('page')
-                            ->live(),
-                        TextInput::make('ordering')->numeric()->label('Ordre d\'affichage')->default(1),
+                        Toggle::make('is_active')->label('Actif')->default(true),
+                        Toggle::make('options.require-login')->label('Connexion requise')->live()->default(fn ($record) => $record?->options['require-login'] ?? false),
+                        Toggle::make('options.one-entry-per-user')->label('Une soumission par utilisateur')
+                            ->visible(fn (Get $get) => $get('options.require-login'))
+                             ->default(fn ($record) => $record?->options['one-entry-per-user'] ?? false),
                     ]),
+                   
+                
                 ]),
             Tabs\Tab::make('form-settings-tab')
                 ->label(__('Paramètres'))
@@ -243,28 +244,9 @@ trait Schemata
                              TextInput::make('action')->label('URL d\'action personnalisée'),
                         Select::make('method')->label('Méthode HTTP')->options(['POST' => 'POST', 'GET' => 'GET'])->default('POST'),
                         Toggle::make('accept_files')->label('Accepter les fichiers'),
-                        Toggle::make('has_decision')->label('Avec processus de décision')
-                         ->live()
-                    ->columnSpanFull(),
-                     Repeater::make('workflowSteps')
-                    ->label('Étapes de validation')
-                    ->relationship('workflowSteps') 
-                    ->schema([
-                        Select::make('workflow_step_id')
-                    ->relationship('workflowStep', 'name')
-                    ->required(),
-                     TextInput::make('ordre')
-                    ->numeric()
-                    ->required(),
-                            
-                       
-                    ])
-                    ->visible(fn (Get $get) => $get('has_decision'))
-                    ->itemLabel(fn (array $state): ?string => $state['name'] ?? null)
-                    ->collapsible()
-                    ->cloneable()
-                    ->orderable('ordre')
-                    ->defaultItems(0)
+                        Toggle::make('has_decision')
+                    ->label('Avec processus de décision')
+                    ->live()
                     ->columnSpanFull(),
                         TextInput::make('target')->label('Cible (target)'),
                         Toggle::make('single_submission')->label('Soumission unique'),
@@ -284,11 +266,52 @@ trait Schemata
                         ->schema([
                             TextInput::make('options.emails-notification')
                                 ->label(__('Emails Notifications'))
+                                 ->default(fn ($record) => $record?->options['emails-notification'] ?? '')
                                 ->helperText(__('optional, enter the emails (comma separated) you want to receive notification when ever you got a new entry')),
                         ]),
                 ]),
                 
+         Tabs\Tab::make('workflow-tab')
+    ->label(__('Etapes de Décision'))
+    ->visible(fn (Get $get) => $get('has_decision'))
+    ->schema([
+        Select::make('workflowSteps') 
+        ->label('Etapes')
+            ->relationship(
+                name: 'workflowSteps', 
+                titleAttribute: 'name', 
+            )
+            ->multiple()
+            ->required()
+            ->searchable()
+            ->preload()
+             
+            ->columnSpanFull()
+            ->createOptionForm([
+       TextInput::make('name')
+            ->required()
+            ->label('Etape'),
+       TextInput::make('description')
+           
+    ])
+            ->saveRelationshipsUsing(function (Form $form, $state) {
+                $syncData = [];
+                foreach (array_values($state) as $order => $stepId) {
+                    $syncData[$stepId] = [
+                        'ordre' => $order + 1,
+                        'created_at'=>now(),
+                        'updated_at'=>now(),
+                       'created_by' => auth()->id(),
+                       'updated_by' => auth()->id(),
 
+
+                ]; 
+                }
+                $form->workflowSteps()->sync($syncData);
+            })
+    ]),
+
+               
             Tabs\Tab::make('extensions-tab')
                 ->label(__('Extensions'))
                 ->visible(BoltPlugin::get()->getExtensions() !== null)
@@ -310,28 +333,7 @@ trait Schemata
                         }),
                 ]),
 
-            Tabs\Tab::make('design')
-                ->label(__('Design'))
-                ->visible(Bolt::hasPro() && config('zeus-bolt.allow_design'))
-                ->schema([
-                    ViewField::make('options.primary_color')
-                        ->hiddenLabel()
-                        ->view('zeus::filament.components.color-picker'),
-                    FileUpload::make('options.logo')
-                        ->disk(config('zeus-bolt.uploadDisk'))
-                        ->directory(config('zeus-bolt.uploadDirectory'))
-                        ->visibility(config('zeus-bolt.uploadVisibility'))
-                        ->image()
-                        ->imageEditor()
-                        ->label(__('Logo')),
-                    FileUpload::make('options.cover')
-                        ->disk(config('zeus-bolt.uploadDisk'))
-                        ->directory(config('zeus-bolt.uploadDirectory'))
-                        ->visibility(config('zeus-bolt.uploadVisibility'))
-                        ->image()
-                        ->imageEditor()
-                        ->label(__('Cover')),
-                ]),
+           
         ];
 
         $customSchema = Bolt::getCustomSchema('form');
@@ -457,7 +459,7 @@ trait Schemata
             Hidden::make('description'),
             TextInput::make('name')
                 ->required()
-                ->lazy()
+               
                 ->label(__('Field Name')),
                 TextInput::make('label')
             ->required()

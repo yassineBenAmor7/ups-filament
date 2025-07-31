@@ -5,7 +5,7 @@ namespace App\Filament\Resources\Formulaire\FormResource\Pages;
 use Filament\Actions;
 use Filament\Actions\Action;
 use Filament\Resources\Pages\ListRecords;
-use App\BoltPlugin;
+use LaraZeus\Bolt\BoltPlugin;
 use App\Facades\Bolt;
 use App\Filament\Resources\Formulaire\FormResource;
 

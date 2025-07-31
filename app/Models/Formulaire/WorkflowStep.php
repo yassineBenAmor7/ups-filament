@@ -3,13 +3,12 @@
 namespace App\Models\Formulaire;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-
+use App\Models\User;
 class WorkflowStep extends Model
 {
-     use SoftDeletes;
+    
 
-    protected $table = 'bolt_workflow_steps';
+    protected $table = 'nachd_workflow_steps';
    protected $fillable = [
     'name',
     'description',
@@ -22,22 +21,36 @@ protected $casts = [
 ];
  public function creator()
     {
-        return $this->belongsTo(config('auth.providers.users.model'), 'created_by');
+        return $this->belongsTo(User::class, 'created_by');
     }
 
     public function updater()
     {
-        return $this->belongsTo(config('auth.providers.users.model'), 'updated_by');
+        return $this->belongsTo(User::class, 'updated_by');
     }
 
     public function forms()
     {
         return $this->belongsToMany(Form::class, 
-            config('zeus-bolt.table-prefix').'form_workflow')
+            config('zeus-bolt.table-prefix').'form_workflow','workflow_step_id','form_id')
+            
             ->withPivot('ordre');
     }
     public function approvals()
     {
         return $this->hasMany(\App\Models\Formulaire\ResponseApproval::class);
     }
+
+
+    protected static function booted(): void
+{
+    static::creating(function ($model) {
+        $model->created_by = auth()->id();
+        $model->updated_by = auth()->id();
+    });
+
+    static::updating(function ($model) {
+        $model->updated_by = auth()->id();
+    });
+}
 }
