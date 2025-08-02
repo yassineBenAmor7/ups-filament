@@ -17,11 +17,10 @@
             </x-filament::button>
         @endif
     </div>
-    
-    <div class="bg-gray-900 p-4 rounded-lg font-mono text-sm overflow-auto max-h-[70vh]">
-        @if (empty($parsedLogs))
-            <p class="text-gray-300"></p>
-        @else
+
+    {{-- Affiche les logs seulement s'ils existent --}}
+    @if (filled($parsedLogs))
+        <div class="bg-gray-900 p-4 rounded-lg font-mono text-sm overflow-auto max-h-[70vh]">
             @foreach ($parsedLogs as $log)
                 <div @style([
                     'color: #f87171' => $log['type'] === 'alert',
@@ -31,6 +30,6 @@
                     {{ $log['content'] }}
                 </div>
             @endforeach
-        @endif
-    </div>
+        </div>
+    @endif
 </x-filament::page>

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 
-class GroupTdTeacher extends Model
+class GroupeTdTeacher extends Model
 {
     protected $fillable = [
         'id',

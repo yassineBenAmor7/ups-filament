@@ -57,7 +57,7 @@ class LogViewer extends Page
     
     if (file_exists($logPath)) {
         file_put_contents($logPath, '');
-        $this->parsedLogs = [['content' => '', 'type' => 'info']];
+        $this->parsedLogs = [];
         // Pas besoin d'émettre d'événement, le réactivité Livewire gérera la mise à jour
     }
 }

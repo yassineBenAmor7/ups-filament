@@ -22,7 +22,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class GroupeTdTeacherResource extends BaseResource
 {
-    protected static ?string $model = GroupTdTeacher::class;
+    protected static ?string $model = GroupeTdTeacher::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 

@@ -161,8 +161,6 @@ namespace App\Models{
  * @property-read \App\Models\Group|null $group
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\GroupTp> $groupTp
  * @property-read int|null $group_tp_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\GroupTdTeacher> $groupeTdTeachers
- * @property-read int|null $groupe_td_teachers_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\StudentsPredefinedList> $students
  * @property-read int|null $students_count
  * @method static \Illuminate\Database\Eloquent\Builder<static>|GroupTd newModelQuery()
@@ -180,19 +178,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|GroupTd whereUpdatedBy($value)
  */
 	class GroupTd extends \Eloquent {}
-}
-
-namespace App\Models{
-/**
- * 
- *
- * @property-read \App\Models\GroupTd|null $groupTd
- * @property-read \App\Models\Teacher|null $teacher
- * @method static \Illuminate\Database\Eloquent\Builder<static>|GroupTdTeacher newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|GroupTdTeacher newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|GroupTdTeacher query()
- */
-	class GroupTdTeacher extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -224,6 +209,19 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|GroupTp whereUpdatedBy($value)
  */
 	class GroupTp extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property-read \App\Models\GroupTd|null $groupTd
+ * @property-read \App\Models\Teacher|null $teacher
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|GroupeTdTeacher newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|GroupeTdTeacher newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|GroupeTdTeacher query()
+ */
+	class GroupeTdTeacher extends \Eloquent {}
 }
 
 namespace App\Models{

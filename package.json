@@ -19,6 +19,7 @@
         "@progress/kendo-ui": "^2025.2.520",
         "ag-grid-community": "^31.3.0",
         "ag-grid-vue": "^31.3.0",
+        "alpinejs": "^3.14.9",
         "heroicons": "^2.2.0",
         "sortablejs": "^1.15.6"
     }

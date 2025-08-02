@@ -28,7 +28,9 @@ use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
 use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
 use Datlechin\FilamentMenuBuilder\Models\MenuItem as BuilderMenuItem; 
 use Datlechin\FilamentMenuBuilder\Models\MenuItem;
-
+use App\Filament\Widgets\ResourceCreateShortcut;
+use App\Filament\Resources\UserResource;
+use App\Filament\Resources\PostResource;
 class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
@@ -49,8 +51,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
+              \App\Filament\Widgets\BlogPostsOverview::class,
             ])
             ->middleware([
                 EncryptCookies::class,
