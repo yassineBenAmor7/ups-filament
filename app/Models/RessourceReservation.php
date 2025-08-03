@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Model;
 class RessourceReservation extends Model
 {
     protected $fillable = [
-        'id',
         'user_id',
         'product_id',
         'user_name',
@@ -20,11 +19,7 @@ class RessourceReservation extends Model
         'etat_deadline',
         'from',
         'to',
-        'qty',
-        'created_by',
-        'updated_by',
-        'created_at',
-        'updated_at'
+        'qty'
     ];
     public function user(){
         return $this->belongsTo(User::class );

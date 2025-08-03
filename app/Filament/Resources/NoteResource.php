@@ -36,8 +36,8 @@ class NoteResource extends BaseResource
                 TextInput::make('teacher_name')->nullable(),
                 Select::make('group_td_id')->relationship('groupTd', 'id')->nullable(),
                 TextInput::make('group_td_designation')->nullable(),
-                TextInput::make('created_by')->nullable(),
-                TextInput::make('updated_by')->nullable(),
+                // TextInput::make('created_by')->nullable(),
+                // TextInput::make('updated_by')->nullable(),
             ]),
         ]);
     }
@@ -60,8 +60,8 @@ class NoteResource extends BaseResource
             static::CustomTextColumn('teacher_name'),
             static::CustomTextColumn('group_td_id'),
             static::CustomTextColumn('group_td_designation'),
-            static::CustomTextColumn('created_by'),
-            static::CustomTextColumn('updated_by'),
+            // static::CustomTextColumn('created_by'),
+            // static::CustomTextColumn('updated_by'),
         ];
     }
 

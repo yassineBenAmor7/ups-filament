@@ -2,14 +2,15 @@
 
 namespace App\Filament\Resources;
 
-use App\Models\NewsPerCategory;
-use App\Filament\Resources\BaseResource;
 use Filament\Forms\Form;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Fieldset;
-use App\Filament\Resources\NewsPerCategoryResource\Pages;
 use Filament\Tables\Table;
+use App\Models\NewsPerCategory;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\Fieldset;
+use App\Filament\Resources\BaseResource;
+use Filament\Forms\Components\TextInput;
+use App\Filament\Resources\NewsPerCategoryResource\Pages;
 
 class NewsPerCategoryResource extends BaseResource
 {
@@ -23,9 +24,9 @@ class NewsPerCategoryResource extends BaseResource
             Fieldset::make()->schema([
                 Select::make('news_id')->relationship('news', 'id')->nullable(),
                 Select::make('news_category_id')->relationship('newsCategory', 'id')->nullable(),
-                TextInput::make('publier')->nullable(),
-                TextInput::make('created_by')->nullable(),
-                TextInput::make('updated_by')->nullable(),
+                Toggle::make('publier')->nullable(),
+                // TextInput::make('created_by')->nullable(),
+                // TextInput::make('updated_by')->nullable(),
             ]),
         ]);
     }
@@ -37,8 +38,8 @@ class NewsPerCategoryResource extends BaseResource
             static::CustomTextColumn('news_id'),
             static::CustomTextColumn('news_category_id'),
             static::CustomTextColumn('publier'),
-            static::CustomTextColumn('created_by'),
-            static::CustomTextColumn('updated_by'),
+            // static::CustomTextColumn('created_by'),
+            // static::CustomTextColumn('updated_by'),
         ];
     }
 

@@ -8,5 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class NachdEtapedecision extends Model
 {
     use HasFactory;
-    
+
+    protected $fillable = ['etapedecision'];
+
 }

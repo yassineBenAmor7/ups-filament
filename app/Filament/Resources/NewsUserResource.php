@@ -23,8 +23,8 @@ class NewsUserResource extends BaseResource
             Fieldset::make()->schema([
                 Select::make('news_id')->relationship('news', 'id')->nullable(),
                 Select::make('user_id')->relationship('user', 'id')->nullable(),
-                TextInput::make('created_by')->nullable(),
-                TextInput::make('updated_by')->nullable(),
+                // TextInput::make('created_by')->nullable(),
+                // TextInput::make('updated_by')->nullable(),
             ]),
         ]);
     }
@@ -35,8 +35,8 @@ class NewsUserResource extends BaseResource
             static::CustomTextColumn('id'),
             static::CustomTextColumn('news_id'),
             static::CustomTextColumn('user_id'),
-            static::CustomTextColumn('created_by'),
-            static::CustomTextColumn('updated_by'),
+            // static::CustomTextColumn('created_by'),
+            // static::CustomTextColumn('updated_by'),
         ];
     }
 

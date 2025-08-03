@@ -2,11 +2,12 @@
 
 namespace App\Filament\Resources;
 
-use App\Models\PagePerCategory;
-use App\Filament\Resources\BaseResource;
 use Filament\Forms\Form;
-use Filament\Forms\Components\TextInput;
 use Filament\Tables\Table;
+use App\Models\PagePerCategory;
+use Filament\Forms\Components\Toggle;
+use App\Filament\Resources\BaseResource;
+use Filament\Forms\Components\TextInput;
 use App\Filament\Resources\PagePerCategoryResource\Pages;
 
 class PagePerCategoryResource extends BaseResource
@@ -20,9 +21,9 @@ class PagePerCategoryResource extends BaseResource
         return $form->schema([
             TextInput::make('page_id')->nullable(),
             TextInput::make('page_category_id')->nullable(),
-            TextInput::make('publier')->nullable(),
-            TextInput::make('created_by')->nullable(),
-            TextInput::make('updated_by')->nullable(),
+            Toggle::make('publier'),
+            // TextInput::make('created_by')->nullable(),
+            // TextInput::make('updated_by')->nullable(),
         ]);
     }
 
@@ -33,8 +34,8 @@ class PagePerCategoryResource extends BaseResource
             static::CustomTextColumn('page_id'),
             static::CustomTextColumn('page_category_id'),
             static::CustomTextColumn('publier'),
-            static::CustomTextColumn('created_by'),
-            static::CustomTextColumn('updated_by'),
+            // static::CustomTextColumn('created_by'),
+            // static::CustomTextColumn('updated_by'),
         ];
     }
 

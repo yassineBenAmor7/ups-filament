@@ -28,8 +28,8 @@ class NachdEtapedecisionFormulaireResource extends BaseResource
                 Select::make('nachd_formulaire_id')->relationship('nachdFormulaire', 'id')->nullable(),
                 Select::make('nachd_etapedecision_id')->relationship('nachdEtapedecision', 'id')->nullable(),
                 TextInput::make('ordre')->nullable(),
-                TextInput::make('created_by')->nullable(),
-                TextInput::make('updated_by')->nullable(),
+                // TextInput::make('created_by')->nullable(),
+                // TextInput::make('updated_by')->nullable(),
             ]),
         ]);
     }
@@ -41,8 +41,8 @@ class NachdEtapedecisionFormulaireResource extends BaseResource
             static::CustomTextColumn('nachd_formulaire_id'),
             static::CustomTextColumn('nachd_etapedecision_id'),
             static::CustomTextColumn('ordre'),
-            static::CustomTextColumn('created_by'),
-            static::CustomTextColumn('updated_by'),
+            // static::CustomTextColumn('created_by'),
+            // static::CustomTextColumn('updated_by'),
         ];
     }
 

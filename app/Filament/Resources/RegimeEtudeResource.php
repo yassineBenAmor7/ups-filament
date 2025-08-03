@@ -21,8 +21,8 @@ class RegimeEtudeResource extends BaseResource
     {
         return $form->schema([
             Toggle::make('publier')->nullable(),
-            TextInput::make('created_by')->nullable(),
-            TextInput::make('updated_by')->nullable(),
+            // TextInput::make('created_by')->nullable(),
+            // TextInput::make('updated_by')->nullable(),
                 ]);
     }
 
@@ -30,10 +30,10 @@ class RegimeEtudeResource extends BaseResource
     {
         return [
             static::CustomTextColumn('publier'),
-            static::CustomTextColumn('created_by'),
-            static::CustomTextColumn('updated_by'),
-            static::CustomTextColumn('created_at'),
-            static::CustomTextColumn('updated_at'),
+            // static::CustomTextColumn('created_by'),
+            // static::CustomTextColumn('updated_by'),
+            // static::CustomTextColumn('created_at'),
+            // static::CustomTextColumn('updated_at'),
         ];
     }
 

@@ -27,8 +27,8 @@ class NachdFormulaireRoleResource extends BaseResource
             Fieldset::make()->schema([
                 Select::make('nachd_formulaire_id')->relationship('nachdFormulaire', 'id')->nullable(),
                 Select::make('role_id')->relationship('role', 'id')->nullable(),
-                TextInput::make('created_by')->nullable(),
-                TextInput::make('updated_by')->nullable(),
+                // TextInput::make('created_by')->nullable(),
+                // TextInput::make('updated_by')->nullable(),
             ]),
         ]);
     }

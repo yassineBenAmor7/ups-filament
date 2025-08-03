@@ -6,6 +6,7 @@ use App\Models\News;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Textarea;
 use App\Filament\Resources\BaseResource;
@@ -37,9 +38,9 @@ class NewsResource extends BaseResource
                 RichEditor::make('description_fr')->nullable(),
                 RichEditor::make('description_en')->nullable(),
                 RichEditor::make('description_ar')->nullable(),
-                TextInput::make('publier')->nullable(),
-                TextInput::make('created_by')->nullable(),
-                TextInput::make('updated_by')->nullable(),
+                Toggle::make('publier')->nullable(),
+                // TextInput::make('created_by')->nullable(),
+                // TextInput::make('updated_by')->nullable(),
                 TextInput::make('for')->nullable(),
                 Select::make('organism_id')->relationship('organism', 'id')->nullable(),
                 TextInput::make('slug')->nullable(),
@@ -65,8 +66,8 @@ class NewsResource extends BaseResource
             static::CustomTextColumn('description_en'),
             static::CustomTextColumn('description_ar'),
             static::CustomTextColumn('publier'),
-            static::CustomTextColumn('created_by'),
-            static::CustomTextColumn('updated_by'),
+            // static::CustomTextColumn('created_by'),
+            // static::CustomTextColumn('updated_by'),
             static::CustomTextColumn('for'),
             static::CustomTextColumn('organism_id'),
             static::CustomTextColumn('slug'),

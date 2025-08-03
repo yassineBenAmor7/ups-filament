@@ -2,15 +2,16 @@
 
 namespace App\Filament\Resources;
 
-use App\Models\Notification;
-use App\Filament\Resources\BaseResource;
 use Filament\Forms\Form;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
+use Filament\Tables\Table;
+use App\Models\Notification;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Fieldset;
+use Filament\Forms\Components\Textarea;
+use App\Filament\Resources\BaseResource;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\FileUpload;
 use App\Filament\Resources\NotificationResource\Pages;
-use Filament\Tables\Table;
 
 class NotificationResource extends BaseResource
 {
@@ -24,13 +25,13 @@ class NotificationResource extends BaseResource
             Fieldset::make()->schema([
                 Select::make('user_id')->relationship('user', 'id')->nullable(),
                 TextInput::make('sender_id')->nullable(),
-                Textarea::make('text')->nullable(),
-                TextInput::make('image')->nullable(),
-                TextInput::make('link')->nullable(),
-                TextInput::make('seen')->nullable(),
+                Textarea::make('text')->nullable()->label('texte'),
+                FileUpload::make('image')->nullable(),
+                TextInput::make('link')->nullable()->label('lien'),
+                TextInput::make('seen')->nullable()->label('vu'),
                 TextInput::make('is_notif_sent')->nullable(),
-                TextInput::make('created_by')->nullable(),
-                TextInput::make('updated_by')->nullable(),
+                // TextInput::make('created_by')->nullable(),
+                // TextInput::make('updated_by')->nullable(),
             ]),
         ]);
     }
@@ -46,8 +47,8 @@ class NotificationResource extends BaseResource
             static::CustomTextColumn('link'),
             static::CustomTextColumn('seen'),
             static::CustomTextColumn('is_notif_sent'),
-            static::CustomTextColumn('created_by'),
-            static::CustomTextColumn('updated_by'),
+            // static::CustomTextColumn('created_by'),
+            // static::CustomTextColumn('updated_by'),
         ];
     }
 

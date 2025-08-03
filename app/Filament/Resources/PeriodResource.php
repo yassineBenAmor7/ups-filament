@@ -23,10 +23,10 @@ class PeriodResource extends BaseResource
             TextInput::make('designation_fr')->nullable(),
             TextInput::make('designation_en')->nullable(),
             TextInput::make('designation_ar')->nullable(),
-            TimePicker::make('start_hour')->nullable(),
-            TimePicker::make('end_hour')->nullable(),
-            TextInput::make('created_by')->nullable(),
-            TextInput::make('updated_by')->nullable(),
+            TimePicker::make('start_hour')->nullable()->label('heure de début'),
+            TimePicker::make('end_hour')->nullable()->label('heure de fin'),
+            // TextInput::make('created_by')->nullable(),
+            // TextInput::make('updated_by')->nullable(),
         ]);
     }
 
@@ -38,10 +38,10 @@ class PeriodResource extends BaseResource
             static::CustomTextColumn('designation_ar'),
             static::CustomTextColumn('start_hour'),
             static::CustomTextColumn('end_hour'),
-            static::CustomTextColumn('created_by'),
-            static::CustomTextColumn('updated_by'),
-            static::CustomTextColumn('created_at'),
-            static::CustomTextColumn('updated_at'),
+            // static::CustomTextColumn('created_by'),
+            // static::CustomTextColumn('updated_by'),
+            // static::CustomTextColumn('created_at'),
+            // static::CustomTextColumn('updated_at'),
         ];
     }
 

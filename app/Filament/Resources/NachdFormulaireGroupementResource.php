@@ -27,9 +27,9 @@ class NachdFormulaireGroupementResource extends BaseResource
                 TextInput::make('designation_fr')->nullable(),
                 TextInput::make('designation_en')->nullable(),
                 TextInput::make('designation_ar')->nullable(),
-                TextInput::make('publier')->nullable(),
-                TextInput::make('created_by')->nullable(),
-                TextInput::make('updated_by')->nullable(),
+                Toggle::make('publier')->nullable(),
+                // TextInput::make('created_by')->nullable(),
+                // TextInput::make('updated_by')->nullable(),
             ]),
         ]);
     }
@@ -42,8 +42,8 @@ class NachdFormulaireGroupementResource extends BaseResource
             static::CustomTextColumn('designation_en'),
             static::CustomTextColumn('designation_ar'),
             static::CustomTextColumn('publier'),
-            static::CustomTextColumn('created_by'),
-            static::CustomTextColumn('updated_by'),
+            // static::CustomTextColumn('created_by'),
+            // static::CustomTextColumn('updated_by'),
         ];
     }
 

@@ -25,8 +25,8 @@ class NachdEtapedecisionResource extends BaseResource
         return $form->schema([
             Fieldset::make()->schema([
                 TextInput::make('etapedecision')->nullable(),
-                TextInput::make('created_by')->nullable(),
-                TextInput::make('updated_by')->nullable(),
+                // TextInput::make('created_by')->nullable(),
+                // TextInput::make('updated_by')->nullable(),
             ]),
         ]);
     }
@@ -36,8 +36,8 @@ class NachdEtapedecisionResource extends BaseResource
         return [
             static::CustomTextColumn('id'),
             static::CustomTextColumn('etapedecision'),
-            static::CustomTextColumn('created_by'),
-            static::CustomTextColumn('updated_by'),
+            // static::CustomTextColumn('created_by'),
+            // static::CustomTextColumn('updated_by'),
         ];
     }
 

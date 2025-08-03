@@ -31,8 +31,8 @@ class MasterDiplomaResource extends BaseResource
             ->schema([
                 TextInput::make('capacite')->numeric()->label('Capacité'),
                 Toggle::make('publier')->label('Publié'),
-                TextInput::make('created_by')->label('Créé par'),
-                TextInput::make('updated_by')->label('Mis à jour par'),
+                //TextInput::make('created_by')->label('Créé par'),
+                //TextInput::make('updated_by')->label('Mis à jour par'),
             ]);
     }
 
@@ -42,8 +42,8 @@ class MasterDiplomaResource extends BaseResource
             static::CustomTextColumn('id')->label('ID'),
             static::CustomTextColumn('capacite')->label('Capacité'),
             ToggleColumn::make('publier')->label('Publié'),
-            static::CustomTextColumn('created_by')->label('Créé par'),
-            static::CustomTextColumn('updated_by')->label('Mis à jour par'),
+            //static::CustomTextColumn('created_by')->label('Créé par'),
+            //static::CustomTextColumn('updated_by')->label('Mis à jour par'),
         ];
     }
 

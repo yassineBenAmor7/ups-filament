@@ -26,16 +26,12 @@ class RapportResource extends BaseResource
             Textarea::make('rapport')->nullable(),
             Textarea::make('remarque')->nullable(),
             TextInput::make('etat')->nullable(),
-            TextInput::make('created_by')->nullable(),
-            DateTimePicker::make('created_at')->nullable(),
-            DateTimePicker::make('updated_at')->nullable(),
             Textarea::make('avis_encadrant')->nullable(),
             Textarea::make('rapport_encadrant')->nullable(),
             DateTimePicker::make('rapport_encadrant_created_at')->nullable(),
             TextInput::make('stage_rapport_type_id')->nullable(),
             Textarea::make('plagiat_rapport')->nullable(),
             Textarea::make('plagiat_note')->nullable(),
-            TextInput::make('updated_by')->nullable(),
         ]);
     }
 
@@ -45,17 +41,12 @@ class RapportResource extends BaseResource
             static::CustomTextColumn('stage_id'),
             static::CustomTextColumn('rapport'),
             static::CustomTextColumn('remarque'),
-            static::CustomTextColumn('etat'),
-            static::CustomTextColumn('created_by'),
-            static::CustomTextColumn('created_at'),
-            static::CustomTextColumn('updated_at'),
             static::CustomTextColumn('avis_encadrant'),
             static::CustomTextColumn('rapport_encadrant'),
             static::CustomTextColumn('rapport_encadrant_created_at'),
             static::CustomTextColumn('stage_rapport_type_id'),
             static::CustomTextColumn('plagiat_rapport'),
             static::CustomTextColumn('plagiat_note'),
-            static::CustomTextColumn('updated_by'),
         ];
     }
 

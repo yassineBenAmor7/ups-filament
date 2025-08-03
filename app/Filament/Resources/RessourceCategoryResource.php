@@ -22,8 +22,8 @@ class RessourceCategoryResource extends BaseResource
             TextInput::make('designation_fr')->nullable(),
             TextInput::make('designation_en')->nullable(),
             TextInput::make('designation_ar')->nullable(),
-            TextInput::make('created_by')->nullable(),
-            TextInput::make('updated_by')->nullable(),
+            // TextInput::make('created_by')->nullable(),
+            // TextInput::make('updated_by')->nullable(),
         ]);
     }
 
@@ -33,10 +33,10 @@ class RessourceCategoryResource extends BaseResource
             static::CustomTextColumn('designation_fr'),
             static::CustomTextColumn('designation_en'),
             static::CustomTextColumn('designation_ar'),
-            static::CustomTextColumn('created_by'),
-            static::CustomTextColumn('updated_by'),
-            static::CustomTextColumn('created_at'),
-            static::CustomTextColumn('updated_at'),
+            // static::CustomTextColumn('created_by'),
+            // static::CustomTextColumn('updated_by'),
+            // static::CustomTextColumn('created_at'),
+            // static::CustomTextColumn('updated_at'),
         ];
     }
 

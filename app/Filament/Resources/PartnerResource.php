@@ -3,11 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Models\Partner;
-use App\Filament\Resources\BaseResource;
 use Filament\Forms\Form;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
 use Filament\Tables\Table;
+use Filament\Forms\Components\Textarea;
+use App\Filament\Resources\BaseResource;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\FileUpload;
 use App\Filament\Resources\PartnerResource\Pages;
 
 class PartnerResource extends BaseResource
@@ -22,17 +23,17 @@ class PartnerResource extends BaseResource
             TextInput::make('designation_fr')->nullable(),
             TextInput::make('designation_en')->nullable(),
             TextInput::make('designation_ar')->nullable(),
-            TextInput::make('logo')->nullable(),
+            FileUpload::make('logo')->nullable(),
             RichEditor::make('description_fr')->nullable(),
             RichEditor::make('description_en')->nullable(),
             RichEditor::make('description_ar')->nullable(),
             TextInput::make('internationalisation')->nullable(),
             TextInput::make('type')->nullable(),
-            TextInput::make('link')->nullable(),
+            TextInput::make('link')->nullable()->label('lien'),
             TextInput::make('partner_categorie_id')->nullable(),
             TextInput::make('publier')->nullable(),
-            TextInput::make('created_by')->nullable(),
-            TextInput::make('updated_by')->nullable(),
+            // TextInput::make('created_by')->nullable(),
+            // TextInput::make('updated_by')->nullable(),
         ]);
     }
 
@@ -49,8 +50,8 @@ class PartnerResource extends BaseResource
             static::CustomTextColumn('link'),
             static::CustomTextColumn('partner_categorie_id'),
             static::CustomTextColumn('publier'),
-            static::CustomTextColumn('created_by'),
-            static::CustomTextColumn('updated_by'),
+            // static::CustomTextColumn('created_by'),
+            // static::CustomTextColumn('updated_by'),
         ];
     }
 

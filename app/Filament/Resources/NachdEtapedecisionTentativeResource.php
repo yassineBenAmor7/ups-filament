@@ -28,8 +28,8 @@ class NachdEtapedecisionTentativeResource extends BaseResource
                 Select::make('nachd_tentative_id')->relationship('nachdTentative', 'id')->nullable(),
                 Select::make('nachd_etapedecision_id')->relationship('nachdEtapedecision', 'id')->nullable(),
                 TextInput::make('etat')->nullable(),
-                TextInput::make('created_by')->nullable(),
-                TextInput::make('updated_by')->nullable(),
+                // TextInput::make('created_by')->nullable(),
+                // TextInput::make('updated_by')->nullable(),
             ]),
         ]);
     }
@@ -41,8 +41,8 @@ class NachdEtapedecisionTentativeResource extends BaseResource
             static::CustomTextColumn('nachd_tentative_id'),
             static::CustomTextColumn('nachd_etapedecision_id'),
             static::CustomTextColumn('etat'),
-            static::CustomTextColumn('created_by'),
-            static::CustomTextColumn('updated_by'),
+            // static::CustomTextColumn('created_by'),
+            // static::CustomTextColumn('updated_by'),
         ];
     }
 

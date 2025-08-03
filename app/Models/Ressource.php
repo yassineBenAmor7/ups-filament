@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Ressource extends Model
 {
     protected $fillable = [
-        'id',
         'ressource_category_id',
         'designation_fr',
         'designation_en',
@@ -24,12 +23,8 @@ class Ressource extends Model
         'seul',
         'stock_reserved',
         'must_be_returned',
-        'created_by',
-        'updated_by',
-        'created_at',
-        'updated_at'
     ];
-    public function category(){
+    public function ressourceCategory(){
         return $this->belongsTo(RessourceCategory::class , 'ressource_category_id');
     }
     public function supplier(){

@@ -40,8 +40,8 @@ class NachdInputResource extends BaseResource
                 TextInput::make('information_recuperable')->nullable(),
                 TextInput::make('attribut_to_use')->nullable(),
                 TextInput::make('table_to_use')->nullable(),
-                TextInput::make('created_by')->nullable(),
-                TextInput::make('updated_by')->nullable(),
+                // TextInput::make('created_by')->nullable(),
+                // TextInput::make('updated_by')->nullable(),
             ]),
         ]);
     }

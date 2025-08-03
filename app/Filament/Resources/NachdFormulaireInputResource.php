@@ -31,8 +31,8 @@ class NachdFormulaireInputResource extends BaseResource
                 TextInput::make('etat_disabled')->nullable(),
                 TextInput::make('etat_public')->nullable(),
                 TextInput::make('ordre')->nullable(),
-                TextInput::make('created_by')->nullable(),
-                TextInput::make('updated_by')->nullable(),
+                // TextInput::make('created_by')->nullable(),
+                // TextInput::make('updated_by')->nullable(),
             ]),
         ]);
     }
@@ -47,8 +47,8 @@ class NachdFormulaireInputResource extends BaseResource
             static::CustomTextColumn('etat_disabled'),
             static::CustomTextColumn('etat_public'),
             static::CustomTextColumn('ordre'),
-            static::CustomTextColumn('created_by'),
-            static::CustomTextColumn('updated_by'),
+            // static::CustomTextColumn('created_by'),
+            // static::CustomTextColumn('updated_by'),
         ];
     }
 

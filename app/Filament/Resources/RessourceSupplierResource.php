@@ -2,12 +2,13 @@
 
 namespace App\Filament\Resources;
 
-use App\Models\RessourceSupplier;
-use App\Filament\Resources\BaseResource;
 use Filament\Forms\Form;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
 use Filament\Tables\Table;
+use App\Models\RessourceSupplier;
+use Filament\Forms\Components\Textarea;
+use App\Filament\Resources\BaseResource;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\FileUpload;
 use App\Filament\Resources\RessourceSupplierResource\Pages;
 
 class RessourceSupplierResource extends BaseResource
@@ -20,20 +21,20 @@ class RessourceSupplierResource extends BaseResource
     public static function form(Form $form): Form
     {
         return $form->schema([
-            Textarea::make('logo')->nullable(),
+            FileUpload::make('logo')->nullable(),
             TextInput::make('raison_social')->nullable(),
             TextInput::make('mf')->nullable(),
             Textarea::make('address')->nullable(),
             TextInput::make('email')->nullable(),
-            TextInput::make('phone1')->nullable(),
-            TextInput::make('phone2')->nullable(),
+            TextInput::make('phone1')->nullable()->numeric(),
+            TextInput::make('phone2')->nullable()->numeric(),
             Textarea::make('website')->nullable(),
             Textarea::make('domaine')->nullable(),
             TextInput::make('responsable_name')->nullable(),
             TextInput::make('responsable_email')->nullable(),
             TextInput::make('responsable_phone')->nullable(),
-            TextInput::make('created_by')->nullable(),
-            TextInput::make('updated_by')->nullable(),
+            // TextInput::make('created_by')->nullable(),
+            // TextInput::make('updated_by')->nullable(),
         ]);
     }
 
@@ -48,10 +49,10 @@ class RessourceSupplierResource extends BaseResource
             static::CustomTextColumn('responsable_name'),
             static::CustomTextColumn('responsable_email'),
             static::CustomTextColumn('responsable_phone'),
-            static::CustomTextColumn('created_by'),
-            static::CustomTextColumn('updated_by'),
-            static::CustomTextColumn('created_at'),
-            static::CustomTextColumn('updated_at'),
+            // static::CustomTextColumn('created_by'),
+            // static::CustomTextColumn('updated_by'),
+            // static::CustomTextColumn('created_at'),
+            // static::CustomTextColumn('updated_at'),
         ];
     }
 

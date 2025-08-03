@@ -28,8 +28,8 @@ class NewsCategoryResource extends BaseResource
                 TextInput::make('designation_fr')->nullable(),
                 TextInput::make('designation_en')->nullable(),
                 TextInput::make('designation_ar')->nullable(),
-                TextInput::make('created_by')->nullable(),
-                TextInput::make('updated_by')->nullable(),
+                // TextInput::make('created_by')->nullable(),
+                // TextInput::make('updated_by')->nullable(),
                 Select::make('parent_id')->relationship('parent', 'id')->nullable(),
             ]),
         ]);
@@ -42,8 +42,8 @@ class NewsCategoryResource extends BaseResource
             static::CustomTextColumn('designation_fr'),
             static::CustomTextColumn('designation_en'),
             static::CustomTextColumn('designation_ar'),
-            static::CustomTextColumn('created_by'),
-            static::CustomTextColumn('updated_by'),
+            // static::CustomTextColumn('created_by'),
+            // static::CustomTextColumn('updated_by'),
             static::CustomTextColumn('parent_id'),
         ];
     }

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 
 class Note extends Model
@@ -10,7 +11,6 @@ class Note extends Model
     protected $perPage = 100;
 
     protected $fillable = [
-        'id',
         'student_cin',
         'student_name',
         'subject',
@@ -24,12 +24,7 @@ class Note extends Model
         'teacher_cin',
         'teacher_name',
         'group_td_id',
-        'group_td_designation',
-        'created_at',
-        'updated_at',
-        'deleted_at',
-        'created_by',
-        'updated_by'
+        'group_td_designation'
 
     ];
 
@@ -37,4 +32,14 @@ class Note extends Model
     {
         return $this->belongsTo(Subject::class, 'subject_id');
     }
+
+    public function year(): BelongsTo
+{
+    return $this->belongsTo(Year::class);
+}
+
+    public function groupTd(): BelongsTo
+{
+    return $this->belongsTo(GroupTd::class);
+}
 }

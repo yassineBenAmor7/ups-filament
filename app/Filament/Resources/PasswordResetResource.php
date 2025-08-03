@@ -20,7 +20,7 @@ class PasswordResetResource extends BaseResource
         return $form->schema([
             TextInput::make('email')->email()->required(),
             TextInput::make('token')->required(),
-            TextInput::make('created_at')->nullable(),
+            // TextInput::make('created_at')->nullable(),
         ]);
     }
 
@@ -29,7 +29,7 @@ class PasswordResetResource extends BaseResource
         return [
             static::CustomTextColumn('email'),
             static::CustomTextColumn('token'),
-            static::CustomTextColumn('created_at'),
+            // static::CustomTextColumn('created_at'),
         ];
     }
 

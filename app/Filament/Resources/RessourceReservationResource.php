@@ -24,12 +24,12 @@ class RessourceReservationResource extends BaseResource
             TextInput::make('product_id')->nullable(),
             TextInput::make('user_name')->nullable(),
             TextInput::make('user_cin')->nullable(),
-            TextInput::make('product')->nullable(),
-            TextInput::make('product_category')->nullable(),
+            TextInput::make('product')->nullable()->label('produit'),
+            TextInput::make('product_category')->nullable()->label('catégorie du produit'),
             TextInput::make('etat')->nullable(),
             TextInput::make('etat_deadline')->nullable(),
-            TextInput::make('created_by')->nullable(),
-            TextInput::make('updated_by')->nullable(),
+            // TextInput::make('created_by')->nullable(),
+            // TextInput::make('updated_by')->nullable(),
 
         ]);
     }
@@ -45,8 +45,8 @@ class RessourceReservationResource extends BaseResource
             static::CustomTextColumn('product_category'),
             static::CustomTextColumn('etat'),
             static::CustomTextColumn('etat_deadline'),
-            static::CustomTextColumn('created_by'),
-            static::CustomTextColumn('updated_by'),
+            // static::CustomTextColumn('created_by'),
+            // static::CustomTextColumn('updated_by'),
 
         ];
     }

@@ -31,8 +31,8 @@ class NachdTentativeResource extends BaseResource
                 TextInput::make('author_id')->nullable(),
                 DateTimePicker::make('date_acceptation')->nullable(),
                 DateTimePicker::make('date_reception')->nullable(),
-                TextInput::make('created_by')->nullable(),
-                TextInput::make('updated_by')->nullable(),
+                // TextInput::make('created_by')->nullable(),
+                // TextInput::make('updated_by')->nullable(),
                 Textarea::make('response_paper')->nullable(),
             ]),
         ]);
@@ -47,8 +47,8 @@ class NachdTentativeResource extends BaseResource
             static::CustomTextColumn('author_id'),
             static::CustomTextColumn('date_acceptation'),
             static::CustomTextColumn('date_reception'),
-            static::CustomTextColumn('created_by'),
-            static::CustomTextColumn('updated_by'),
+            // static::CustomTextColumn('created_by'),
+            // static::CustomTextColumn('updated_by'),
             static::CustomTextColumn('response_paper'),
         ];
     }

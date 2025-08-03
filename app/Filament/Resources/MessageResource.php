@@ -26,13 +26,13 @@ class MessageResource extends BaseResource
     {
         return $form->schema([
             Fieldset::make('Message Details')->schema([
-                Textarea::make('content')->nullable(),
-                TextInput::make('seen')->numeric()->nullable(),
-                Textarea::make('files')->nullable(),
+                Textarea::make('content')->nullable()->label('contenu'),
+                TextInput::make('seen')->numeric()->nullable()->label('vu'),
+                Textarea::make('files')->nullable()->label('fichiers'),
                 Select::make('user_id')->relationship('user', 'name')->nullable(),
                 Select::make('chat_id')->relationship('chat', 'id')->nullable(),
-                TextInput::make('created_by')->nullable(),
-                TextInput::make('updated_by')->nullable(),
+                // TextInput::make('created_by')->nullable(),
+                // TextInput::make('updated_by')->nullable(),
             ]),
         ]);
     }
@@ -46,8 +46,8 @@ class MessageResource extends BaseResource
             static::CustomTextColumn('files'),
             static::CustomTextColumn('user.name', 'User'),
             static::CustomTextColumn('chat.id', 'Chat'),
-            static::CustomTextColumn('created_by'),
-            static::CustomTextColumn('updated_by'),
+            // static::CustomTextColumn('created_by'),
+            // static::CustomTextColumn('updated_by'),
         ];
     }
 

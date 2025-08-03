@@ -21,7 +21,7 @@ class OfferResource extends BaseResource
     public static function form(Form $form): Form
     {
         return $form->schema([
-            TextInput::make('company')->nullable(),
+            TextInput::make('company')->nullable()->required(),
             TextInput::make('designation_fr')->nullable(),
             TextInput::make('designation_en')->nullable(),
             TextInput::make('designation_ar')->nullable(),
@@ -29,12 +29,12 @@ class OfferResource extends BaseResource
             Textarea::make('description_en')->nullable(),
             Textarea::make('description_ar')->nullable(),
             TextInput::make('type')->nullable(),
-            TextInput::make('phone')->nullable(),
+            TextInput::make('phone')->nullable()->numeric(),
             TextInput::make('address')->nullable(),
             TextInput::make('responsible')->nullable(),
-            TextInput::make('email')->nullable(),
-            TextInput::make('created_by')->nullable(),
-            TextInput::make('updated_by')->nullable(),
+            TextInput::make('email')->nullable()->required(),
+            // TextInput::make('created_by')->nullable(),
+            // TextInput::make('updated_by')->nullable(),
             TextInput::make('cover')->nullable(),
             Select::make('entreprise_id')
                 ->relationship('entreprise', 'designation_fr')
@@ -61,8 +61,8 @@ class OfferResource extends BaseResource
             static::CustomTextColumn('address'),
             static::CustomTextColumn('responsible'),
             static::CustomTextColumn('email'),
-            static::CustomTextColumn('created_by'),
-            static::CustomTextColumn('updated_by'),
+            // static::CustomTextColumn('created_by'),
+            // static::CustomTextColumn('updated_by'),
             static::CustomTextColumn('cover'),
             static::CustomTextColumn('entreprise_id'),
             static::CustomTextColumn('publier'),

@@ -26,8 +26,8 @@ class NoteClaimResource extends BaseResource
                 Select::make('note_id')->relationship('note', 'id')->nullable(),
                 Textarea::make('description')->nullable(),
                 TextInput::make('etat')->nullable(),
-                TextInput::make('created_by')->nullable(),
-                TextInput::make('updated_by')->nullable(),
+                // TextInput::make('created_by')->nullable(),
+                // TextInput::make('updated_by')->nullable(),
             ]),
         ]);
     }
@@ -40,8 +40,8 @@ class NoteClaimResource extends BaseResource
             static::CustomTextColumn('note_id'),
             static::CustomTextColumn('description'),
             static::CustomTextColumn('etat'),
-            static::CustomTextColumn('created_by'),
-            static::CustomTextColumn('updated_by'),
+            // static::CustomTextColumn('created_by'),
+            // static::CustomTextColumn('updated_by'),
         ];
     }
 

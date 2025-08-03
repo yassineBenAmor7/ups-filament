@@ -9,6 +9,7 @@ use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Textarea;
 use App\Filament\Resources\BaseResource;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use App\Filament\Resources\PageResource\Pages;
 
@@ -21,15 +22,14 @@ class PageResource extends BaseResource
     public static function form(Form $form): Form
     {
         return $form->schema([
-            TextInput::make('author_id')->nullable(),
-            TextInput::make('image')->nullable(),
+            FileUpload::make('image')->nullable(),
             TextInput::make('slug')->unique()->required(),
             Textarea::make('meta_description')->nullable(),
             Textarea::make('meta_keywords')->nullable(),
-            TextInput::make('created_by')->nullable(),
-            TextInput::make('updated_by')->nullable(),
+            // TextInput::make('created_by')->nullable(),
+            // TextInput::make('updated_by')->nullable(),
             Toggle::make('publier')->default(1),
-            Textarea::make('pdf')->nullable(),
+            FileUpload::make('pdf')->nullable(),
             TextInput::make('designation_fr')->nullable(),
             TextInput::make('designation_en')->nullable(),
             TextInput::make('designation_ar')->nullable(),
@@ -39,11 +39,11 @@ class PageResource extends BaseResource
             RichEditor::make('description_fr')->nullable(),
             RichEditor::make('description_en')->nullable(),
             RichEditor::make('description_ar')->nullable(),
-            RichEditor::make('target')->nullable(),
-            TextInput::make('parent_id')->nullable(),
-            Textarea::make('display_type')->nullable(),
-            Textarea::make('link')->nullable(),
-            Textarea::make('files')->nullable(),
+            TextInput::make('target')->nullable(),
+            //TextInput::make('parent_id')->nullable(),
+            Textarea::make('display_type')->nullable()->label("type d'affichage"),
+            Textarea::make('link')->nullable()->label('lien'),
+            Textarea::make('files')->nullable()->label('fichiers'),
         ]);
     }
 
@@ -51,13 +51,12 @@ class PageResource extends BaseResource
     {
         return [
             static::CustomTextColumn('id'),
-            static::CustomTextColumn('author_id'),
             static::CustomTextColumn('image'),
             static::CustomTextColumn('slug'),
             static::CustomTextColumn('meta_description'),
             static::CustomTextColumn('meta_keywords'),
-            static::CustomTextColumn('created_by'),
-            static::CustomTextColumn('updated_by'),
+            // static::CustomTextColumn('created_by'),
+            // static::CustomTextColumn('updated_by'),
             static::CustomTextColumn('publier'),
             static::CustomTextColumn('pdf'),
             static::CustomTextColumn('designation_fr'),

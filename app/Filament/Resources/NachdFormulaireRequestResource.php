@@ -31,9 +31,8 @@ class NachdFormulaireRequestResource extends BaseResource
                 Select::make('nachd_input_id')->relationship('nachdInput', 'id')->nullable(),
                 Select::make('nachd_tentative_id')->relationship('nachdTentative', 'id')->nullable(),
                 Textarea::make('value')->nullable(),
-                TextInput::make('author_id')->nullable(),
-                TextInput::make('created_by')->nullable(),
-                TextInput::make('updated_by')->nullable(),
+                // TextInput::make('created_by')->nullable(),
+                // TextInput::make('updated_by')->nullable(),
             ]),
         ]);
     }

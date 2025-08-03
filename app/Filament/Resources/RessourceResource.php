@@ -27,14 +27,14 @@ class RessourceResource extends BaseResource
             TextInput::make('designation_ar')->nullable(),
             Textarea::make('cover')->nullable(),
             TextInput::make('pu')->numeric()->nullable(),
-            TextInput::make('quantity')->numeric()->nullable(),
+            TextInput::make('quantity')->numeric()->nullable()->label('Quantité'),
             Textarea::make('note')->nullable(),
             Select::make('supplier_id')->relationship('supplier', 'raison_social')->nullable(),
             Textarea::make('description_fr')->nullable(),
             Textarea::make('description_en')->nullable(),
             Textarea::make('description_ar')->nullable(),
-            TextInput::make('created_by')->nullable(),
-            TextInput::make('updated_by')->nullable(),
+            // TextInput::make('created_by')->nullable(),
+            // TextInput::make('updated_by')->nullable(),
         ]);
     }
 
@@ -46,10 +46,10 @@ class RessourceResource extends BaseResource
             static::CustomTextColumn('designation_ar'),
             static::CustomTextColumn('pu'),
             static::CustomTextColumn('quantity'),
-            static::CustomTextColumn('created_by'),
-            static::CustomTextColumn('updated_by'),
-            static::CustomTextColumn('created_at'),
-            static::CustomTextColumn('updated_at'),
+            // static::CustomTextColumn('created_by'),
+            // static::CustomTextColumn('updated_by'),
+            // static::CustomTextColumn('created_at'),
+            // static::CustomTextColumn('updated_at'),
         ];
     }
 

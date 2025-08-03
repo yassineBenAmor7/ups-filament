@@ -27,9 +27,9 @@ class OfferUserResource extends BaseResource
                 ->relationship('user', 'name')
                 ->nullable(),
             Textarea::make('note')->nullable(),
-            TextInput::make('created_by')->nullable(),
-            TextInput::make('updated_by')->nullable(),
-            TextInput::make('seen')->nullable(),
+            // TextInput::make('created_by')->nullable(),
+            // TextInput::make('updated_by')->nullable(),
+            TextInput::make('seen')->nullable()->label('vu'),
         ]);
     }
 
@@ -40,8 +40,8 @@ class OfferUserResource extends BaseResource
             static::CustomTextColumn('offer_id'),
             static::CustomTextColumn('user_id'),
             static::CustomTextColumn('note'),
-            static::CustomTextColumn('created_by'),
-            static::CustomTextColumn('updated_by'),
+            // static::CustomTextColumn('created_by'),
+            // static::CustomTextColumn('updated_by'),
             static::CustomTextColumn('seen'),
         ];
     }

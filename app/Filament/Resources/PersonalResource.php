@@ -37,10 +37,10 @@ class PersonalResource extends BaseResource
                 TextInput::make('fonction_fr'),
                 TextInput::make('fonction_en'),
                 TextInput::make('fonction_ar'),
-                TextInput::make('created_by'),
-                TextInput::make('updated_by'),
-                DatePicker::make('created_at'),
-                DatePicker::make('updated_at'),
+                // TextInput::make('created_by'),
+                // TextInput::make('updated_by'),
+                // DatePicker::make('created_at'),
+                // DatePicker::make('updated_at'),
                 TextInput::make('cin'),
                 TextInput::make('slug'),
 
@@ -56,7 +56,7 @@ class PersonalResource extends BaseResource
                 TextColumn::make('fonction_fr'),
                 TextColumn::make('affichage_in_front'),
                 TextColumn::make('cin'),
-                TextColumn::make('created_at')->dateTime(),
+                // TextColumn::make('created_at')->dateTime(),
 
             ])
             ->filters([

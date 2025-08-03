@@ -13,15 +13,10 @@ class NewsCategory extends Model
         return $this->belongsTo(self::class);
     }
     protected $fillable = [
-        'id',
         'designation_fr',
         'designation_en',
         'designation_ar',
         'parent_id',
-        'created_by',
-        'updated_by',
-        'created_at',
-        'updated_at'
 
     ];
 }

@@ -15,7 +15,7 @@ class News extends Model
     }
 
     protected $fillable = [
-        'id','categorie_id','designation_fr','designation_en','designation_ar','cover','short_description_fr','short_description_en','short_description_ar','description_fr','description_en','description_ar','publier','created_by','updated_by','created_at','updated_at','for'
+        'categorie_id','designation_fr','designation_en','designation_ar','cover','short_description_fr','short_description_en','short_description_ar','description_fr','description_en','description_ar','publier','created_at','updated_at','for'
 
     ];
 
@@ -35,4 +35,5 @@ class News extends Model
 
         return $this->belongsTo(Organism::class );
     }
+
 }

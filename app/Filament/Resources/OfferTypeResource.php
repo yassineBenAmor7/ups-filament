@@ -2,13 +2,14 @@
 
 namespace App\Filament\Resources;
 
-use App\Models\OfferType;
-use App\Filament\Resources\BaseResource;
 use Filament\Forms\Form;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Fieldset;
-use App\Filament\Resources\OfferTypeResource\Pages;
+use App\Models\OfferType;
 use Filament\Tables\Table;
+use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\Fieldset;
+use App\Filament\Resources\BaseResource;
+use Filament\Forms\Components\TextInput;
+use App\Filament\Resources\OfferTypeResource\Pages;
 
 class OfferTypeResource extends BaseResource
 {
@@ -26,9 +27,9 @@ class OfferTypeResource extends BaseResource
                 TextInput::make('cover_fr')->nullable(),
                 TextInput::make('cover_en')->nullable(),
                 TextInput::make('cover_ar')->nullable(),
-                TextInput::make('publier')->nullable(),
-                TextInput::make('created_by')->nullable(),
-                TextInput::make('updated_by')->nullable(),
+                Toggle::make('publier'),
+                // TextInput::make('created_by')->nullable(),
+                // TextInput::make('updated_by')->nullable(),
             ]),
         ]);
     }
@@ -44,8 +45,8 @@ class OfferTypeResource extends BaseResource
             static::CustomTextColumn('cover_en'),
             static::CustomTextColumn('cover_ar'),
             static::CustomTextColumn('publier'),
-            static::CustomTextColumn('created_by'),
-            static::CustomTextColumn('updated_by'),
+            // static::CustomTextColumn('created_by'),
+            // static::CustomTextColumn('updated_by'),
         ];
     }
 

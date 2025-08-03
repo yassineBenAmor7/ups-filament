@@ -7,5 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class MasterEstablishment extends Model
 {
-    
+    protected $fillable = [
+        'capacite', 'publier'
+    ];
 }

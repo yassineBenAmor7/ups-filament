@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class RessourceSupplier extends Model
 {
     protected $fillable = [
-        'id',
         'logo',
         'raison_social',
         'mf',
@@ -20,10 +19,6 @@ class RessourceSupplier extends Model
         'domaine',
         'responsable_name',
         'responsable_email',
-        'responsable_phone',
-        'created_by',
-        'updated_by',
-        'created_at',
-        'updated_at'
+        'responsable_phone'
     ];
 }
