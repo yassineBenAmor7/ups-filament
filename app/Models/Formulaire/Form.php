@@ -4,9 +4,15 @@ namespace App\Models\Formulaire;
 
 use LaraZeus\Bolt\Models\Form as BaseForm;
 use Spatie\Permission\Models\Role;
+use Spatie\Translatable\HasTranslations;
 
 class Form extends BaseForm
 {  
+
+     use HasTranslations;
+   
+
+    public array $translatable = ['name', 'description'];
 
     protected $fillable = [
     'name',
@@ -18,16 +24,13 @@ class Form extends BaseForm
     'method',
     'accept_files',
     'has_decision',
-    'target',
-    'single_submission',
+    'form_for',
+    
     'start_date',
     'end_date',
     'header',
     'footer',
-    'supplementary_image_1',
-    'supplementary_image_2',
-    'image_1_position',
-    'image_2_position',
+   
     'response_template',
     'response_header',
     'response_footer',
@@ -36,7 +39,7 @@ class Form extends BaseForm
     'created_by',
     'updated_by',
     'options',
-    'extensions',
+    
 ];
 
 protected $casts = [
@@ -44,14 +47,14 @@ protected $casts = [
     'ordering' => 'integer',
     'accept_files' => 'boolean',
     'has_decision' => 'boolean',
-    'single_submission' => 'boolean',
+    
     'response_template' => 'array',
     'start_date' => 'datetime',
     'end_date' => 'datetime',
     'user_id' => 'integer',
     'category_id' => 'integer',
      'options' => 'array',
-    'extensions' => 'array',
+    
 ];
    
      public function creator()

@@ -1,13 +1,9 @@
-@php
-    $colors = \Illuminate\Support\Arr::toCssStyles([
-        \Filament\Support\get_color_css_variables($zeusForm->options['primary_color'] ?? 'primary', shades: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900]),
-    ]);
-@endphp
 
-<div class="not-prose" style="{{ $colors }}">
+
+<div class="not-prose" >
 
     @if(!$inline)
-        @if(!class_exists(\LaraZeus\BoltPro\BoltProServiceProvider::class) || (optional($zeusForm->options)['logo'] === null && optional($zeusForm->options)['cover'] === null))
+        @if( (optional($zeusForm->options)['logo'] === null && optional($zeusForm->options)['cover'] === null))
             <x-slot name="header">
                 <h2>{{ $zeusForm->name ?? '' }}</h2>
                 <p class="text-gray-400 text-mdd my-2">{{ $zeusForm->description ?? '' }}</p>
@@ -25,17 +21,7 @@
         @endif
 
         <x-slot name="breadcrumbs">
-            @if($zeusForm->extensions === null)
-                <li class="flex items-center">
-                    <a href="{{ route('bolt.forms.list') }}">{{ __('Forms') }}</a>
-                    @svg('heroicon-s-arrow-small-right','fill-current w-4 h-4 mx-3 rtl:rotate-180')
-                </li>
-            @else
-                <li class="flex items-center">
-                    <a href="{{ \LaraZeus\Bolt\Facades\Extensions::init($zeusForm, 'route') }}">{{ \LaraZeus\Bolt\Facades\Extensions::init($zeusForm, 'label') }}</a>
-                    @svg('heroicon-s-arrow-small-right','fill-current w-4 h-4 mx-3 rtl:rotate-180')
-                </li>
-            @endif
+           
             <li class="flex items-center">
                 {{ $zeusForm->name }}
             </li>
@@ -46,7 +32,7 @@
         @include($boltTheme.'.loading')
     @endif
 
-    @if(class_exists(\LaraZeus\BoltPro\BoltProServiceProvider::class) && optional($zeusForm->options)['logo'] !== null && optional($zeusForm)->options['cover'] !== null)
+    @if(  optional($zeusForm->options)['logo'] !== null && optional($zeusForm)->options['cover'] !== null)
         <div style="background-image: url('{{ \Illuminate\Support\Facades\Storage::disk(config('zeus-bolt.uploadDisk'))->url($zeusForm->options['cover']) }}')"
              class="flex justify-start items-center px-4 py-6 gap-4 rounded-lg bg-clip-border bg-origin-border bg-cover bg-center">
             <div>
@@ -59,6 +45,7 @@
             <div class="bg-white/40 p-4 space-y-1 rounded-lg w-full text-left">
                 <h4 class="text-custom-600 text-2xl font-bold dark:text-white">
                     {{ $zeusForm->name ?? '' }}
+                   
                 </h4>
                 @if(filled($zeusForm->description))
                     <h5 class="text-custom-600 font-normal">
@@ -81,22 +68,41 @@
     @endif
 
     @if($sent)
+    @if ($zeusForm->response_header)
+        <div class="prose max-w-none mb-4">
+            {!! $zeusForm->response_header !!}
+        </div>
+    @endif
         @include($boltTheme.'.submitted')
+        @if ($zeusForm->response_footer)
+        <div class="prose max-w-none mt-4">
+            {!! $zeusForm->response_footer !!}
+        </div>
+    @endif
     @else
-        <x-filament-panels::form wire:submit.prevent="store" :class="!$inline ? 'mx-2' : ''">
+    @if ($zeusForm->header)
+    <div class="prose max-w-none my-6">
+        {!! $zeusForm->header !!}
+    </div>
+@endif
+
+
+       <form
+    wire:submit.prevent="store"
+    action="{{ $zeusForm->action ?? '' }}"
+    method="{{ $zeusForm->method ?? 'POST' }}"
+   
+    enctype="{{ ($zeusForm->accept_files ?? false) ? 'multipart/form-data' : 'application/x-www-form-urlencoded' }}"
+    class="{{ !$inline ? 'mx-2' : '' }}"
+>
+    @csrf
             @if(!$inline)
                 {{ \LaraZeus\Bolt\Facades\Bolt::renderHookBlade('zeus-form.before') }}
             @endif
 
             {!! \LaraZeus\Bolt\Facades\Extensions::init($zeusForm, 'render',$extensionData) !!}
 
-            @if(!empty($zeusForm->details))
-                <div class="m-4">
-                    <x-filament::section :compact="true">
-                        {!! nl2br($zeusForm->details) !!}
-                    </x-filament::section>
-                </div>
-            @endif
+           
 
            {{$this->form}}
 
@@ -104,7 +110,7 @@
                 <x-filament::button
                     form="store"
                     type="submit"
-                    :color="$zeusForm->options['primary_color'] ?? 'primary'"
+                
                 >
                     {{ __('Save') }}
                 </x-filament::button>
@@ -113,8 +119,12 @@
             @if(!$inline)
                 {{ \LaraZeus\Bolt\Facades\Bolt::renderHookBlade('zeus-form.after') }}
             @endif
-        </x-filament-panels::form>
-
+        </form>
+@if ($zeusForm->footer)
+    <div class="prose max-w-none mt-6 text-center">
+        {!! $zeusForm->footer !!}
+    </div>
+@endif
         <x-filament-actions::modals/>
     @endif
 </div>

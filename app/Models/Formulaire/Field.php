@@ -5,9 +5,12 @@ namespace App\Models\Formulaire;
 use Illuminate\Database\Eloquent\Model;
 use LaraZeus\Bolt\Models\Field as BaseField;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\Translatable\HasTranslations;
 
 class Field extends BaseField
 {
+    use HasTranslations;
+     public array $translatable = ['label'];
     protected $fillable = [
     'name',
     'type',

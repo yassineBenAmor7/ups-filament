@@ -10,7 +10,9 @@ class Section extends BaseSection
         'form_id', 'name', 'description', 'ordering', 'columns',
         'icon', 'aside', 'compact', 'borderless', 'options'
     ];
-
+ protected $casts = [
+    'options' => 'array',
+];
     public function form():BelongsTo
     {
         return $this->belongsTo(Form::class, 'form_id');

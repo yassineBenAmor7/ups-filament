@@ -4,8 +4,12 @@ namespace App\Models\Formulaire;
 
 use Illuminate\Database\Eloquent\Model;
 use LaraZeus\Bolt\Models\Category as BaseCategory;
+use Spatie\Translatable\HasTranslations;
+
 class Category extends BaseCategory
 {
+    use HasTranslations;
+     public array $translatable = ['name', 'description'];
    protected $fillable = [
     'name',
     'slug',

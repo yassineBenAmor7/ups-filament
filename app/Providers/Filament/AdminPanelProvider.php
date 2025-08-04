@@ -66,7 +66,7 @@ class AdminPanelProvider extends PanelProvider
                 FilamentShieldPlugin::make(),
                 ResizedColumnPlugin::make()
                 ->preserveONDB(),
-                SpatieLaravelTranslatablePlugin::make()->defaultLocales([config('app.locale')]),
+                SpatieLaravelTranslatablePlugin::make()->defaultLocales(['en','fr']),
                 BoltPlugin::make()
                  ->navigationGroupLabel('Form Builder')
                  

@@ -46,8 +46,8 @@ return new class extends Migration {
             $table->string('method')->default('POST');
             $table->boolean('accept_files')->default(false);
             $table->boolean('has_decision')->default(false);
-            $table->string('target')->nullable();
-            $table->boolean('single_submission')->default(false);
+            $table->string('form_for')->nullable();
+          
             
             // Dates
             $table->dateTime('start_date')->nullable();
@@ -57,11 +57,7 @@ return new class extends Migration {
             $table->text('header')->nullable();
             $table->text('footer')->nullable();
             
-            // Media
-            $table->string('supplementary_image_1')->nullable();
-            $table->string('supplementary_image_2')->nullable();
-            $table->string('image_1_position')->nullable();
-            $table->string('image_2_position')->nullable();
+           
             
             // Response templates
             $table->json('response_template')->nullable();
@@ -76,7 +72,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->json('options')->nullable();
-            $table->json('extensions')->nullable();
+           
             $table->timestamps();
              $table->softDeletes();
            

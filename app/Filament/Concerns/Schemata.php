@@ -2,6 +2,7 @@
 
 namespace App\Filament\Concerns;
 use Filament\Facades\Filament;
+use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\Actions;
 use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Component;
@@ -76,14 +77,7 @@ trait Schemata
                                 ->default(1)
                                 ->hint(__('fields per row'))
                                 ->label(__('Section Columns')),
-                            IconPicker::make('icon')
-                                ->columns([
-                                    'default' => 1,
-                                    'lg' => 3,
-                                    '2xl' => 5,
-                                ])
-                                ->visible(fn (Get $get) => $formOptions['show-as'] === 'page' && $get('borderless') === false)
-                                ->label(__('Section icon')),
+                           
                             Toggle::make('aside')
                                 ->default(false)
                                 ->visible(fn (Get $get) => $formOptions['show-as'] === 'page' && $get('borderless') === false)
@@ -99,7 +93,7 @@ trait Schemata
                                 ->visible(fn (Get $get) => $formOptions['show-as'] === 'page' && $get('borderless') === false)
                                 ->label(__('Compact section')),
                         ]),
-                    self::visibility($allSections),
+                  self::visibility($allSections),
                     Bolt::getCustomSchema('section') ?? [],
                 ])),
         ];
@@ -202,12 +196,23 @@ trait Schemata
                 ->schema([
                      RichEditor::make('header')->label('En-tête du formulaire'),
                     RichEditor::make('footer')->label('Pied du formulaire'),
-                    Grid::make(2)->schema([
-                        FileUpload::make('supplementary_image_1')->label('Image supplémentaire 1'),
-                        TextInput::make('image_1_position')->label('Position de l\'image 1'),
-                        FileUpload::make('supplementary_image_2')->label('Image supplémentaire 2'),
-                        TextInput::make('image_2_position')->label('Position de l\'image 2'),
-                    ]),
+                 
+                    FileUpload::make('options.logo')
+                      ->disk(config('zeus-bolt.uploadDisk'))
+                     ->directory(config('zeus-bolt.uploadDirectory'))
+                      ->visibility(config('zeus-bolt.uploadVisibility'))
+                        ->image()
+                        ->imageEditor()
+                        ->label(__('Logo'))
+                        ->preserveFilenames(),
+                    FileUpload::make('options.cover')
+                        ->disk(config('zeus-bolt.uploadDisk'))
+                        ->directory(config('zeus-bolt.uploadDirectory'))
+                        ->visibility(config('zeus-bolt.uploadVisibility'))
+                        ->image()
+                        ->imageEditor()
+                        ->label(__('Cover'))
+                        ->preserveFilenames(),
                     RichEditor::make('response_header')->label('En-tête de réponse'),
                     RichEditor::make('response_footer')->label('Pied de réponse'),
                     Textarea::make('response_template')->label('Modèle de réponse (JSON)')->rows(6),
@@ -233,7 +238,29 @@ trait Schemata
                              ->default(fn ($record) => $record?->options['one-entry-per-user'] ?? false),
                     ]),
                    
-                
+                 Grid::make()
+                        ->columnSpan(1)
+                        ->columns(1)
+                        ->schema([
+                            Radio::make('options.show-as')
+                                ->label(__('Show the form as'))
+                                ->live()
+                                ->default('page')
+                                ->descriptions([
+                                    'page' => __('show all sections on one page'),
+                                    'wizard' => __('separate each section in steps'),
+                                    'tabs' => __('Show the Form as Tabs'),
+                                ])
+                                ->options([
+                                    'page' => __('Show on one page'),
+                                    'wizard' => __('Show As Wizard'),
+                                    'tabs' => __('Show As Tabs'),
+                                ]),
+                                  ]),
+                                   TextInput::make('ordering')
+                        ->numeric()
+                        ->label(__('ordering'))
+                        ->default(1),
                 ]),
             Tabs\Tab::make('form-settings-tab')
                 ->label(__('Paramètres'))
@@ -248,8 +275,8 @@ trait Schemata
                     ->label('Avec processus de décision')
                     ->live()
                     ->columnSpanFull(),
-                        TextInput::make('target')->label('Cible (target)'),
-                        Toggle::make('single_submission')->label('Soumission unique'),
+                        TextInput::make('form_for')->label('Cible '),
+                       
 
                             Placeholder::make('form-dates')
                                ->label('Dates du formulaire')
@@ -312,28 +339,8 @@ trait Schemata
     ]),
 
                
-            Tabs\Tab::make('extensions-tab')
-                ->label(__('Extensions'))
-                ->visible(BoltPlugin::get()->getExtensions() !== null)
-                ->schema([
-                    Select::make('extensions')
-                        ->label(__('Extensions'))
-                        ->preload()
-                        ->live()
-                        ->options(function () {
-                            // @phpstan-ignore-next-line
-                            return collect(BoltPlugin::get()->getExtensions())
-                                ->mapWithKeys(function (string $item): array {
-                                    if (class_exists($item)) {
-                                        return [$item => (new $item)->label()];
-                                    }
-
-                                    return [$item => $item];
-                                });
-                        }),
-                ]),
-
            
+ 
         ];
 
         $customSchema = Bolt::getCustomSchema('form');
@@ -390,8 +397,7 @@ trait Schemata
                 ->itemLabel(fn (array $state): ?string => $state['name'] ?? null)
                 ->addActionLabel(__('Add field'))
                 ->extraItemActions([
-                    // @phpstan-ignore-next-line
-                    Bolt::hasPro() ? \LaraZeus\BoltPro\Actions\FieldMarkAction::make('marks') : null,
+                   
 
                     Action::make('fields options')
                         ->slideOver()
@@ -435,7 +441,7 @@ trait Schemata
             Hidden::make('compact')->default(0)->nullable(),
             Hidden::make('aside')->default(0)->nullable(),
             Hidden::make('borderless')->default(0)->nullable(),
-            Hidden::make('icon')->nullable(),
+           
             Hidden::make('columns')->default(1)->nullable(),
             Hidden::make('description')->nullable(),
             Hidden::make('options.visibility.active')->default(0)->nullable(),
