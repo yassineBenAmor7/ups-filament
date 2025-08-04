@@ -25,7 +25,7 @@ class YearResource extends BaseResource
             TextInput::make('designation')
                 ->required()
                 ->length(4)
-                ->label('Year'),
+                ->label('Année'),
         ]);
     }
 
@@ -44,8 +44,7 @@ class YearResource extends BaseResource
 
     public static function table(Table $table): Table
     {
-        // Appelle la méthode table() du BaseResource,
-        // qui doit gérer colonnes, filtres, actions...
+
         return parent::table($table);
     }
 

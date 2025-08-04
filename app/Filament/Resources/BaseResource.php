@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use Filament\Forms;
+use App\Models\Year;
 use Filament\Tables;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
@@ -25,6 +26,7 @@ use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Forms\Components\RichEditor;
 use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Enums\ActionsPosition;
 use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
@@ -215,10 +217,7 @@ protected static function getExtraFilters(): array
     {
         return $table
             ->columns(static::getExtraColumns())
-            ->filters( array_merge(
-                    static::getDynamicFilters(),
-                    static::getExtraFilters(),
-                ), layout: FiltersLayout::Modal)
+            ->filters(static::getAutoFilters(), layout: FiltersLayout::Modal)
             ->actions(static::getBaseActions(), position: ActionsPosition::BeforeCells)
             ->bulkActions(static::getBaseBulkActions())
 
@@ -288,6 +287,35 @@ protected static function getBulkEmailSendAction(): ?BulkAction
         ->visible(fn (): bool => Schema::hasColumn($table, 'email'));
 }
 
+
+public static function getAutoYearFilter(string $column = 'year_id', string $label = 'Year'): ?SelectFilter
+{
+    $model = static::getModel();
+    $table = (new $model)->getTable();
+
+    if (!Schema::hasColumn($table, $column)) {
+        return null;
+    }
+
+    return SelectFilter::make($column)
+        ->label($label)
+        ->options(fn () => Year::pluck('designation', 'id'))
+        ->default(fn () => Year::where('designation', now()->year)->value('id'));
+}
+
+protected static function getAutoFilters(): array
+{
+    $filters = array_merge(
+        static::getDynamicFilters(),
+        static::getExtraFilters()
+    );
+
+    if ($yearFilter = static::getAutoYearFilter()) {
+        $filters[] = $yearFilter;
+    }
+
+    return array_filter($filters);
+}
 
 }
 

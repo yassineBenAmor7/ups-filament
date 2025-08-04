@@ -32,19 +32,19 @@ class CoordinateResource extends BaseResource
             TextInput::make('addresse_fr'),
             TextInput::make('addresse_en'),
             TextInput::make('addresse_ar'),
-            TextInput::make('phone'),
-            TextInput::make('phone_2'),
-            TextInput::make('fax'),
-            TextInput::make('email'),
-            TextInput::make('cover'),
-            TextInput::make('university'),
-            TextInput::make('ministere'),
-            TextInput::make('facebook_link'),
-            TextInput::make('youtube_link'),
-            TextInput::make('google_link'),
-            TextInput::make('linkedin_link'),
-            TextInput::make('instagram_link'),
-            TextInput::make('favicon'),
+            TextInput::make('phone')->label('Téléphone'),
+            TextInput::make('phone_2')->label('Téléphone 2'),
+            TextInput::make('fax')->label('Fax'),
+            TextInput::make('email')->label('Email'),
+            TextInput::make('cover')->label('Couverture'),
+            TextInput::make('university')->label('Université'),
+            TextInput::make('ministere')->label('Ministère'),
+            TextInput::make('facebook_link')->label('lien Facebook'),
+            TextInput::make('youtube_link')->label('lien YouTube'),
+            TextInput::make('google_link')->label('lien Google'),
+            TextInput::make('linkedin_link')->label('lien LinkedIn'),
+            TextInput::make('instagram_link')->label('lien Instagram'),
+            TextInput::make('favicon')->label('Favicon'),
             FileUpload::make('logo'),
             TextInput::make('logo_footer'),
             TextInput::make('short_description_fr'),
@@ -69,21 +69,16 @@ class CoordinateResource extends BaseResource
             static::CustomTextColumn('designation_fr'),
             static::CustomTextColumn('abbreviation'),
             static::CustomTextColumn('email'),
-            static::CustomTextColumn('phone'),
-            static::CustomTextColumn('university'),
-            static::CustomTextColumn('ministere'),
-            static::CustomTextColumn('currentYear.designation')->label('Year'),
+            static::CustomTextColumn('phone')->label('Téléphone'),
+            static::CustomTextColumn('university')->label('Université'),
+            static::CustomTextColumn('ministere')->label('Ministère'),
+            static::CustomTextColumn('currentYear.designation')->label('Année'),
         ];
     }
 
     public static function getExtraFilters(): array
     {
-        return [
-            SelectFilter::make('current_year_id')
-                ->label('Year')
-                ->options(fn () => Year::pluck('designation', 'id'))
-                ->default(fn () => Year::where('designation', now()->year)->value('id')),
-        ];
+        return [];
     }
 
     public static function table(Table $table): Table
