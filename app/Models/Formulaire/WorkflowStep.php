@@ -14,11 +14,10 @@ class WorkflowStep extends Model
     'description',
     'created_by',
     'updated_by',
+   
 ];
 
-protected $casts = [
-    'ordre' => 'integer',
-];
+
  public function creator()
     {
         return $this->belongsTo(User::class, 'created_by');
@@ -34,7 +33,7 @@ protected $casts = [
         return $this->belongsToMany(Form::class, 
             config('zeus-bolt.table-prefix').'form_workflow','workflow_step_id','form_id')
             
-            ->withPivot('ordre');
+            ->withPivot(['ordre','role_id']);
     }
     public function approvals()
     {

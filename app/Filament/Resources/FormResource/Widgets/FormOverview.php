@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Formulaire\FormResource\Widgets;
+namespace App\Filament\Resources\FormResource\Widgets;
 
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;

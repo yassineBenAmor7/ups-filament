@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use LaraZeus\Bolt\Models\Response as BaseResponse;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-
+use App\Models\Formulaire\Form;
 class Response extends BaseResponse
 {
    protected $fillable = [
@@ -14,7 +14,6 @@ class Response extends BaseResponse
     'user_id',
     'status',
     'confirmation_code',
-    'submitted_at',
     'processed_at',
     'notes',
     'paper_response',
@@ -23,41 +22,67 @@ class Response extends BaseResponse
 ];
 
 protected $casts = [
-    'submitted_at' => 'datetime',
+   
     'processed_at' => 'datetime',
 ];
-     public function creator()
-    {
-        return $this->belongsTo(config('auth.providers.users.model'), 'created_by');
-    }
-
-    public function updater()
-    {
-        return $this->belongsTo(config('auth.providers.users.model'), 'updated_by');
-    }
+    
     public function user():BelongsTo
 {
     return $this->belongsTo(User::class);
 }
-
+ 
 public function approvals()
 {
-    return $this->hasMany(ResponseApproval::class);
+    return $this->hasMany(ResponseApproval::class,'response_id');
+}
+//get the latest approval step ordre that user has submitted
+public function getLastApprovalOrdre():?int
+{
+     
+    $ordre= $this->approvals()
+    ->join('nachd_form_workflow', 'nachd_response_approvals.workflow_step_id', '=', 'nachd_form_workflow.workflow_step_id')
+    ->where('nachd_response_approvals.response_id', $this->id)
+    ->max('nachd_form_workflow.ordre');
+        
+    return $ordre;
+}
+public function getNextApprovalStep()
+{
+    
+    $formWorkflows = $this->form->workflowSteps()
+        ->orderBy('nachd_form_workflow.ordre')
+        ->get();
+
+        
+     $lastOrdre = $this->getLastApprovalOrdre() ;
+
+       
+
+     if ($lastOrdre === null) {
+        
+        return $formWorkflows->first();
+    }
+     $nextStep = $formWorkflows->first(function ($step) use ($lastOrdre) {
+        return $step->pivot->ordre > $lastOrdre;
+    });
+
+   
+
+    return $nextStep;
 }
 
-public function currentApproval()
-{
-    return $this->hasOne(ResponseApproval::class)->latestOfMany();
-}
  protected static function booted(): void
 {
     static::creating(function ($model) {
         $model->created_by = auth()->id();
         $model->updated_by = auth()->id();
+       
     });
 
     static::updating(function ($model) {
         $model->updated_by = auth()->id();
     });
 }
+
+
 }

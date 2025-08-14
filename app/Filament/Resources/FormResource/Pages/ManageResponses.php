@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Formulaire\FormResource\Pages;
+namespace App\Filament\Resources\FormResource\Pages;
 
 use Filament\Forms\Components\DatePicker;
 use Filament\Resources\Pages\ManageRelatedRecords;
@@ -13,8 +13,9 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use LaraZeus\Bolt\BoltPlugin;
 use LaraZeus\Bolt\Filament\Actions\SetResponseStatus;
+use App\Filament\Actions\ApproveResponse;
 use LaraZeus\Bolt\Filament\Exports\ResponseExporter;
-use App\Filament\Resources\Formulaire\FormResource;
+use App\Filament\Resources\FormResource;
 use App\Models\Formulaire\Field;
 use App\Models\Formulaire\Form;
 use App\Models\Formulaire\Response;
@@ -31,6 +32,12 @@ class ManageResponses extends ManageRelatedRecords
     protected static string $relationship = 'responses';
 
     protected static ?string $navigationIcon = 'heroicon-o-document-chart-bar';
+    public static function canAccess(array $parameters = []): bool
+    {
+        // User can access this page if they have view_form or submit_response_form
+        $user = auth()->user();
+        return $user && ($user->can('view_form') || $user->can('submit_response_form'));
+    }
 
     public function table(Table $table): Table
     {
@@ -39,13 +46,7 @@ class ManageResponses extends ManageRelatedRecords
         $getUserModel = $userModel::getBoltUserFullNameAttribute();
 
         $mainColumns = [
-            ImageColumn::make('user.avatar')
-                ->sortable(false)
-                ->searchable(false)
-                ->label(__('Avatar'))
-                ->circular()
-                ->toggleable(),
-
+            
             TextColumn::make('user.' . $getUserModel)
                 ->label(__('Name'))
                 ->toggleable()
@@ -101,6 +102,7 @@ class ManageResponses extends ManageRelatedRecords
             ->columns($mainColumns)
             ->actions([
                 SetResponseStatus::make(),
+                ApproveResponse::make(),
                 Tables\Actions\DeleteAction::make(),
                 Tables\Actions\ForceDeleteAction::make(),
                 Tables\Actions\RestoreAction::make(),
@@ -160,4 +162,5 @@ class ManageResponses extends ManageRelatedRecords
     {
         return __('Entries Report');
     }
+    
 }

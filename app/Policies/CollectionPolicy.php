@@ -15,7 +15,7 @@ class CollectionPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_formulaire::collection');
+        return $user->can('view_any_collection');
     }
 
     /**
@@ -23,7 +23,7 @@ class CollectionPolicy
      */
     public function view(User $user, Collection $collection): bool
     {
-        return $user->can('view_formulaire::collection');
+        return $user->can('view_collection');
     }
 
     /**
@@ -31,7 +31,7 @@ class CollectionPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create_formulaire::collection');
+        return $user->can('create_collection');
     }
 
     /**
@@ -39,7 +39,7 @@ class CollectionPolicy
      */
     public function update(User $user, Collection $collection): bool
     {
-        return $user->can('update_formulaire::collection');
+        return $user->can('update_collection');
     }
 
     /**
@@ -47,7 +47,7 @@ class CollectionPolicy
      */
     public function delete(User $user, Collection $collection): bool
     {
-        return $user->can('delete_formulaire::collection');
+        return $user->can('delete_collection');
     }
 
     /**
@@ -55,7 +55,7 @@ class CollectionPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('delete_any_formulaire::collection');
+        return $user->can('delete_any_collection');
     }
 
     /**
@@ -63,7 +63,7 @@ class CollectionPolicy
      */
     public function forceDelete(User $user, Collection $collection): bool
     {
-        return $user->can('force_delete_formulaire::collection');
+        return $user->can('force_delete_collection');
     }
 
     /**
@@ -71,7 +71,7 @@ class CollectionPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('force_delete_any_formulaire::collection');
+        return $user->can('force_delete_any_collection');
     }
 
     /**
@@ -79,7 +79,7 @@ class CollectionPolicy
      */
     public function restore(User $user, Collection $collection): bool
     {
-        return $user->can('restore_formulaire::collection');
+        return $user->can('restore_collection');
     }
 
     /**
@@ -87,7 +87,7 @@ class CollectionPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('restore_any_formulaire::collection');
+        return $user->can('restore_any_collection');
     }
 
     /**
@@ -95,7 +95,7 @@ class CollectionPolicy
      */
     public function replicate(User $user, Collection $collection): bool
     {
-        return $user->can('replicate_formulaire::collection');
+        return $user->can('replicate_collection');
     }
 
     /**
@@ -103,6 +103,6 @@ class CollectionPolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('reorder_formulaire::collection');
+        return $user->can('reorder_collection');
     }
 }

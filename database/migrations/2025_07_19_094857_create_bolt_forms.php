@@ -72,7 +72,8 @@ return new class extends Migration {
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->json('options')->nullable();
-           
+           $table->json('extensions')->nullable();
+           $table->json('workflow_config')->nullable();
             $table->timestamps();
              $table->softDeletes();
            
@@ -108,17 +109,14 @@ return new class extends Migration {
             $table->foreignId('section_id')->nullable(false)->constrained(config('zeus-bolt.table-prefix').'sections');
     $table->string('name')->unique();
     $table->string('type');
-    $table->string('label');
-    $table->string('placeholder')->nullable();
+   
     $table->json('options')->nullable(); 
-    $table->string('default_value')->nullable();
-     // Field settings
-            $table->boolean('is_required')->default(true);
-            $table->boolean('is_disabled')->default(false);
-            $table->boolean('is_visible')->default(true);
+   
+     
             $table->unsignedInteger('ordering')->nullable();
     $table->timestamps();
  $table->softDeletes();
+ $table->unique(['section_id', 'name']);
         });
 
        
@@ -134,7 +132,7 @@ return new class extends Migration {
             // Status tracking
             $table->string('status')->default('NEW');
             $table->string('confirmation_code')->nullable();
-            $table->dateTime('submitted_at')->nullable();
+           
             $table->dateTime('processed_at')->nullable();
             $table->text('notes')->nullable();
             $table->text('paper_response')->nullable();
@@ -150,20 +148,18 @@ return new class extends Migration {
         // ======================
         Schema::create(config('zeus-bolt.table-prefix').'field_responses', function (Blueprint $table) {
             $table->id();
+             $table->foreignId('form_id')->constrained(config('zeus-bolt.table-prefix').'forms');
             $table->foreignId('response_id')->constrained(config('zeus-bolt.table-prefix').'responses');
             $table->foreignId('field_id')->constrained(config('zeus-bolt.table-prefix').'fields');
-             $table->foreignId('form_id')
-        ->nullable()
+            
       
-        ->constrained(config('zeus-bolt.table-prefix') . 'forms')
-        ->onDelete('cascade');
+       
             $table->text('response')->nullable();
-             $table->unsignedBigInteger('author_id')->nullable();
+            
 
              $table->softDeletes();
             $table->timestamps();
-            $table->unsignedBigInteger('created_by')->nullable();
-            $table->unsignedBigInteger('updated_by')->nullable();
+           
 
         });
 
@@ -188,6 +184,7 @@ return new class extends Migration {
             $table->foreignId('form_id')->constrained(config('zeus-bolt.table-prefix').'forms');
             $table->foreignId('workflow_step_id')->constrained(config('zeus-bolt.table-prefix').'workflow_steps');
             $table->unsignedInteger('ordre')->nullable();
+             $table->foreignId('role_id')->constrained('roles');
             $table->timestamps();
              $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
@@ -204,8 +201,8 @@ return new class extends Migration {
             $table->foreignId('workflow_step_id')->constrained(config('zeus-bolt.table-prefix').'workflow_steps');
             $table->unsignedTinyInteger('status')->default(0);
             $table->foreignId('approved_by')->nullable()->constrained('users');
+           $table->timestamp('approved_at')->nullable();
            
-            $table->unsignedBigInteger('updated_by')->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();
             
@@ -220,7 +217,7 @@ return new class extends Migration {
             $table->foreignId('form_id')->constrained(config('zeus-bolt.table-prefix').'forms');
             $table->foreignId('role_id')->constrained('roles');
             $table->timestamps();
-            
+          
             $table->unique(['form_id', 'role_id']);
              $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();

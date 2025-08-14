@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Filament\Resources\Formulaire\FormResource\Pages;
+namespace App\Filament\Resources\FormResource\Pages;
 
 use Filament\Actions;
 use Filament\Actions\Action;
 use Filament\Resources\Pages\ListRecords;
 use LaraZeus\Bolt\BoltPlugin;
-use App\Facades\Bolt;
-use App\Filament\Resources\Formulaire\FormResource;
+use LaraZeus\Bolt\Facades\Bolt;
+use App\Filament\Resources\FormResource;
 
 class ListForms extends ListRecords
 {

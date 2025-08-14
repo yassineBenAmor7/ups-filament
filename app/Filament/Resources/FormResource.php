@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Filament\Resources\Formulaire;
-use Filament\Navigation\NavigationItem;
-use LaraZeus\Bolt\Filament\Resources\BoltResource; 
+namespace App\Filament\Resources;
+
 use Closure;
 use Filament\Forms\Form;
 use Filament\Infolists\Components\IconEntry;
@@ -29,19 +28,33 @@ use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use LaraZeus\Bolt\BoltPlugin;
+use App\Filament\Plugins\CustomBoltPlugin;
 use LaraZeus\Bolt\Concerns\HasOptions;
 use App\Filament\Concerns\Schemata;
 use LaraZeus\Bolt\Facades\Bolt;
 use LaraZeus\Bolt\Filament\Actions\ReplicateFormAction;
-use App\Filament\Resources\Formulaire\FormResource\Pages;
+use App\Filament\Resources\FormResource\Pages;
 use App\Models\Formulaire\Form as ZeusForm;
 use LaraZeus\ListGroup\Infolists\ListEntry;
-class FormResource extends BoltResource
+use App\Filament\Resources\FormResource\Widgets;
+use LaraZeus\Bolt\Filament\Resources\FormResource as BaseFormResource; 
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
+class FormResource extends BaseFormResource implements HasShieldPermissions
 {
     use HasOptions;
     use Schemata;
-
+ public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'view_any',
+            'create',
+            'update',
+            'delete',
+            'delete_any',
+            'submit_response'
+        ];
+    }
     protected static ?string $navigationIcon = 'tabler-file-description';
 
     protected static ?int $navigationSort = 1;
@@ -54,35 +67,22 @@ class FormResource extends BoltResource
 
     public static function getModel(): string
     {
-        return BoltPlugin::getModel('Form');
+        return CustomBoltPlugin::getModel('Form');
     }
 
     public static function getNavigationBadge(): ?string
     {
-        if (! BoltPlugin::getNavigationBadgesVisibility(self::class)) {
+        if (! CustomBoltPlugin::getNavigationBadgesVisibility(self::class)) {
             return null;
         }
 
-        return (string) BoltPlugin::getModel('Form')::query()->count();
+        return (string) CustomBoltPlugin::getModel('Form')::query()->count();
     }
 
-    public static function getModelLabel(): string
-    {
-        return __('Form');
-    }
-
-    public static function getPluralModelLabel(): string
-    {
-        return __('Forms');
-    }
-
-    public static function getNavigationLabel(): string
-    {
-        return __('Forms');
-    }
-
+    
     public static function infolist(Infolist $infolist): Infolist
     {
+        
         return $infolist
             ->schema([
                 Section::make()->schema([
@@ -97,7 +97,7 @@ class FormResource extends BoltResource
 
                     TextEntry::make('slug')
                         ->label(__('slug'))
-                        ->url(fn (ZeusForm $record) => route(BoltPlugin::get()->getRouteNamePrefix() . 'bolt.form.show', ['slug' => $record->slug]))
+                        ->url(fn (ZeusForm $record) => route(CustomBoltPlugin::get()->getRouteNamePrefix() . 'bolt.form.show', ['slug' => $record->slug]))
                         ->visible(fn (ZeusForm $record) => $record->extensions === null)
                         ->icon('heroicon-o-arrow-top-right-on-square')
                         ->openUrlInNewTab(),
@@ -130,7 +130,6 @@ class FormResource extends BoltResource
     public static function form(Form $form): Form
     {
         return $form->schema(static::$boltFormSchema ?? static::getMainFormSchema());
-      
     }
 
     public function getBoltFormSchema(): array | Closure | null
@@ -148,6 +147,7 @@ class FormResource extends BoltResource
      */
     public static function table(Table $table): Table
     {
+        
         return $table
             ->reorderable('ordering')
             ->columns([
@@ -184,7 +184,7 @@ class FormResource extends BoltResource
                     ->label(__('Inactive')),
 
                 SelectFilter::make('category_id')
-                    ->options(BoltPlugin::getModel('Category')::pluck('name', 'id'))
+                    ->options(CustomBoltPlugin::getModel('Category')::pluck('name', 'id'))
                     ->label(__('Category')),
             ])
             ->bulkActions([
@@ -215,7 +215,12 @@ class FormResource extends BoltResource
             'viewResponse' => Pages\ViewResponse::route('/{record}/response/{responseID}'),
         ];
 
-       
+        if (Bolt::hasPro()) {
+            // @phpstan-ignore-next-line
+            $pages['prefilled'] = \LaraZeus\BoltPro\Livewire\PrefilledForm::route('/{record}/prefilled');
+            // @phpstan-ignore-next-line
+            $pages['share'] = \LaraZeus\BoltPro\Livewire\ShareForm::route('/{record}/share');
+        }
 
         return $pages;
     }
@@ -223,14 +228,13 @@ class FormResource extends BoltResource
     public static function getWidgets(): array
     {
         $widgets = [
-            FormResource\Widgets\FormOverview::class,
-            FormResource\Widgets\ResponsesPerMonth::class,
-            FormResource\Widgets\ResponsesPerStatus::class,
-            FormResource\Widgets\ResponsesPerFields::class,
+           Widgets\FormOverview::class,
+          Widgets\ResponsesPerMonth::class,
+           Widgets\ResponsesPerStatus::class,
+          Widgets\ResponsesPerFields::class,
         ];
 
-       
-
+        
         return $widgets;
     }
 
@@ -263,7 +267,7 @@ class FormResource extends BoltResource
             // @phpstan-ignore-next-line
             $advancedActions[] = \LaraZeus\Helen\Actions\ShortUrlAction::make('get-link')
                 ->label(__('Short Link'))
-                ->distUrl(fn (ZeusForm $record) => route(BoltPlugin::get()->getRouteNamePrefix() . 'bolt.form.show', $record));
+                ->distUrl(fn (ZeusForm $record) => route(CustomBoltPlugin::get()->getRouteNamePrefix() . 'bolt.form.show', $record));
         }
 
         $moreActions[] = ActionGroup::make($advancedActions)->dropdown(false);
@@ -278,19 +282,16 @@ class FormResource extends BoltResource
             Pages\EditForm::class,
         ];
 
+      
 
         $respNavs = [
             Pages\ManageResponses::class,
             Pages\BrowseResponses::class,
         ];
 
-        $navItems = $page->generateNavigationItems([
-        ...$formNavs,
-        ...$respNavs,
-    ]);
-      
-
-    return $navItems;
+        return $page->generateNavigationItems([
+            ...$formNavs,
+            ...$respNavs,
+        ]);
     }
-  
 }

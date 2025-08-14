@@ -13,8 +13,6 @@
 
 namespace App\Models{
 /**
- * 
- *
  * @property int $id
  * @property int $sector_id
  * @property int $user_id
@@ -40,8 +38,6 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * 
- *
  * @property int $id
  * @property string $teacher_cin
  * @property string|null $designation_fr
@@ -84,8 +80,6 @@ namespace App\Models{
 
 namespace App\Models\Formulaire{
 /**
- * 
- *
  * @property int $id
  * @property array<array-key, mixed> $name
  * @property string $slug
@@ -126,7 +120,7 @@ namespace App\Models\Formulaire{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Category whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Category whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Category whereUpdatedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Category withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category withTrashed(bool $withTrashed = true)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Category withoutTrashed()
  */
 	class Category extends \Eloquent {}
@@ -134,19 +128,11 @@ namespace App\Models\Formulaire{
 
 namespace App\Models\Formulaire{
 /**
- * 
- *
  * @property int $id
  * @property int $section_id
- * @property array<array-key, mixed> $name
+ * @property string $name
  * @property string $type
- * @property string $label
- * @property string|null $placeholder
  * @property array<array-key, mixed>|null $options
- * @property string|null $default_value
- * @property bool $is_required
- * @property bool $is_disabled
- * @property bool $is_visible
  * @property int|null $ordering
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -163,25 +149,19 @@ namespace App\Models\Formulaire{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Field onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Field query()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Field whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Field whereDefaultValue($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Field whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Field whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Field whereIsDisabled($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Field whereIsRequired($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Field whereIsVisible($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Field whereJsonContainsLocale(string $column, string $locale, ?mixed $value, string $operand = '=')
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Field whereJsonContainsLocales(string $column, array $locales, ?mixed $value, string $operand = '=')
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Field whereLabel($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Field whereLocale(string $column, string $locale)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Field whereLocales(string $column, array $locales)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Field whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Field whereOptions($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Field whereOrdering($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Field wherePlaceholder($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Field whereSectionId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Field whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Field whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Field withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Field withTrashed(bool $withTrashed = true)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Field withoutTrashed()
  */
 	class Field extends \Eloquent {}
@@ -189,30 +169,23 @@ namespace App\Models\Formulaire{
 
 namespace App\Models\Formulaire{
 /**
- * 
- *
  * @property int $id
+ * @property int $form_id
  * @property int $response_id
  * @property int $field_id
- * @property int|null $form_id
  * @property string|null $response
- * @property int|null $author_id
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property int|null $created_by
- * @property int|null $updated_by
  * @property-read \App\Models\Formulaire\Field $field
- * @property-read \App\Models\Formulaire\Form|null $form
+ * @property-read \App\Models\Formulaire\Form $form
  * @property-read \App\Models\Formulaire\Response $parentResponse
  * @method static \LaraZeus\Bolt\Database\Factories\FieldResponseFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FieldResponse newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FieldResponse newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FieldResponse onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FieldResponse query()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|FieldResponse whereAuthorId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FieldResponse whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|FieldResponse whereCreatedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FieldResponse whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FieldResponse whereFieldId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FieldResponse whereFormId($value)
@@ -220,8 +193,7 @@ namespace App\Models\Formulaire{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FieldResponse whereResponse($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FieldResponse whereResponseId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FieldResponse whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|FieldResponse whereUpdatedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|FieldResponse withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FieldResponse withTrashed(bool $withTrashed = true)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FieldResponse withoutTrashed()
  */
 	class FieldResponse extends \Eloquent {}
@@ -229,8 +201,6 @@ namespace App\Models\Formulaire{
 
 namespace App\Models\Formulaire{
 /**
- * 
- *
  * @property int $id
  * @property array<array-key, mixed> $name
  * @property string $slug
@@ -241,16 +211,11 @@ namespace App\Models\Formulaire{
  * @property string $method
  * @property bool $accept_files
  * @property bool $has_decision
- * @property string|null $target
- * @property bool $single_submission
+ * @property string|null $form_for
  * @property \Illuminate\Support\Carbon|null $start_date
  * @property \Illuminate\Support\Carbon|null $end_date
  * @property string|null $header
  * @property string|null $footer
- * @property string|null $supplementary_image_1
- * @property string|null $supplementary_image_2
- * @property string|null $image_1_position
- * @property string|null $image_2_position
  * @property array<array-key, mixed>|null $response_template
  * @property string|null $response_header
  * @property string|null $response_footer
@@ -259,7 +224,8 @@ namespace App\Models\Formulaire{
  * @property int|null $created_by
  * @property int|null $updated_by
  * @property array<array-key, mixed>|null $options
- * @property array<array-key, mixed>|null $extensions
+ * @property string|null $extensions
+ * @property array<array-key, mixed>|null $workflow_config
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
@@ -300,11 +266,10 @@ namespace App\Models\Formulaire{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereEndDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereExtensions($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereFooter($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereFormFor($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereHasDecision($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereHeader($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereImage1Position($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereImage2Position($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereIsActive($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereJsonContainsLocale(string $column, string $locale, ?mixed $value, string $operand = '=')
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereJsonContainsLocales(string $column, array $locales, ?mixed $value, string $operand = '=')
@@ -317,16 +282,13 @@ namespace App\Models\Formulaire{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereResponseFooter($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereResponseHeader($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereResponseTemplate($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereSingleSubmission($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereStartDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereSupplementaryImage1($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereSupplementaryImage2($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereTarget($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereUpdatedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereUserId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Form withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Form whereWorkflowConfig($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Form withTrashed(bool $withTrashed = true)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Form withoutTrashed()
  */
 	class Form extends \Eloquent {}
@@ -334,8 +296,6 @@ namespace App\Models\Formulaire{
 
 namespace App\Models\Formulaire{
 /**
- * 
- *
  * @property int $id
  * @property int $form_id
  * @property int $role_id
@@ -360,17 +320,17 @@ namespace App\Models\Formulaire{
 
 namespace App\Models\Formulaire{
 /**
- * 
- *
  * @property int $id
  * @property int $form_id
  * @property int $workflow_step_id
  * @property int|null $ordre
+ * @property int $role_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property int|null $created_by
  * @property int|null $updated_by
  * @property-read \App\Models\Formulaire\Form $form
+ * @property-read \Spatie\Permission\Models\Role $role
  * @property-read \App\Models\Formulaire\WorkflowStep $workflowStep
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormWorkflow newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormWorkflow newQuery()
@@ -380,6 +340,7 @@ namespace App\Models\Formulaire{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormWorkflow whereFormId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormWorkflow whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormWorkflow whereOrdre($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormWorkflow whereRoleId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormWorkflow whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormWorkflow whereUpdatedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormWorkflow whereWorkflowStepId($value)
@@ -389,14 +350,11 @@ namespace App\Models\Formulaire{
 
 namespace App\Models\Formulaire{
 /**
- * 
- *
  * @property int $id
  * @property int $form_id
  * @property int|null $user_id
  * @property string $status
  * @property string|null $confirmation_code
- * @property \Illuminate\Support\Carbon|null $submitted_at
  * @property \Illuminate\Support\Carbon|null $processed_at
  * @property string|null $notes
  * @property string|null $paper_response
@@ -407,13 +365,10 @@ namespace App\Models\Formulaire{
  * @property int|null $updated_by
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Formulaire\ResponseApproval> $approvals
  * @property-read int|null $approvals_count
- * @property-read \App\Models\User|null $creator
- * @property-read \App\Models\Formulaire\ResponseApproval|null $currentApproval
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Formulaire\FieldResponse> $fieldsResponses
  * @property-read int|null $fields_responses_count
  * @property-read \App\Models\Formulaire\Form $form
  * @property-read string $last_updated
- * @property-read \App\Models\User|null $updater
  * @property-read \App\Models\User|null $user
  * @method static \LaraZeus\Bolt\Database\Factories\ResponseFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Response newModelQuery()
@@ -430,11 +385,10 @@ namespace App\Models\Formulaire{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Response wherePaperResponse($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Response whereProcessedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Response whereStatus($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Response whereSubmittedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Response whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Response whereUpdatedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Response whereUserId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Response withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Response withTrashed(bool $withTrashed = true)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Response withoutTrashed()
  */
 	class Response extends \Eloquent {}
@@ -442,24 +396,21 @@ namespace App\Models\Formulaire{
 
 namespace App\Models\Formulaire{
 /**
- * 
- *
  * @property int $id
  * @property int $response_id
  * @property int $workflow_step_id
  * @property int $status
  * @property int|null $approved_by
- * @property int|null $updated_by
+ * @property string|null $approved_at
  * @property string|null $notes
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\User|null $approver
  * @property-read \App\Models\Formulaire\Response $response
- * @property-read \App\Models\User|null $updater
  * @property-read \App\Models\Formulaire\WorkflowStep $workflowStep
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ResponseApproval newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ResponseApproval newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ResponseApproval query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ResponseApproval whereApprovedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ResponseApproval whereApprovedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ResponseApproval whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ResponseApproval whereId($value)
@@ -467,7 +418,6 @@ namespace App\Models\Formulaire{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ResponseApproval whereResponseId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ResponseApproval whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ResponseApproval whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|ResponseApproval whereUpdatedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ResponseApproval whereWorkflowStepId($value)
  */
 	class ResponseApproval extends \Eloquent {}
@@ -475,8 +425,6 @@ namespace App\Models\Formulaire{
 
 namespace App\Models\Formulaire{
 /**
- * 
- *
  * @property int $id
  * @property int $form_id
  * @property array<array-key, mixed> $name
@@ -518,7 +466,7 @@ namespace App\Models\Formulaire{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Section whereOptions($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Section whereOrdering($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Section whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Section withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Section withTrashed(bool $withTrashed = true)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Section withoutTrashed()
  */
 	class Section extends \Eloquent {}
@@ -526,8 +474,6 @@ namespace App\Models\Formulaire{
 
 namespace App\Models\Formulaire{
 /**
- * 
- *
  * @property int $id
  * @property string $name
  * @property string|null $description
@@ -557,8 +503,6 @@ namespace App\Models\Formulaire{
 
 namespace App\Models{
 /**
- * 
- *
  * @property int $id
  * @property string|null $designation_fr
  * @property string|null $designation_en
@@ -588,8 +532,6 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * 
- *
  * @property int $id
  * @property string|null $designation_fr
  * @property string|null $designation_en
@@ -619,8 +561,6 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * 
- *
  * @property int $id
  * @property int|null $group_id
  * @property string|null $designation_fr
@@ -657,8 +597,6 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * 
- *
  * @property-read \App\Models\GroupTd|null $groupTd
  * @property-read \App\Models\Teacher|null $teacher
  * @method static \Illuminate\Database\Eloquent\Builder<static>|GroupTdTeacher newModelQuery()
@@ -670,8 +608,6 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * 
- *
  * @property int $id
  * @property int|null $group_td_id
  * @property string|null $designation_fr
@@ -701,8 +637,6 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * 
- *
  * @property int $id
  * @property int $user_id
  * @property string $table_name
@@ -731,8 +665,6 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * 
- *
  * @property int $id
  * @property int|null $affichage_in_front
  * @property string|null $grade_name
@@ -776,8 +708,6 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * 
- *
  * @property int $id
  * @property string|null $file
  * @property int|null $sector_id
@@ -812,8 +742,6 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * 
- *
  * @property int $id
  * @property int|null $sector_type_id
  * @property string|null $designation_fr
@@ -865,8 +793,6 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * 
- *
  * @property int $id
  * @property string|null $designation_fr
  * @property string|null $designation_en
@@ -898,8 +824,6 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * 
- *
  * @property int $id
  * @property string|null $annee_bac
  * @property string|null $section_bac
@@ -953,8 +877,6 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * 
- *
  * @property int $id
  * @property string|null $numero_inscription
  * @property string|null $cin
@@ -998,8 +920,6 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * 
- *
  * @property int $id
  * @property int $department_id
  * @property string|null $cin
@@ -1065,8 +985,6 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * 
- *
  * @property int $id
  * @property string $name
  * @property string $email

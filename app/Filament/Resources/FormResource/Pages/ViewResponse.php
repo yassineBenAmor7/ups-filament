@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Formulaire\FormResource\Pages;
+namespace App\Filament\Resources\FormResource\Pages;
 
 use Filament\Actions\Action;
 use Filament\Forms\Components\Select;
@@ -8,9 +8,10 @@ use Filament\Forms\Components\Textarea;
 use Filament\Resources\Pages\ViewRecord;
 use Illuminate\Contracts\Support\Htmlable;
 use LaraZeus\Bolt\BoltPlugin;
-use App\Filament\Resources\Formulaire\FormResource;
+use App\Filament\Resources\FormResource;
 use App\Models\Formulaire\Form;
 use App\Models\Formulaire\Response;
+
 
 /**
  * @property Form $record.
@@ -26,7 +27,8 @@ class ViewResponse extends ViewRecord
     protected static string $resource = FormResource::class;
 
     public function mount(int | string $record): void
-    {
+    { 
+        
         parent::mount($record);
 
         $this->response = BoltPlugin::getModel('Response')::find($this->responseID);
@@ -36,7 +38,8 @@ class ViewResponse extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
-            Action::make('set-status')
+          
+             Action::make('set-status')
                 ->visible(function (): bool {
                     return $this->response->form->extensions === null;
                 })
@@ -57,6 +60,8 @@ class ViewResponse extends ViewRecord
                     $this->response->notes = $data['notes'];
                     $this->response->save();
                 }),
+               
+          
         ];
     }
 

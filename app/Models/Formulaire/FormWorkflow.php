@@ -3,14 +3,15 @@
 namespace App\Models\Formulaire;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use App\Models\Formulaire\WorkflowStep;
-
+use Spatie\Permission\Models\Role;
 class FormWorkflow extends Pivot
 {
      protected $table = 'nachd_form_workflow'; 
       protected $fillable = [
         'form_id',
         'workflow_step_id',
-        'ordre'
+        'ordre',
+        'role_id'
     ];
 
     public function workflowStep()
@@ -21,4 +22,8 @@ class FormWorkflow extends Pivot
     {
         return $this->belongsTo(Form::class,'form_id');
     }
+    public function role()
+{
+    return $this->belongsTo(Role::class);
+}
 }

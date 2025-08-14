@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Formulaire\FormResource\Pages;
+namespace App\Filament\Resources\FormResource\Pages;
 
 use Filament\Resources\Pages\ManageRelatedRecords;
 use Filament\Tables\Columns\ViewColumn;
@@ -8,8 +8,8 @@ use Filament\Tables\Enums\ActionsPosition;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use LaraZeus\Bolt\BoltPlugin;
-use App\Filament\Actions\SetResponseStatus;
-use App\Filament\Resources\Formulaire\FormResource;
+use LaraZeus\Bolt\Filament\Actions\SetResponseStatus;
+use App\Filament\Resources\FormResource;
 use App\Models\Formulaire\Form;
 
 /**
@@ -37,6 +37,7 @@ class BrowseResponses extends ManageRelatedRecords
             ])
             ->actions([
                 SetResponseStatus::make(),
+              
             ], position: ActionsPosition::AfterContent)
             ->filters([
                 SelectFilter::make('status')

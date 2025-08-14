@@ -33,6 +33,8 @@ use LaraZeus\Bolt\Facades\Bolt;
 use App\Models\Formulaire\Category;
 use App\Models\Formulaire\WorkflowStep;
 use App\Models\Formulaire\Form; 
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 trait Schemata
 {
     protected static function getVisibleFields(array $sections, array $arguments): array
@@ -224,11 +226,52 @@ trait Schemata
                 ->schema([
                     Grid::make()->schema([
                        Select::make('roles')
-                    ->relationship('roles', 'name')
-                    ->multiple()
-                    ->preload()
-                    ->searchable()
-                        ->label('Rôles autorisés à accéder au formulaire')
+    ->label('Rôles autorisés à accéder au formulaire')
+    ->relationship('roles', 'name')
+    ->multiple()
+    ->preload()
+    ->searchable()
+   
+    ->dehydrated(false) 
+    ->createOptionForm([
+                    TextInput::make('name')->required(),
+                ])
+                ->createOptionUsing(fn ($data) => Role::create([
+                    'name' => $data['name'],
+                    'guard_name' => 'web',
+                ])->id)
+    ->afterStateHydrated(function ($component, $state, $record) {
+        $component->state($record?->roles?->pluck('id')->toArray() ?? []);
+    })
+    ->afterStateUpdated(function ($state, $get, $set, $livewire) {
+        $form = $livewire->record;
+
+        if ($form) {
+            $pivotData = [];
+            foreach ($state as $roleId) {
+                $pivotData[$roleId] = [
+                    'created_by' => auth()->id(),
+                    'updated_by' => auth()->id(),
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+
+               
+                $role = Role::find($roleId);
+                if ($role) {
+                    $formPermissions = Permission::where('name', 'like', '%_form')->get();
+                    foreach ($formPermissions as $perm) {
+                        if (! $role->hasPermissionTo($perm)) {
+                            $role->givePermissionTo($perm);
+                        }
+                    }
+                }
+            }
+            $form->roles()->sync($pivotData);
+        }
+    }),
+
+                 
                     ]),
                     Grid::make()->schema([
                         Toggle::make('is_active')->label('Actif')->default(true),
@@ -302,40 +345,57 @@ trait Schemata
     ->label(__('Etapes de Décision'))
     ->visible(fn (Get $get) => $get('has_decision'))
     ->schema([
-        Select::make('workflowSteps') 
-        ->label('Etapes')
-            ->relationship(
-                name: 'workflowSteps', 
-                titleAttribute: 'name', 
-            )
-            ->multiple()
-            ->required()
-            ->searchable()
-            ->preload()
-             
-            ->columnSpanFull()
+        Repeater::make('workflow_config')
+    ->label('Étapes du workflow')
+    ->schema([
+        Select::make('workflow_step_id')
+            ->label('Étape')
+            ->options(\App\Models\Formulaire\WorkflowStep::pluck('name', 'id'))
             ->createOptionForm([
-       TextInput::make('name')
+                TextInput::make('name')
+                    ->label('Nom de l’étape')
+                    ->required(),
+                TextInput::make('description')
+                    ->label('Description'),
+            ])
             ->required()
-            ->label('Etape'),
-       TextInput::make('description')
-           
+ ->createOptionUsing(function (array $data) {
+        return \App\Models\Formulaire\WorkflowStep::create([
+            'name' => $data['name'],
+            'description' => $data['description'] ?? null,
+            'created_by' => auth()->id(),
+            'updated_by' => auth()->id(),
+        ]);
+    }),
+        Select::make('role_id')
+            ->label('Rôle responsable')
+            ->options(Role::pluck('name', 'id'))
+            ->searchable()
+            ->required()
+             ->afterStateUpdated(function ($state, $old) {
+       
+         $permission = Permission::firstOrCreate(['name' => 'submit_response_form']);
+
+    // Add to new role
+    if ($state && $newRole = Role::find($state)) {
+        if (! $newRole->hasPermissionTo($permission)) {
+            $newRole->givePermissionTo($permission);
+        }
+    }
+
+    app(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
+    }),
+
+        TextInput::make('ordre')
+            ->label('Ordre')
+            ->numeric()
+            ->minValue(1)
+            ->required(),
     ])
-            ->saveRelationshipsUsing(function (Form $form, $state) {
-                $syncData = [];
-                foreach (array_values($state) as $order => $stepId) {
-                    $syncData[$stepId] = [
-                        'ordre' => $order + 1,
-                        'created_at'=>now(),
-                        'updated_at'=>now(),
-                       'created_by' => auth()->id(),
-                       'updated_by' => auth()->id(),
-
-
-                ]; 
-                }
-                $form->workflowSteps()->sync($syncData);
-            })
+    ->minItems(1)
+    ->columnSpanFull()
+    
+    
     ]),
 
                
@@ -467,29 +527,6 @@ trait Schemata
                 ->required()
                
                 ->label(__('Field Name')),
-                TextInput::make('label')
-            ->required()
-            ->label(__('Field Label')),
-
-        TextInput::make('placeholder')
-            ->nullable()
-            ->label(__('Placeholder')),
-
-        TextInput::make('default_value')
-            ->nullable()
-            ->label(__('Default Value')),
-
-        Toggle::make('is_required')
-            ->label(__('Required'))
-            ->default(true),
-
-        Toggle::make('is_disabled')
-            ->label(__('Disabled'))
-            ->default(false),
-
-        Toggle::make('is_visible')
-            ->label(__('Visible'))
-            ->default(true),
 
         TextInput::make('ordering')
             ->numeric()

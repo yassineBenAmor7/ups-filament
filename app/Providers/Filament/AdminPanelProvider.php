@@ -28,11 +28,20 @@ use Illuminate\Support\Facades\File;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use LaraZeus\Bolt\BoltPlugin;
 use Filament\SpatieLaravelTranslatablePlugin;
-
+use Filament\Facades\Filament;
+use LaraZeus\Bolt\Filament\Resources\FormResource as BoltFormResource;
+use App\Filament\Plugins\CustomBoltPlugin;
 class AdminPanelProvider extends PanelProvider
 {
+    
     public function panel(Panel $panel): Panel
     {
+         \Log::info('AdminPanelProvider panel method called!');
+          $customPlugin = CustomBoltPlugin::make()
+        ->navigationGroupLabel('Form Builder')
+        ->formActionsAreSticky(true);
+    
+    \Log::info('CustomBoltPlugin created: ' . get_class($customPlugin));
         return $panel
             ->default()
             ->id('admin')
@@ -66,10 +75,11 @@ class AdminPanelProvider extends PanelProvider
                 FilamentShieldPlugin::make(),
                 ResizedColumnPlugin::make()
                 ->preserveONDB(),
-                SpatieLaravelTranslatablePlugin::make()->defaultLocales(['en','fr']),
-                BoltPlugin::make()
-                 ->navigationGroupLabel('Form Builder')
-                 
+                SpatieLaravelTranslatablePlugin::make()->defaultLocales(['fr','en']),
+                  $customPlugin,
+   
+
+             
             ])
             ->navigationItems($this->getNavigation())
             ->authMiddleware([
@@ -79,6 +89,7 @@ class AdminPanelProvider extends PanelProvider
                 ->usingResource(MenuResource::class)
             );
     }
+     
 
     protected function getNavigation(): array
     {
@@ -131,4 +142,5 @@ class AdminPanelProvider extends PanelProvider
 
         return $items;
     }
+   
 }

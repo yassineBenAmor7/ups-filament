@@ -1,22 +1,22 @@
 <?php
 
-namespace App\Filament\Resources\Formulaire\FormResource\Pages;
+namespace App\Filament\Resources\FormResource\Pages;
 
 use Filament\Actions\Action;
 use Filament\Actions\LocaleSwitcher;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Contracts\Support\Htmlable;
 use LaraZeus\Bolt\BoltPlugin;
-use App\Filament\Resources\Formulaire\FormResource;
+use App\Filament\Resources\FormResource;
 use App\Models\Formulaire\Form;
-use Illuminate\Database\Eloquent\Model;
+
 /**
  * @property Form $record.
  */
 class EditForm extends EditRecord
 {
     use EditRecord\Concerns\Translatable;
- 
+
     protected static string $resource = FormResource::class;
 
     public function areFormActionsSticky(): bool
@@ -48,8 +48,4 @@ class EditForm extends EditRecord
                 ->openUrlInNewTab(),
         ];
     }
-  
-
-
-    
 }

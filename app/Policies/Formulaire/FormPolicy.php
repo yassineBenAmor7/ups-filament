@@ -15,7 +15,7 @@ class FormPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_formulaire::form');
+        return $user->can('view_any_form')|| $user->can('submit_response_form');
     }
 
     /**
@@ -23,7 +23,8 @@ class FormPolicy
      */
     public function view(User $user, Form $form): bool
     {
-        return $user->can('view_formulaire::form');
+         // User can view if they have 'view_form' or 'submit_response'
+        return $user->can('view_form') || $user->can('submit_response_form');;
     }
 
     /**
@@ -31,7 +32,7 @@ class FormPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create_formulaire::form');
+        return $user->can('create_form');
     }
 
     /**
@@ -39,7 +40,7 @@ class FormPolicy
      */
     public function update(User $user, Form $form): bool
     {
-        return $user->can('update_formulaire::form');
+        return $user->can('update_form');
     }
 
     /**
@@ -47,7 +48,7 @@ class FormPolicy
      */
     public function delete(User $user, Form $form): bool
     {
-        return $user->can('delete_formulaire::form');
+        return $user->can('delete_form');
     }
 
     /**
@@ -55,7 +56,7 @@ class FormPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('delete_any_formulaire::form');
+        return $user->can('delete_any_form');
     }
 
     /**
@@ -63,7 +64,7 @@ class FormPolicy
      */
     public function forceDelete(User $user, Form $form): bool
     {
-        return $user->can('force_delete_formulaire::form');
+        return $user->can('force_delete_form');
     }
 
     /**
@@ -71,7 +72,7 @@ class FormPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('force_delete_any_formulaire::form');
+        return $user->can('force_delete_any_form');
     }
 
     /**
@@ -79,7 +80,7 @@ class FormPolicy
      */
     public function restore(User $user, Form $form): bool
     {
-        return $user->can('restore_formulaire::form');
+        return $user->can('restore_form');
     }
 
     /**
@@ -87,7 +88,7 @@ class FormPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('restore_any_formulaire::form');
+        return $user->can('restore_any_form');
     }
 
     /**
@@ -95,7 +96,7 @@ class FormPolicy
      */
     public function replicate(User $user, Form $form): bool
     {
-        return $user->can('replicate_formulaire::form');
+        return $user->can('replicate_form');
     }
 
     /**
@@ -103,6 +104,11 @@ class FormPolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('reorder_formulaire::form');
+        return $user->can('reorder_form');
+    }
+     public function submitResponse(User $user, Form $form): bool
+    {
+        // This method is for the manageResponse / viewResponse page
+        return $user->can('submit_response');
     }
 }

@@ -1,16 +1,21 @@
 <?php
 
-namespace App\Filament\Resources\Formulaire\FormResource\Widgets;
+namespace App\Filament\Resources\FormResource\Widgets;
 
 use Filament\Widgets\ChartWidget;
 use LaraZeus\Bolt\BoltPlugin;
 use App\Models\Formulaire\Form;
 
-class ResponsesPerStatus extends ChartWidget
+class ResponsesPerFields extends ChartWidget
 {
     public Form $record;
 
     protected static ?string $maxHeight = '300px';
+
+    protected int | string | array $columnSpan = [
+        'lg' => 1,
+        'md' => 2,
+    ];
 
     protected static ?array $options = [
         'scales' => [
@@ -33,29 +38,29 @@ class ResponsesPerStatus extends ChartWidget
         ],
     ];
 
-    protected int | string | array $columnSpan = [
-        'lg' => 1,
-        'md' => 2,
-    ];
+    protected function getType(): string
+    {
+        return 'pie';
+    }
 
     public function getHeading(): string
     {
-        return __('Responses Status');
+        return __('Responses Entries');
     }
 
     protected function getData(): array
     {
         $dataset = [];
-        $statuses = BoltPlugin::getModel('FormsStatus')::get();
 
         $form = BoltPlugin::getModel('Form')::query()
-            ->with(['responses'])
+            ->with(['fields', 'fieldsResponses'])
             ->where('id', $this->record->id)
             ->first();
 
-        foreach ($statuses as $status) {
-            $dataset[] = $form->responses
-                ->where('status', $status->key)
+        $fields = $form->fields;
+        foreach ($fields as $field) {
+            $dataset[] = $form->fieldsResponses
+                ->where('field_id', $field->id)
                 ->count();
         }
 
@@ -64,17 +69,12 @@ class ResponsesPerStatus extends ChartWidget
                 [
                     'label' => __('entries per month'),
                     'data' => $dataset,
-                    'backgroundColor' => $statuses->pluck('chartColor'),
+                    'backgroundColor' => '#8A8AFF',
                     'borderColor' => '#ffffff',
                 ],
             ],
 
-            'labels' => $statuses->pluck('label'),
+            'labels' => $fields->pluck('name'),
         ];
-    }
-
-    protected function getType(): string
-    {
-        return 'pie';
     }
 }
